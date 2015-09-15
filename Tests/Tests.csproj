@@ -17,7 +17,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -43,6 +43,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,6 +52,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -75,6 +77,7 @@
     <Compile Include="src\Tests\CLRCGPropertyTest.cs" />
     <Compile Include="src\Tests\CLRCGSampleTest.cs" />
     <Compile Include="src\Tests\CLRCGScopeTest.cs" />
+    <Compile Include="src\Tests\CLRCGSpecialization.cs" />
     <Compile Include="src\Tests\CLRCGUnionTypesTest.cs" />
     <Compile Include="src\Tests\CLRCGVarTests.cs" />
     <Compile Include="src\Tests\CLRCodeGenerationTest.cs" />
@@ -86,7 +89,6 @@
     <Compile Include="src\Tests\CLRCGOperator.cs" />
     <Compile Include="src\Tests\CLRCGWrongTestCases.cs" />
     <Compile Include="src\Tests\Benchmarks.cs" />
-    <Compile Include="src\Tests\Compilation.cs" />
     <Compile Include="src\Tests\GettingStartedTest.cs" />
     <Compile Include="src\Tests\RrotorCodeGenerationTest.cs" />
     <Compile Include="src\Tests\SemanticDynamicsTest.cs" />

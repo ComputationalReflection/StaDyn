@@ -53,14 +53,20 @@ namespace Tests {
         /// <summary>
         /// Using "dynamic" to refer to a "dynamic var"
         /// </summary>
-        private bool dynamic;
+        public bool dynamic;
 
-        // * Server option, make use of the DLR
+        /// <summary>
+        /// Server option, make use of the DLR
+        /// </summary>        
         public bool server;
 
+        /// <summary>
+        /// Specialized option, specializing methods with the type information of their arguments
+        /// </summary>        
+        public bool specialized;
+
         #endregion
-
-
+        
         #region Properties
         /// <summary>
         /// The lower index of actual errors
@@ -123,6 +129,14 @@ namespace Tests {
         {
             get { return this.server; }
         }
+        
+        /// <summary>
+        /// Specialized option, specializing methods with the type information of their arguments
+        /// </summary>
+        public bool Specialized
+        {
+            get { return this.specialized; }
+        }
 
         /// <summary>
         /// The name of the target platform
@@ -152,7 +166,7 @@ namespace Tests {
             this.FromError = ErrorManager.Instance.ErrorCount;            
             Compiler.Parser.Parse(fileNames, this.generateCode ? outputFileName : null,
                 this.generateCode ? this.targetPlatform : TargetPlatform.CLR,
-                Application.StartupPath + "\\Tests\\", "ilasm.exe", "TypeTable.txt",this.run,this.dynamic,this.server);            
+                Application.StartupPath + "\\Tests\\", "ilasm.exe", "TypeTable.txt",this.run,this.dynamic,this.server, this.specialized);            
             this.ToError = ErrorManager.Instance.ErrorCount;
             int expectedNumberOfErrors;
             this.Success = ErrorFile.CheckErrors(fileNames, this.FromError, this.ToError, out expectedNumberOfErrors);

@@ -125,17 +125,31 @@ namespace Semantic
         /// </summary>
         private void loadDynVars()
         {
-            string dynFile = Path.ChangeExtension(this.currentFile, DynVarManagement.DynVarManager.DynVarFileExt);
-
-            if (File.Exists(dynFile))
+            if (DynVarManager.DynamicOption)
             {
                 try
                 {
-                    manager.Load(dynFile);
+                    manager.Load();
                 }
-                catch (DynVarManagement.DynVarException e)
+                catch (DynVarException e)
                 {
                     ErrorManager.Instance.NotifyError(new LoadingDynVarsError(e.Message));
+                }
+            }
+            else
+            {
+                string dynFile = Path.ChangeExtension(this.currentFile, DynVarManagement.DynVarManager.DynVarFileExt);
+
+                if (File.Exists(dynFile))
+                {
+                    try
+                    {
+                        manager.Load(dynFile);
+                    }
+                    catch (DynVarManagement.DynVarException e)
+                    {
+                        ErrorManager.Instance.NotifyError(new LoadingDynVarsError(e.Message));
+                    }
                 }
             }
         }

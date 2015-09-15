@@ -490,15 +490,25 @@ namespace TypeSystem {
         public MethodType CloneMethodType(IDictionary<TypeVariable, TypeVariable> typeVariableMappings) {
             // * We clone the members of the MethodType
             MethodType methodType = new MethodType(null);
-            List<TypeExpression> oldParameterList = this.paramList;
+            List<TypeExpression> oldParameterList = this.paramList;            
             methodType.paramList = new List<TypeExpression>();
             // * We must create new type variables for parameters
             IList<EquivalenceClass> equivalenceClasses = new List<EquivalenceClass>();
             for (int i = 0; i < this.paramList.Count; i++)
+            { 
                 // * Every type variable is cloned to a new one, adding both to typesVariables,
                 //   inserting its equivalence classes in the equivalenceClasses parameter and updating the
                 //   typeVariableMappings dictionary (<oldvariable,newVariable>
+
                 methodType.paramList.Add(oldParameterList[i].CloneTypeVariables(typeVariableMappings, equivalenceClasses, new List<ClassType>()));
+                
+                //if (paramList[i].IsDynamic && paramList[i] is TypeVariable)
+                  //  equivalenceClasses = new List<EquivalenceClass>();
+                //{
+                //    foreach (EquivalenceClass equivalenceClass in equivalenceClasses)
+                //        equivalenceClass.UpdateEquivalenceClass(typeVariableMappings);
+                //}
+            }
             // * The same for the returned value
             methodType.ret = this.ret.CloneTypeVariables(typeVariableMappings, equivalenceClasses, new List<ClassType>());
             // * Member info (access modifier)
@@ -579,12 +589,11 @@ namespace TypeSystem {
 
             // * If "this" is the actual implicit object, the return type is the original return type of the method
             TypeExpression originalReturnType = formalMethod.Return;
-
             if (formalMethod.HasTypeVariables() || formalMethod.Constraints.Count > 0)
                 // * We must also generate a method with fresh variables (formal method)
                 //   when it has parameters with type variables or constraints
                 formalMethod = formalMethod.CloneMethodType(typeVariableMappings);
-
+            
             // * If the method has type variables... 
             if (formalMethod.HasTypeVariables()) {
                 // * We create the actual method:

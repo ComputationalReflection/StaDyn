@@ -1319,7 +1319,7 @@ namespace Semantic {
         /// </summary>
         /// <param name="args">Arguments information.</param>
         /// <returns>Returns the argument type expressions </returns>
-        private TypeExpression[] compoundExpressionToArray(CompoundExpression args) {
+        public TypeExpression[] compoundExpressionToArray(CompoundExpression args) {
             TypeExpression[] aux = new TypeExpression[args.ExpressionCount];
             TypeExpression te;
 
@@ -1405,7 +1405,7 @@ namespace Semantic {
             if (md == null)
                 // * No abstract interpretation in method declarations (abstract or interfaces)
                 return mte;
-
+            
             if (this.methodsAllReadyVisited.Contains(md))
                 // * Already visited, let's exit
                 return mte;

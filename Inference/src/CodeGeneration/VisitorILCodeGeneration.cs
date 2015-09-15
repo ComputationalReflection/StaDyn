@@ -831,11 +831,17 @@ namespace CodeGeneration {
                 return this.LoadAuxiliarVariable(node.ExpressionType.ILType());
 
             if (node.CastType.IsValueType() && CGCastOperation<T>.IsInternallyAnObject(node.Expression.ExpressionType))
+            {
+                this.codeGenerator.Promotion(this.indent, node.Expression.ExpressionType, node.Expression.ILTypeExpression, node.CastType, node.ILTypeExpression, true, true);
                  node.Expression.ExpressionType.AcceptOperation(new CGCastOperation<T>(this.codeGenerator, this.indent), node.CastType);            
+            }
             else if (node.CastType.IsValueType() && !node.Expression.ILTypeExpression.IsValueType())
-                this.codeGenerator.UnboxAny(indent, node.CastType);                           
+                this.codeGenerator.UnboxAny(indent, node.CastType);
             else
+            {
+                this.codeGenerator.Promotion(this.indent, node.Expression.ExpressionType, node.Expression.ILTypeExpression, node.CastType, node.ILTypeExpression, true,true);
                 node.CastType.AcceptOperation(new CGCastOperation<T>(this.codeGenerator, this.indent), node.CastType);
+            }
 
             if (CGCastOperation<T>.ChechBox(node.Expression.ExpressionType))
                 this.codeGenerator.Box(indent, node.CastType);            

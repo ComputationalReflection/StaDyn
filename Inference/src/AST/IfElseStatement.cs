@@ -169,7 +169,7 @@ namespace AST {
 
         #endregion
 
-        #region HaveElseBlock
+        #region ElseBlock
 
         /// <summary>
         /// Returns true if the statement has a else block. Otherwise, false.
@@ -179,6 +179,15 @@ namespace AST {
             if ((this.falseBranch is Block) && (((Block)this.falseBranch).StatementCount == 0))
                 return false;
             return true;
+        }
+
+        /// <summary>
+        /// Set the false branch of of the if statement
+        /// </summary>
+        /// <param name="falseBranch">Block executed when the condition is false.</param>
+        public void SetFalseBranch(Statement falseBranch)
+        {
+            this.falseBranch = falseBranch;
         }
 
         #endregion

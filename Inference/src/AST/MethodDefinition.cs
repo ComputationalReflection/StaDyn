@@ -102,5 +102,27 @@ namespace AST {
         }
 
         #endregion
+
+
+        public MethodDefinition CloneMethodDefinition()
+        {
+
+            MethodType originalMethodType = TypeExpr as MethodType;
+            if (originalMethodType == null) return null;
+
+            MethodType clonedMemberTypeExpresion = originalMethodType.CloneMethodType(new Dictionary<TypeVariable, TypeVariable>());
+            
+            Block clonedBlock = new Block(Body.Location);
+            for (int i = 0; i < Body.StatementCount; i++)
+            {
+                Statement sta = Body.GetStatementElement(i);                
+                clonedBlock.AddStatement(sta);
+            }
+
+            
+
+            MethodDefinition clonedMethodDefinition = new MethodDefinition(IdentifierExp, clonedBlock, TypeVariable.NewTypeVariable.typeExpression, ParametersInfo, ModifiersInfo, Location);
+            return clonedMethodDefinition;
+        }
     }
 }

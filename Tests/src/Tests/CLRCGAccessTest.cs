@@ -158,7 +158,7 @@ namespace Tests
             runTest(new string[] { "tests/code.generation/Access/CG.TestStats2.cs" });
         }
         public void testCCGtestVarParametersAndReturn()
-        {
+        {            
             runTest(new string[] { "tests/code.generation/Access/CG.testVar.ParametersAndReturn.cs" });
         }
         public void testCCGThisBase()

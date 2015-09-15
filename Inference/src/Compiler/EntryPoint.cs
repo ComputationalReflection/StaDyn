@@ -53,7 +53,7 @@ namespace Compiler {
                     }
 
                     // starts the compilation process
-                    initApp.Run(directories, null, Application.StartupPath+"\\Tests\\","ilasm.exe", "TypeTable.txt", TargetPlatform.CLR, false,false,false);
+                    initApp.Run(directories, null, Application.StartupPath+"\\Tests\\","ilasm.exe", "TypeTable.txt", TargetPlatform.CLR, false,false,false,false);
                 }
                 else
                     ErrorManager.Instance.NotifyError(new CommandLineArgumentsError());

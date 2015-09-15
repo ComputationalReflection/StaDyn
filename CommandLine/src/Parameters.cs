@@ -26,6 +26,9 @@ namespace CommandLine {
         public bool Dynamic;
         // * Server option, make use of the DLR (default value is false)
         public bool Server;
+        // * Specializing methods with the type information of their arguments (default value is true)
+        public bool Specialized;
+
 
     }
 }

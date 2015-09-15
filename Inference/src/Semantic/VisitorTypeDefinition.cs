@@ -222,6 +222,7 @@ namespace Semantic
             if (accessModifier != null)
             {
                accessModifier.Class = (UserType)(node.TypeExpr);
+               accessModifier.TypeDefinition = node;
 
                if (!(members.ContainsKey(accessModifier.MemberIdentifier)))
                   members.Add(accessModifier.MemberIdentifier, new List<AccessModifier>());

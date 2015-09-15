@@ -41,6 +41,8 @@ namespace CommandLine {
                                 "                                   (Short form: /d).\n" +
                                 "/server                  Allows using the DLR (disabled by default)\n" +
                                 "                                   (Short form: /s).\n" +
+                                "/specialized             Allows specializing methods with the type information of their arguments. (enabled by default)\n" +
+                                "                                   (Short form: /sp).\n" +
                                 "\n";
         public const string errorMessage = copyrightMessage + "\nSome error in the input parameters. Type /help for help.\n";
         public const string dynAndStaErrorMessage = copyrightMessage + "\nEverything dynamic and static options cannot be both enabled.\n";
@@ -54,6 +56,7 @@ namespace CommandLine {
         public static readonly string[] runOptions = { "run", "r" };
         public static readonly string[] dynamicOptions = {"dynamic","d"};
         public static readonly string[] serverOptions = { "server", "s" };
+        public static readonly string[] specilizationOptions = { "specialized", "sp" };
 
         // * Possible target names
         public static readonly string[] targetNames = { "rrotor", "clr" };
@@ -61,6 +64,7 @@ namespace CommandLine {
         // * Default values
         public static readonly TargetPlatform defaultTargetPlatform = TargetPlatform.CLR;
         public static readonly bool defaultRunOption = false;
+        public static readonly bool defaultSpecializedOption = true;
 
 
         // * Options prefix

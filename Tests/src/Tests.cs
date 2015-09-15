@@ -12,6 +12,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Text;
@@ -24,7 +25,7 @@ namespace Tests {
 
         static Type[] testClasses = { 
             
-            typeof(GettingStartedTest),                        
+ typeof(GettingStartedTest),                        
             typeof(SemanticSampleTest),
             typeof(SemanticDynamicsTest),
             typeof(SemanticExplicitTest), 
@@ -48,6 +49,8 @@ namespace Tests {
             typeof(CLRCGExamplesTestCases),
             typeof(Benchmarks), //no.inference.cs commented.   
             typeof(Compilation),            
+            
+            //typeof(CLRCGSpecialization),         
         };
 
         static void Main() {            

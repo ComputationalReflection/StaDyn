@@ -7,12 +7,13 @@ namespace Tests
     class CLRCGExamplesTestCases : Test
     {
             #region Constructor
+
         /// GenerateCode = true
         /// Run = true
         /// Dynamic = true
         /// Target = "clr"
         /// </summary>
-        public CLRCGExamplesTestCases() : base(true, true, true, TargetPlatform.CLR,true) { }
+        public CLRCGExamplesTestCases() : base(true, true, true, TargetPlatform.CLR, true) {}
         #endregion
 
 

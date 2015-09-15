@@ -73,6 +73,7 @@ namespace AST
       public SingleIdentifierExpression FieldName
       {
          get { return this.field; }
+         set { this.field = value; }
       }
 
        /// <summary>
