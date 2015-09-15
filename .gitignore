@@ -1,0 +1,19 @@
+﻿################################################################################
+# Este archivo .gitignore ha sido creado automáticamente por Microsoft(R) Visual Studio.
+################################################################################
+
+/CommandLine/bin/Debug
+/CommandLine/obj/Debug
+/Inference/bin/Debug
+/Inference/obj/Debug
+/Tests/obj/Debug
+*.suo
+/Tests/bin/Debug/antlr.astframe.dll
+/Tests/bin/Debug/antlr.runtime.dll
+/Tests/bin/Debug/fusion.dll
+/Tests/bin/Debug/ilasm.exe
+/Tests/bin/Debug/Inference.dll
+/Tests/bin/Debug/Inference.pdb
+/Tests/bin/Debug/Tests.exe
+/Tests/bin/Debug/Tests.exe.config
+/Tests/bin/Debug/Tests.pdb
