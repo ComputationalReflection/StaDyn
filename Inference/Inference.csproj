@@ -41,13 +41,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="antlr.astframe, Version=2.7.7.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Tests\bin\Debug\tests\code.generation\antlr.astframe.dll</HintPath>
+    <Reference Include="antlr.astframe">
+      <HintPath>..\References\antlr.astframe.dll</HintPath>
     </Reference>
-    <Reference Include="antlr.runtime, Version=2.7.7.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Tests\bin\Debug\tests\code.generation\antlr.runtime.dll</HintPath>
+    <Reference Include="antlr.runtime">
+      <HintPath>..\References\antlr.runtime.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
