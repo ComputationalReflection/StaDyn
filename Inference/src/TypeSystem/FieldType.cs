@@ -25,10 +25,10 @@ using TypeSystem.Constraints;
 using Tools;
 using DynVarManagement;
 using TypeSystem.Operations;
-
+//visto
 namespace TypeSystem {
     /// <summary>
-    /// Represents a field type.
+    /// Representa a field type.
     /// </summary>
     /// <remarks>
     /// Inheritance: MemberType.

@@ -134,6 +134,14 @@
     <Compile Include="src\AST\WhileStatement.cs" />
     <Compile Include="src\CodeGeneration\CLRCodeGenerator.cs" />
     <Compile Include="src\CodeGeneration\CodeGenerator.cs" />
+    <Compile Include="src\CodeGeneration\DLR\AbstractCallSite.cs" />
+    <Compile Include="src\CodeGeneration\DLR\CallSiteContainer.cs" />
+    <Compile Include="src\CodeGeneration\DLR\InvokeMemberCallSite.cs" />
+    <Compile Include="src\CodeGeneration\DLR\SetMemberCallSite.cs" />
+    <Compile Include="src\CodeGeneration\DLR\GetMemberCallSite.cs" />
+    <Compile Include="src\CodeGeneration\DLR\ICallSite.cs" />
+    <Compile Include="src\CodeGeneration\DLR\VisitorDLRCodeGeneration.cs" />
+    <Compile Include="src\CodeGeneration\DLR\DLRCodeGenerator.cs" />
     <Compile Include="src\CodeGeneration\Operations\CGAritmethicOperation.cs" />
     <Compile Include="src\CodeGeneration\Operations\CGBinaryOperation.cs" />
     <Compile Include="src\CodeGeneration\Operations\CGCastOperation.cs" />

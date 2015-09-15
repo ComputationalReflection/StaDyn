@@ -26,7 +26,7 @@ namespace Tests {
         /// GenerateCode = true
         /// Run = true
         /// Target = "rrotor"
-        public RrotorCodeGenerationTest(): base(true, true, false,TargetPlatform.RRotor) {
+        public RrotorCodeGenerationTest(): base(true, true, false,TargetPlatform.RRotor,false) {
         }
         #endregion
 

@@ -33,6 +33,7 @@ namespace TypeSystem {
     /// Implements Composite pattern [Leaf].
     /// Implements Singleton pattern.
     /// </remarks>
+    /// //visto
     public class IntType : TypeExpression {
         #region Fields
 

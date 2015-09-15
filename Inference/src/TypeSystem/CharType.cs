@@ -26,6 +26,7 @@ using Tools;
 using TypeSystem.Operations;
 
 namespace TypeSystem {
+    //VISTO
     /// <summary>
     /// Represent a character type.
     /// </summary>

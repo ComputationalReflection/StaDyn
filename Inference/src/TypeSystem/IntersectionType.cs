@@ -27,13 +27,14 @@ using TypeSystem.Operations;
 
 namespace TypeSystem {
     /// <summary>
-    /// Represents an intersection type.
+    /// Representa an intersection type.
     /// </summary>
     /// <remarks>
     /// Inheritance: TypeExpression.
     /// Implements Composite pattern [Composite].
     /// </remarks>
-
+    /// 
+    //VISTO
     public class IntersectionType : TypeExpression {
         #region Fields
 

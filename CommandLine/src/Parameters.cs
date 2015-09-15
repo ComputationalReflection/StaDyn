@@ -24,5 +24,8 @@ namespace CommandLine {
         public bool Run;
         // * Using "dynamic" to refer to a "dynamic var" (default value is false)
         public bool Dynamic;
+        // * Server option, make use of the DLR (default value is false)
+        public bool Server;
+
     }
 }

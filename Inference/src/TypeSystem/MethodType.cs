@@ -14,7 +14,7 @@
 // Create date: 15-10-2006                                                    //
 // Modification date: 03-04-2007                                              //
 ////////////////////////////////////////////////////////////////////////////////
-
+//visto
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,7 +28,7 @@ using TypeSystem.Operations;
 
 namespace TypeSystem {
     /// <summary>
-    /// Represents a method type.
+    /// Representa a method type.
     /// </summary>
     /// <remarks>
     /// Inheritance: MemberType.

@@ -75,6 +75,7 @@
     <Compile Include="src\Tests.cs" />
     <Compile Include="src\Tests\CLRCGArraysTest.cs" />
     <Compile Include="src\Tests\CLRCGCasting.cs" />
+    <Compile Include="src\Tests\CLRCGExamplesTestCases.cs" />
     <Compile Include="src\Tests\CLRCGExceptionTest.cs" />
     <Compile Include="src\Tests\CLRCGCInheritanceTest.cs" />
     <Compile Include="src\Tests\CLRCGCollectionsTest.cs" />
@@ -91,8 +92,9 @@
     <Compile Include="src\Tests\CLRCGTypes.cs" />
     <Compile Include="src\Tests\CLRCGPromotion.cs" />
     <Compile Include="src\Tests\CLRCGOperator.cs" />
-    <Compile Include="src\Tests\CLRCGExamplesTestCases.cs" />
+    <Compile Include="src\Tests\CLRCGWrongTestCases.cs" />
     <Compile Include="src\Tests\Benchmarks.cs" />
+    <Compile Include="src\Tests\Compilation.cs" />
     <Compile Include="src\Tests\GettingStartedTest.cs" />
     <Compile Include="src\Tests\RrotorCodeGenerationTest.cs" />
     <Compile Include="src\Tests\SemanticDynamicsTest.cs" />

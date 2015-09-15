@@ -23,7 +23,7 @@ using ErrorManagement;
 
 namespace TypeSystem {
     /// <summary>
-    /// Represents a class attribute (fields or methods).
+    /// Representa a class attribute (fields or methods).
     /// </summary>
     /// <remarks>
     /// Inheritance: TypeExpression.

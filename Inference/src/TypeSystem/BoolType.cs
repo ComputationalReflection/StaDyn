@@ -23,7 +23,7 @@ using AST;
 using ErrorManagement;
 using Tools;
 using TypeSystem.Operations;
-
+//VISTO
 namespace TypeSystem {
     /// <summary>
     /// Represent a bool type.

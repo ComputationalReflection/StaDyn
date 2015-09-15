@@ -21,3 +21,8 @@
 /Tests/bin/Debug/Tests.vshost.exe
 /Tests/bin/Debug/Tests.vshost.exe.config
 /Tests/bin/Debug
+/Wrong Test Cases/fusion.dll
+/Wrong Test Cases/ilasm.exe
+/Wrong Test Cases/Inference.dll
+/Wrong Test Cases/StaDyn.exe
+/Wrong Test Cases/antlr.runtime.dll

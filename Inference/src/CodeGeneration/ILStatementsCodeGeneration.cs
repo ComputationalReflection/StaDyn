@@ -30,7 +30,7 @@ namespace CodeGeneration {
         }
         #endregion
 
-#region  Write() & WriteLine() & indentation
+        #region  Write() & WriteLine() & indentation
 
         /// <summary>
         /// Writes a line terminator in the text stream

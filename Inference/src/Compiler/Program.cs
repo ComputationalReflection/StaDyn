@@ -233,10 +233,11 @@ namespace Compiler
       /// <param name="ilasmFileName">Path to the ilasm.exe executable file (includes filename).</param>
       /// <param name="run">If the program must be executed after compilation</param>
       /// <param name="dynamic">Using "dynamic" to refer to a "dynamic var"</param>
+      /// <param name="server">Server option, make use of the DLR</param>
       /// <param name="targetPlatform">The target platform to compile the code</param>
       /// </summary>
       public void Run(IDictionary<string, string> directories, string outputFileName, 
-          string debugFilePath, string ilasmFileName,string typeTableFileName,  TargetPlatform targetPlatform, bool run, bool dynamic)
+          string debugFilePath, string ilasmFileName,string typeTableFileName,  TargetPlatform targetPlatform, bool run, bool dynamic, bool server)
       {
          int previousNumberOfErrors = ErrorManager.Instance.ErrorCount;
 
@@ -288,7 +289,7 @@ namespace Compiler
             if (entryPointList.Count == 1)  {
                // * The same visitor code generation should be used in the whole process
                string ilFileName = Path.ChangeExtension(outputFileName, ".il");                
-               VisitorCodeGenerationBase visitorCodeGeneration = createVisitorCodeGeneration(ilFileName, outputFileName, targetPlatform);
+               VisitorCodeGenerationBase visitorCodeGeneration = createVisitorCodeGeneration(ilFileName, outputFileName, targetPlatform, server);
                for (int i = 0; i < this.astList.Count; i++)
                {
                   this.astList[i].Accept(visitorCodeGeneration, null);
@@ -347,17 +348,22 @@ namespace Compiler
       /// <param name="ilFileName">The name of the IL file</param>
       /// <param name="outputFileName">The name of the exe file</param>
       /// <param name="target">The name of the target platform</param>
-      private VisitorCodeGenerationBase createVisitorCodeGeneration (string ilFileName, string outputFileName, TargetPlatform target)
+      /// <param name="server">Server option, make use of the DLR</param>
+      private VisitorCodeGenerationBase createVisitorCodeGeneration (string ilFileName, string outputFileName, TargetPlatform target, bool server)
       {          
          switch (target)
          {
              case TargetPlatform.CLR:
+                 if(server)
+                     return new VisitorDLRCodeGeneration<DLRCodeGenerator>(Path.GetFileNameWithoutExtension(outputFileName),
+                   new DLRCodeGenerator(new StreamWriter(ilFileName)));
+                   //new DLRCodeGenerator(Console.Out)); 
                  return new VisitorCLRCodeGeneration<CLRCodeGenerator>(Path.GetFileNameWithoutExtension(outputFileName),
                    new CLRCodeGenerator(new StreamWriter(ilFileName)));                   
                    //new CLRCodeGenerator(Console.Out)); 
              //case TargetPlatform.RRotor:
-            //     return new VisitorRrotorCodeGeneration<RrotorCodeGenerator>(Path.GetFileNameWithoutExtension(outputFileName),
-            //       new RrotorCodeGenerator(new StreamWriter(ilFileName)));
+               //  return new VisitorRrotorCodeGeneration<RrotorCodeGenerator>(Path.GetFileNameWithoutExtension(outputFileName),
+                 //  new RrotorCodeGenerator(new StreamWriter(ilFileName)));
             default:
                System.Diagnostics.Debug.Assert(false, "Wrong target platform");
                break;
@@ -378,9 +384,9 @@ namespace Compiler
         {
          Process process = new Process();
          process.StartInfo.UseShellExecute = false;
-         //process.StartInfo.CreateNoWindow = true; //Uncomment this to execute large source code, but StandardOutput and StandardError will be not visible.
-         process.StartInfo.RedirectStandardOutput = true; //Set to false to execute large source code
-         process.StartInfo.RedirectStandardError = true; //Set to false to execute large source code  
+         process.StartInfo.CreateNoWindow = true; //Uncomment this to execute large source code, but StandardOutput and StandardError will be not visible.
+         process.StartInfo.RedirectStandardOutput = false; //Set to false to execute large source code
+         process.StartInfo.RedirectStandardError = false; //Set to false to execute large source code  
 
          process.StartInfo.FileName = ilasmFileName;
          process.StartInfo.Arguments = "\"" + ilFileName + "\"" + " /output=" + "\"" + outputFileName + "\" /optimize";

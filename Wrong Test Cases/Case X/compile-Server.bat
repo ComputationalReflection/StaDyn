@@ -1,0 +1,1 @@
+..\StaDyn.exe .\CG.cs -ed -d -s

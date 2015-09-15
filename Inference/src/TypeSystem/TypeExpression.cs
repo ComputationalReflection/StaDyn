@@ -30,6 +30,7 @@ namespace TypeSystem {
     /// <remarks>
     /// Implements Composite pattern [Component].
     /// </remarks>
+    /// //visto
     public abstract class TypeExpression {
         
         #region Fields

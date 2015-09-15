@@ -27,7 +27,7 @@ namespace Tests {
         /// Run = true
         /// Target = "clr"
         /// </summary>
-        public CLRCodeGenerationTest(): base(true, true,false, TargetPlatform.CLR) {
+        public CLRCodeGenerationTest(): base(true, true,false, TargetPlatform.CLR,false) {
         }
         #endregion
 
