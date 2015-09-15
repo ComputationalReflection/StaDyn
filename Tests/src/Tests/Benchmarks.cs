@@ -32,60 +32,60 @@ namespace Tests
             runTest(new string[] { "tests/benchmarks/static/pystone/Pystone.Static.cs" });
         }
 
-        //public void testPystoneProc1()
-        //{
-        //    runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc1.cs" });
-        //}
+        public void testPystoneProc1()
+        {
+            runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc1.cs" });
+        }
 
-        //public void testPystoneProc2()
-        //{
-        //    runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc2.cs" });
-        //}
+        public void testPystoneProc2()
+        {
+            runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc2.cs" });
+        }
 
-        //public void testPystoneProc3()
-        //{
-        //    runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc3.cs" });
-        //}
+        public void testPystoneProc3()
+        {
+            runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc3.cs" });
+        }
 
-        //public void testPystoneProc4()
-        //{
-        //    runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc4.cs" });
-        //}
+        public void testPystoneProc4()
+        {
+            runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc4.cs" });
+        }
 
-        //public void testPystoneProc5()
-        //{
-        //    runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc5.cs" });
-        //}
+        public void testPystoneProc5()
+        {
+            runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc5.cs" });
+        }
 
-        //public void testPystoneProc6()
-        //{
-        //    runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc6.cs" });
-        //}
+        public void testPystoneProc6()
+        {
+            runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc6.cs" });
+        }
 
-        //public void testPystoneProc7()
-        //{
-        //    runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc7.cs" });
-        //}
+        public void testPystoneProc7()
+        {
+            runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc7.cs" });
+        }
 
-        //public void testPystoneProc8()
-        //{
-        //    runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc8.cs" });
-        //}
+        public void testPystoneProc8()
+        {
+            runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestProc8.cs" });
+        }
 
-        //public void testPystoneFunc1()
-        //{
-        //    runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestFunc1.cs" });
-        //}
+        public void testPystoneFunc1()
+        {
+            runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestFunc1.cs" });
+        }
 
-        //public void testPystoneFunc2()
-        //{
-        //    runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestFunc2.cs" });
-        //}
+        public void testPystoneFunc2()
+        {
+            runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestFunc2.cs" });
+        }
 
-        //public void testPystoneFunc3()
-        //{
-        //    runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestFunc3.cs" });
-        //}
+        public void testPystoneFunc3()
+        {
+            runTest(new string[] { "tests/benchmarks/dynamic/pystone/TestFunc3.cs" });
+        }
 
         public void testPystoneDynamic()
         {
