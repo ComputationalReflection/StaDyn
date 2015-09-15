@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application name="testWrongDynamics.Array">
+    <namespace name="Testing.Wrong.Dynamics">
+        <class name="Arrays">
+          <method name="test">
+            <dynvar name="vector" />
+          </method>
+          <method name="wrongTest">
+            <dynvar name="dyn" />
+          </method>
+        </class>
+    </namespace>
+</application>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application name="testDynamicsParameters">
+    <namespace name="Testing.Dynamics">
+        <class name="Parameters">
+          <method name="testDynamic">
+                <dynvar name="dynParameter" />
+            </method>
+        </class>
+    </namespace>
+</application>

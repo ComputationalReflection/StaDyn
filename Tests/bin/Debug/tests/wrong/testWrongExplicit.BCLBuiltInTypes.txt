@@ -1,0 +1,4 @@
+7,,ErrorManagement.UnknownMemberError
+9,,ErrorManagement.TypePromotionError
+12,,ErrorManagement.TypePromotionError
+14,,ErrorManagement.TypePromotionError

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application name="testWrongDynamics.Attributes">
+    <namespace name="Testing.Wrong.Dynamics">
+        <class name="Attributes">
+          <dynvar name="dynAttribute" />
+        </class>
+    </namespace>
+</application>

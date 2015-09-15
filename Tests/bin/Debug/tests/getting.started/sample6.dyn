@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<application name="sample6">
+  <namespace name="GettingStarted">
+    <class name="Test">
+          <method name="Main">
+            <dynvar name="dynamicReference" />
+          </method>
+        </class>
+    </namespace>    
+</application>

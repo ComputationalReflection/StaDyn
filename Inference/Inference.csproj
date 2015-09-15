@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6AB60528-1ADA-4E5C-8F4E-802F0CA11C3C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Inference</RootNamespace>
+    <AssemblyName>Inference</AssemblyName>
+    <TargetZone>LocalIntranet</TargetZone>
+    <GenerateManifests>false</GenerateManifests>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0618</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="antlr.astframe, Version=2.7.7.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Tests\bin\Debug\tests\code.generation\antlr.astframe.dll</HintPath>
+    </Reference>
+    <Reference Include="antlr.runtime, Version=2.7.7.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Tests\bin\Debug\tests\code.generation\antlr.runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="src\AST\ArgumentExpression.cs" />
+    <Compile Include="src\AST\ArithmeticExpression.cs" />
+    <Compile Include="src\AST\ArrayAccessExpression.cs" />
+    <Compile Include="src\AST\AssertStatement.cs" />
+    <Compile Include="src\AST\AssignmentExpression.cs" />
+    <Compile Include="src\AST\AstNode.cs" />
+    <Compile Include="src\AST\Operations\AstOperations.cs" />
+    <Compile Include="src\AST\BaseCallExpression.cs" />
+    <Compile Include="src\AST\BaseExpression.cs" />
+    <Compile Include="src\AST\BinaryExpression.cs" />
+    <Compile Include="src\AST\Block.cs" />
+    <Compile Include="src\AST\BoolLiteralExpression.cs" />
+    <Compile Include="src\AST\BreakStatement.cs" />
+    <Compile Include="src\AST\BitwiseExpression.cs" />
+    <Compile Include="src\AST\Operations\CheckMakeAnUnboxOperation.cs" />
+    <Compile Include="src\AST\SwitchLabel.cs" />
+    <Compile Include="src\AST\SwitchSection.cs" />
+    <Compile Include="src\AST\CastExpression.cs" />
+    <Compile Include="src\AST\CatchStatement.cs" />
+    <Compile Include="src\AST\CharLiteralExpression.cs" />
+    <Compile Include="src\AST\ClassDefinition.cs" />
+    <Compile Include="src\AST\CompoundExpression.cs" />
+    <Compile Include="src\AST\ConstantDefinition.cs" />
+    <Compile Include="src\AST\ConstantFieldDefinition.cs" />
+    <Compile Include="src\AST\ConstructorDefinition.cs" />
+    <Compile Include="src\AST\ContinueStatement.cs" />
+    <Compile Include="src\AST\ThetaStatement.cs" />
+    <Compile Include="src\AST\MoveStatement.cs" />
+    <Compile Include="src\AST\Declaration.cs" />
+    <Compile Include="src\AST\DeclarationSet.cs" />
+    <Compile Include="src\AST\Definition.cs" />
+    <Compile Include="src\AST\DoStatement.cs" />
+    <Compile Include="src\AST\DoubleLiteralExpression.cs" />
+    <Compile Include="src\AST\Expression.cs" />
+    <Compile Include="src\AST\FieldAccessExpression.cs" />
+    <Compile Include="src\AST\FieldDeclaration.cs" />
+    <Compile Include="src\AST\FieldDeclarationSet.cs" />
+    <Compile Include="src\AST\FieldDefinition.cs" />
+    <Compile Include="src\AST\ForeachStatement.cs" />
+    <Compile Include="src\AST\ForStatement.cs" />
+    <Compile Include="src\AST\IdDeclaration.cs" />
+    <Compile Include="src\AST\IdentifierExpression.cs" />
+    <Compile Include="src\AST\IfElseStatement.cs" />
+    <Compile Include="src\AST\InterfaceDefinition.cs" />
+    <Compile Include="src\AST\IntLiteralExpression.cs" />
+    <Compile Include="src\AST\InvocationExpression.cs" />
+    <Compile Include="src\AST\IsExpression.cs" />
+    <Compile Include="src\AST\LogicalExpression.cs" />
+    <Compile Include="src\AST\MethodDeclaration.cs" />
+    <Compile Include="src\AST\MethodDefinition.cs" />
+    <Compile Include="src\AST\Namespace.cs" />
+    <Compile Include="src\AST\NewArrayExpression.cs" />
+    <Compile Include="src\AST\NewExpression.cs" />
+    <Compile Include="src\AST\NullExpression.cs" />
+    <Compile Include="src\AST\Parameter.cs" />
+    <Compile Include="src\AST\PropertyDefinition.cs" />
+    <Compile Include="src\AST\QualifiedIdentifierExpression.cs" />
+    <Compile Include="src\AST\RelationalExpression.cs" />
+    <Compile Include="src\AST\ReturnStatement.cs" />
+    <Compile Include="src\AST\SingleIdentifierExpression.cs" />
+    <Compile Include="src\AST\SourceFile.cs" />
+    <Compile Include="src\AST\Statement.cs" />
+    <Compile Include="src\AST\StringLiteralExpression.cs" />
+    <Compile Include="src\AST\SwitchStatement.cs" />
+    <Compile Include="src\AST\TernaryExpression.cs" />
+    <Compile Include="src\AST\ThisExpression.cs" />
+    <Compile Include="src\AST\ThrowStatement.cs" />
+    <Compile Include="src\AST\ExceptionManagementStatement.cs" />
+    <Compile Include="src\AST\TypeDefinition.cs" />
+    <Compile Include="src\AST\UnaryExpression.cs" />
+    <Compile Include="src\AST\WhileStatement.cs" />
+    <Compile Include="src\CodeGeneration\CLRCodeGenerator.cs" />
+    <Compile Include="src\CodeGeneration\CodeGenerator.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGAritmethicOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGBinaryOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGCastOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGUnaryOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGRelationalOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGBitwiseOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGTypeSystemOperations.cs" />
+    <Compile Include="src\CodeGeneration\Operations\ConstantTable.cs" />
+    <Compile Include="src\CodeGeneration\ILReservedWords.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGClassDefinitionStartOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGConstantFieldDefinitionInitializationOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGILInvocationExpressionOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGILMethodInvocationOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGInterfaceDefinitionStartOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGLoadArrayElementOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGPlainTypeExpressionOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGProcessFieldOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGProcessMethodOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGRemoveTopElementInvocationOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGRuntimeCheckArgumentOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGRuntimeCheckTypeExpressionOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGRuntimeFreshTEPromotionOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGRuntimeIsInstructionOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGRuntimeUnionTypePromotionOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGStoreArrayElementOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGVisitArithmeticalOp.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGVisitDefinitionNodeOperation.cs" />
+    <Compile Include="src\CodeGeneration\MethodInvocationArguments\MethodInvocationArguments.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGConvertToOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\CGToStringOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\MajorTypeForArithMeticOperation.cs" />
+    <Compile Include="src\CodeGeneration\Operations\MajorTypeOperation.cs" />
+    <Compile Include="src\CodeGeneration\TemporalVariablesTable.cs" />
+    <Compile Include="src\CodeGeneration\VisitorCodeGenerationBase.cs" />
+    <Compile Include="src\CodeGeneration\ILCodeGenerator.cs" />
+    <Compile Include="src\CodeGeneration\ILStatementsCodeGeneration.cs" />
+    <Compile Include="src\CodeGeneration\VisitorILCodeGeneration.cs" />
+    <Compile Include="src\Compiler\EntryPoint.cs" />
+    <Compile Include="src\Compiler\Parser.cs" />
+    <Compile Include="src\Compiler\Program.cs" />
+    <Compile Include="src\ErrorManagement\CodeGenerationError.cs" />
+    <Compile Include="src\ErrorManagement\InternalOperationInterfaceError.cs" />
+    <Compile Include="src\ErrorManagement\ExceptionClauseWrongDerived.cs" />
+    <Compile Include="src\PackageDocumentation.cs" />
+    <Compile Include="src\Parser\CSharpLexerDynamic.cs" />
+    <Compile Include="src\Parser\CSharpParserDynamic.cs" />
+    <Compile Include="src\Parser\ICSharpLexer.cs" />
+    <Compile Include="src\Parser\ICSharpParser.cs" />
+    <Compile Include="src\TargetPlatforms\TargetPlatform.cs" />
+    <Compile Include="src\TargetPlatforms\TargetPlatformRepresentation.cs" />
+    <Compile Include="src\TypeSystem\Operations\CastOperation.cs" />
+    <Compile Include="src\TypeSystem\Operations\EqualsForOverloadOperation.cs" />
+    <Compile Include="src\TypeSystem\Operations\GetMembersOperation.cs" />
+    <Compile Include="src\TypeSystem\Operations\SimplePromotionOperation.cs" />
+    <Compile Include="src\CodeGeneration\RrotorCodeGenerator.cs" />
+    <Compile Include="src\CodeGeneration\SynthesizedAttributes.cs" />
+    <Compile Include="src\CodeGeneration\InheritedAttributes.cs" />
+    <Compile Include="src\CodeGeneration\TypeMapping.cs" />
+    <Compile Include="src\CodeGeneration\VisitorCLRCodeGeneration.cs" />
+    <Compile Include="src\CodeGeneration\VisitorCodeGeneration2.cs" />
+    <Compile Include="src\CodeGeneration\VisitorCodeGeneration.cs" />
+    <Compile Include="src\CodeGeneration\VisitorRrotorCodeGeneration.cs" />
+    <Compile Include="src\Debug\VisitorDebug.cs" />
+    <Compile Include="src\DynVarManagement\DynVarException.cs" />
+    <Compile Include="src\DynVarManagement\DynVarManager.cs" />
+    <Compile Include="src\DynVarManagement\DynVarOptions.cs" />
+    <Compile Include="src\ErrorManagement\ArgumentNumberError.cs" />
+    <Compile Include="src\ErrorManagement\ArgumentOutOfRangeError.cs" />
+    <Compile Include="src\ErrorManagement\AssemblerError.cs" />
+    <Compile Include="src\ErrorManagement\AssignmentError.cs" />
+    <Compile Include="src\ErrorManagement\ClassTypeInfoError.cs" />
+    <Compile Include="src\ErrorManagement\CommandLineArgumentsError.cs" />
+    <Compile Include="src\ErrorManagement\ConstraintError.cs" />
+    <Compile Include="src\ErrorManagement\DispatcherError.cs" />
+    <Compile Include="src\ErrorManagement\ExecutionError.cs" />
+    <Compile Include="src\ErrorManagement\IncorrectArraySizeError.cs" />
+    <Compile Include="src\ErrorManagement\EntryPointNotFoundError.cs" />
+    <Compile Include="src\ErrorManagement\EntryPointFoundError.cs" />
+    <Compile Include="src\ErrorManagement\Location.cs" />
+    <Compile Include="src\ErrorManagement\MemberTypeExpectedError.cs" />
+    <Compile Include="src\ErrorManagement\ProtectionLevelError.cs" />
+    <Compile Include="src\ErrorManagement\TypeCastError.cs" />
+    <Compile Include="src\ErrorManagement\UserTypeExpectedError.cs" />
+    <Compile Include="src\ErrorManagement\DeclarationFoundError.cs" />
+    <Compile Include="src\ErrorManagement\DefinedTypeError.cs" />
+    <Compile Include="src\ErrorManagement\ErrorAdapter.cs" />
+    <Compile Include="src\ErrorManagement\ErrorManager.cs" />
+    <Compile Include="src\ErrorManagement\ExpectedInterfaceError.cs" />
+    <Compile Include="src\ErrorManagement\ExpressionExpectedError.cs" />
+    <Compile Include="src\ErrorManagement\FileNotFoundError.cs" />
+    <Compile Include="src\ErrorManagement\IError.cs" />
+    <Compile Include="src\ErrorManagement\InstanceMethodCallFromStaticMethodError.cs" />
+    <Compile Include="src\ErrorManagement\LexicalError.cs" />
+    <Compile Include="src\ErrorManagement\LoadingDynVarsError.cs" />
+    <Compile Include="src\ErrorManagement\LValueError.cs" />
+    <Compile Include="src\ErrorManagement\MultipleBaseClassError.cs" />
+    <Compile Include="src\ErrorManagement\NoTypeAcceptsOperation.cs" />
+    <Compile Include="src\ErrorManagement\NoTypeHasMember.cs" />
+    <Compile Include="src\ErrorManagement\OperationNotAllowedError.cs" />
+    <Compile Include="src\ErrorManagement\OverloadError.cs" />
+    <Compile Include="src\ErrorManagement\ParserError.cs" />
+    <Compile Include="src\ErrorManagement\PropertyWriteError.cs" />
+    <Compile Include="src\ErrorManagement\ReturnExpectedError.cs" />
+    <Compile Include="src\ErrorManagement\SymbolNotFoundError.cs" />
+    <Compile Include="src\ErrorManagement\TernaryError.cs" />
+    <Compile Include="src\ErrorManagement\ThisWordFromStaticMethodError.cs" />
+    <Compile Include="src\ErrorManagement\TypePromotionError.cs" />
+    <Compile Include="src\ErrorManagement\UnificationError.cs" />
+    <Compile Include="src\ErrorManagement\UnknownIDError.cs" />
+    <Compile Include="src\ErrorManagement\UnknownMemberError.cs" />
+    <Compile Include="src\ErrorManagement\UnknownTypeError.cs" />
+    <Compile Include="src\CodeGeneration\ExceptionManagement\DynamicException.cs" />
+    <Compile Include="src\CodeGeneration\ExceptionManagement\WrongDynamicTypeException.cs" />
+    <Compile Include="src\Parser\CodeMaskEnums.cs" />
+    <Compile Include="src\Parser\CSharpLexer.cs" />
+    <Compile Include="src\Parser\CSharpParser.cs" />
+    <Compile Include="src\Parser\CSharpPreprocessorHooverLexer.cs" />
+    <Compile Include="src\Parser\CSharpPreprocessorLexer.cs" />
+    <Compile Include="src\Parser\CSharpTokenTypes.cs" />
+    <Compile Include="src\Parser\CustomHiddenStreamToken.cs" />
+    <Compile Include="src\Semantic\SSAAlgorithm\SSAElement.cs" />
+    <Compile Include="src\Semantic\SSAAlgorithm\SSAHelper.cs" />
+    <Compile Include="src\Semantic\SSAAlgorithm\SSAInfo.cs" />
+    <Compile Include="src\Semantic\SSAAlgorithm\VisitorSSA2.cs" />
+    <Compile Include="src\Semantic\SSAAlgorithm\SSAMap.cs" />
+    <Compile Include="src\Semantic\SSAAlgorithm\VisitorSSA.cs" />
+    <Compile Include="src\Semantic\VisitorSymbolIdentification.cs" />
+    <Compile Include="src\Semantic\VisitorTypeDefinition.cs" />
+    <Compile Include="src\Semantic\VisitorTypeInference.cs" />
+    <Compile Include="src\Semantic\VisitorTypeLoad.cs" />
+    <Compile Include="src\Symbols\Symbol.cs" />
+    <Compile Include="src\Symbols\SymbolTable.cs" />
+    <Compile Include="src\Tools\Pair.cs" />
+    <Compile Include="src\Tools\Visitor.cs" />
+    <Compile Include="src\Tools\VisitorAdapter.cs" />
+    <Compile Include="src\TypeSystem\AccessModifier.cs" />
+    <Compile Include="src\TypeSystem\ArrayType.cs" />
+    <Compile Include="src\TypeSystem\BCLInterfaceType.cs" />
+    <Compile Include="src\TypeSystem\BCLNameSpaceType.cs" />
+    <Compile Include="src\TypeSystem\BoolType.cs" />
+    <Compile Include="src\TypeSystem\CharType.cs" />
+    <Compile Include="src\TypeSystem\ClassType.cs" />
+    <Compile Include="src\TypeSystem\ClassTypeProxy.cs" />
+    <Compile Include="src\TypeSystem\BCLClassType.cs" />
+    <Compile Include="src\TypeSystem\Constraints\ArithmeticConstraint.cs" />
+    <Compile Include="src\TypeSystem\Constraints\SquareBracketConstraint.cs" />
+    <Compile Include="src\TypeSystem\Constraints\CastConstraint.cs" />
+    <Compile Include="src\TypeSystem\Constraints\CloneConstraint.cs" />
+    <Compile Include="src\TypeSystem\Constraints\Constraint.cs" />
+    <Compile Include="src\TypeSystem\Constraints\ConstraintAdapter.cs" />
+    <Compile Include="src\TypeSystem\Constraints\ConstraintList.cs" />
+    <Compile Include="src\TypeSystem\Constraints\DotConstraint.cs" />
+    <Compile Include="src\TypeSystem\Constraints\FieldTypeAssignmentConstraint.cs" />
+    <Compile Include="src\TypeSystem\Constraints\FieldTypeVariableAssignmentConstraint.cs" />
+    <Compile Include="src\TypeSystem\Constraints\ParenthesisConstraint.cs" />
+    <Compile Include="src\TypeSystem\Constraints\PromotionConstraint.cs" />
+    <Compile Include="src\TypeSystem\Constraints\RelationalConstraint.cs" />
+    <Compile Include="src\TypeSystem\Operations\EquivalentOperation.cs" />
+    <Compile Include="src\TypeSystem\Operations\AssignmentOperation.cs" />
+    <Compile Include="src\TypeSystem\Operations\ConstrainedDot.cs" />
+    <Compile Include="src\TypeSystem\Operations\DotOperation.cs" />
+    <Compile Include="src\TypeSystem\Operations\ParenthesisOperation.cs" />
+    <Compile Include="src\TypeSystem\Operations\PromotionLevelOperation.cs" />
+    <Compile Include="src\TypeSystem\Operations\PromotionOperation.cs" />
+    <Compile Include="src\TypeSystem\Operations\SquareBracketOperation.cs" />
+    <Compile Include="src\TypeSystem\Operations\TypeSystemOperations.cs" />
+    <Compile Include="src\TypeSystem\Operations\UnconstrainedDot.cs" />
+    <Compile Include="src\TypeSystem\IBCLUserType.cs" />
+    <Compile Include="src\TypeSystem\NameSpaceType.cs" />
+    <Compile Include="src\TypeSystem\NullType.cs" />
+    <Compile Include="src\TypeSystem\DeclarationTable.cs" />
+    <Compile Include="src\TypeSystem\DoubleType.cs" />
+    <Compile Include="src\TypeSystem\EquivalenceClass.cs" />
+    <Compile Include="src\TypeSystem\FieldType.cs" />
+    <Compile Include="src\TypeSystem\Instrospection.cs" />
+    <Compile Include="src\TypeSystem\InterfaceType.cs" />
+    <Compile Include="src\TypeSystem\IntersectionType.cs" />
+    <Compile Include="src\TypeSystem\IntersectionMemberType.cs" />
+    <Compile Include="src\TypeSystem\IntType.cs" />
+    <Compile Include="src\TypeSystem\IMemberType.cs" />
+    <Compile Include="src\TypeSystem\MethodType.cs" />
+    <Compile Include="src\TypeSystem\Operations\BinaryArithmeticalOperation.cs" />
+    <Compile Include="src\TypeSystem\Operations\ArithmeticalOperation.cs" />
+    <Compile Include="src\TypeSystem\Operations\RelationalOperation.cs" />
+    <Compile Include="src\TypeSystem\Operations\UnaryArithmeticalOperation.cs" />
+    <Compile Include="src\TypeSystem\Operations\UnifyOperation.cs" />
+    <Compile Include="src\TypeSystem\Operations\VerbosePromotionOperation.cs" />
+    <Compile Include="src\TypeSystem\PropertyType.cs" />
+    <Compile Include="src\TypeSystem\SortOfUnification.cs" />
+    <Compile Include="src\TypeSystem\StringType.cs" />
+    <Compile Include="src\TypeSystem\TypeExpression.cs" />
+    <Compile Include="src\TypeSystem\TypeTable.cs" />
+    <Compile Include="src\TypeSystem\TypeVariable.cs" />
+    <Compile Include="src\TypeSystem\UnionType.cs" />
+    <Compile Include="src\TypeSystem\UserType.cs" />
+    <Compile Include="src\TypeSystem\VoidType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PreBuildEvent>xcopy /Y ..\..\..\References\fusion.dll
+xcopy /Y ..\..\..\References\ilasm.exe</PreBuildEvent>
+  </PropertyGroup>
+</Project>

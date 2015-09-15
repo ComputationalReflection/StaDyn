@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application name="CG.var.ReturnUnionType">
+   <namespace name="">
+      <class name="VarReturnUnionType">
+         <method name="union1">
+            <dynvar name="ret" />
+            <dynvar name="" />
+         </method>
+         <method name="union2">
+            <dynvar name="ret" />
+            <dynvar name="" />
+         </method>
+         <method name="Main">
+            <dynvar name="a" />
+            <dynvar name="b" />
+            <dynvar name="c" />
+            <dynvar name="d" />
+         </method>
+      </class>
+   </namespace>
+</application>

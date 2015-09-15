@@ -1,0 +1,61 @@
+using System;
+
+namespace Figure13
+{
+	class Circumference 
+	{
+		public dynamic x, y, radius;
+	}
+	
+	class Rectangle 
+	{
+		public dynamic x, y, width, height;
+
+		public Rectangle(dynamic x, dynamic y, dynamic width, dynamic height) 
+		{
+			this.x = x;
+			this.y = y;
+			this.width = width;
+			this.height = height;
+		}
+	}
+
+	class CodeGeneration 
+	{
+		static dynamic createCircumference(int x, int y, double radius) 
+		{
+			dynamic c = new Circumference();
+			c.x = x;
+			c.y = y;
+			c.radius = radius;
+			return c;
+		}
+
+		static dynamic getX(dynamic figure) 
+		{
+			return figure.x;
+		}
+
+		static void Main(string[] args) 
+		{
+			var staFig;
+			dynamic dynFig;
+			if (args.Length == 0) 
+			{
+				dynFig = staFig = createCircumference(0,0,5.5);
+				double perimeter = 2 * 3.14159 * dynFig.radius;
+			}
+			else
+			{
+				staFig = new Rectangle(0,0,10,10);
+				dynFig = "StaDyn";
+				int area = staFig.width * staFig.height;
+				int length = dynFig.Length;
+			}
+			int x = staFig.x;
+			//int y = dynFig.y; // if else runtime error
+			Console.WriteLine(x);
+			//Console.WriteLine(y); // if else runtime error
+		}
+	}
+}

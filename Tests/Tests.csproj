@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BA79ADE8-BEA6-4186-AACC-18992EF0D904}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tests</RootNamespace>
+    <AssemblyName>Tests</AssemblyName>
+    <StartupObject>Tests.Tests</StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="antlr.astframe, Version=2.7.7.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\tests\code.generation\antlr.astframe.dll</HintPath>
+    </Reference>
+    <Reference Include="antlr.runtime, Version=2.7.7.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\tests\code.generation\antlr.runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\Tests\CLRCGAccessTest.cs" />
+    <Compile Include="src\Tests\CLRCGArithmeticTest.cs" />
+    <Compile Include="src\ErrorDescription.cs" />
+    <Compile Include="src\ErrorFile.cs" />
+    <Compile Include="src\Tests.cs" />
+    <Compile Include="src\Tests\CLRCGArraysTest.cs" />
+    <Compile Include="src\Tests\CLRCGCasting.cs" />
+    <Compile Include="src\Tests\CLRCGExceptionTest.cs" />
+    <Compile Include="src\Tests\CLRCGCInheritanceTest.cs" />
+    <Compile Include="src\Tests\CLRCGCollectionsTest.cs" />
+    <Compile Include="src\Tests\CLRCGConditionalsTest.cs" />
+    <Compile Include="src\Tests\CLRCGPropertyTest.cs" />
+    <Compile Include="src\Tests\CLRCGSampleTest.cs" />
+    <Compile Include="src\Tests\CLRCGScopeTest.cs" />
+    <Compile Include="src\Tests\CLRCGUnionTypesTest.cs" />
+    <Compile Include="src\Tests\CLRCGVarTests.cs" />
+    <Compile Include="src\Tests\CLRCodeGenerationTest.cs" />
+    <Compile Include="src\Tests\CLRCGTest.cs" />
+    <Compile Include="src\Tests\CLRCGVarSemanticTests.cs" />
+    <Compile Include="src\Tests\CLRCGParameter.cs" />
+    <Compile Include="src\Tests\CLRCGTypes.cs" />
+    <Compile Include="src\Tests\CLRCGPromotion.cs" />
+    <Compile Include="src\Tests\CLRCGOperator.cs" />
+    <Compile Include="src\Tests\CLRCGExamplesTestCases.cs" />
+    <Compile Include="src\Tests\Benchmarks.cs" />
+    <Compile Include="src\Tests\GettingStartedTest.cs" />
+    <Compile Include="src\Tests\RrotorCodeGenerationTest.cs" />
+    <Compile Include="src\Tests\SemanticDynamicsTest.cs" />
+    <Compile Include="src\Tests\SemanticExplicitTest.cs" />
+    <Compile Include="src\Tests\SemanticMainTest.cs" />
+    <Compile Include="src\Tests\SemanticSampleTest.cs" />
+    <Compile Include="src\Tests\SemanticTest.cs" />
+    <Compile Include="src\Tests\SemanticVarTest.cs" />
+    <Compile Include="src\Tests\Test.cs" />
+    <Compile Include="src\Tests\UnificationTest.cs" />
+    <Compile Include="src\Tests\WrongDynamicTests.cs" />
+    <Compile Include="src\Tests\WrongExplicitTests.cs" />
+    <Compile Include="src\Tests\WrongVarTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Inference\Inference.csproj">
+      <Project>{6AB60528-1ADA-4E5C-8F4E-802F0CA11C3C}</Project>
+      <Name>Inference</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>xcopy /Y ..\..\..\References\fusion.dll
+xcopy /Y ..\..\..\References\ilasm.exe</PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

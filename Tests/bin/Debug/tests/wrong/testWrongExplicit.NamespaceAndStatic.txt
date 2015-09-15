@@ -1,0 +1,5 @@
+8,,ErrorManagement.UnknownMemberError
+8,,ErrorManagement.UnknownIDError
+10,,ErrorManagement.UnknownMemberError
+12,,ErrorManagement.LValueError
+14,,ErrorManagement.UnknownMemberError

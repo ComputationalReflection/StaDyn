@@ -1,0 +1,16 @@
+using System;
+
+namespace Figure04
+{
+	class MultipleTypes 
+	{	
+		static void Main(string[] args) 
+		{								
+			dynamic value = "12";
+			Console.WriteLine("Number of digits : {0}.", value.Length);
+			value = Math.Sqrt(Convert.ToDouble(value));
+			Console.WriteLine("Square of the square root: {0}.", value*value);
+			//int length = value.Length; // compiler error
+		}	
+	}
+}

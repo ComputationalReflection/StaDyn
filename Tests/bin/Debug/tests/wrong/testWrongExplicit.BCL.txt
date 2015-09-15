@@ -1,0 +1,7 @@
+32,,ErrorManagement.UnknownTypeError
+35,,ErrorManagement.ExpectedInterfaceError
+11,,ErrorManagement.UnknownMemberError
+16,,ErrorManagement.UnknownMemberError
+18,,ErrorManagement.PropertyWriteError
+22,,ErrorManagement.UnknownTypeError
+27,,ErrorManagement.UnknownMemberError

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<application name="CG.Sample">
+   <namespace name="CG.Sample">
+      <class name="Test">
+         <method name="Main">
+            <dynvar name="reference" />
+         </method>
+      </class>
+   </namespace>
+</application>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application name="CG.var.ParamLocal52">
+   <namespace name="">
+      <class name="ParamLocal">
+         <method name="varios">
+            <dynvar name="param" />
+            <dynvar name="local" />
+            <dynvar name="" />
+         </method>
+      </class>
+   </namespace>
+</application>

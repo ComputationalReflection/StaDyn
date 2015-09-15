@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application name="CG.var.UnionTypeDyn">
+   <namespace name="Testing">
+      <class name="VarsUnified">
+         <method name="LocalVariable">
+            <dynvar name="generic" />
+         </method>
+         <method name="LocalVariable2">
+            <dynvar name="generic" />            
+         </method>
+      </class>
+   </namespace>
+</application>

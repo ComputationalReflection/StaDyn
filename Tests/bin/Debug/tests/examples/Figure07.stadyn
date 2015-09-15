@@ -1,0 +1,45 @@
+using System;
+
+namespace Figure07
+{
+	class Circumference
+	{
+		public dynamic x, y, radius;
+		
+		public Circumference()
+		{
+			this.x = this.y = 0;
+			this.radius = 5;
+		}
+	}
+	
+	class Rectangle
+	{
+		public dynamic x, y, width, height;
+		
+		public Rectangle()
+		{
+			this.x = this.y = 0.1;
+			this.width = this.height = 7.5;
+		}
+	}
+	
+	class UnionTypes 
+	{		
+		static var getX(bool condition)
+		{
+			var figure;
+			if(condition)
+				figure = new Circumference();
+			else
+				figure = new Rectangle();
+			return figure.x;
+		}
+		
+		static void Main()
+		{											
+			Console.WriteLine(getX(true));
+			Console.WriteLine(getX(false));
+		}	
+	}
+}

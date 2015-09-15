@@ -1,0 +1,9 @@
+Exception: System.ComponentModel.Win32Exception (0x80004005): El sistema no puede encontrar el archivo especificado
+   en System.Diagnostics.Process.StartWithCreateProcess(ProcessStartInfo startInfo)
+   en Compiler.Program.assembleAndRun(String ilFileName, String outputFileName, String ilasmFileName, Boolean run) en d:\Kagueto\Desktop\Tesis\StaDyn - Repositorio\trunk\Inference\src\Compiler\Program.cs:línea 387
+   en Compiler.Program.Run(IDictionary`2 directories, String outputFileName, String debugFilePath, String ilasmFileName, String typeTableFileName, TargetPlatform targetPlatform, Boolean run, Boolean dynamic) en d:\Kagueto\Desktop\Tesis\StaDyn - Repositorio\trunk\Inference\src\Compiler\Program.cs:línea 304
+   en Compiler.Parser.Parse(String[] files, String outputFileName, TargetPlatform targetPlatform, String debugFilePath, String ilasmFileName, String typeTableFileName, Boolean run, Boolean dynamic) en d:\Kagueto\Desktop\Tesis\StaDyn - Repositorio\trunk\Inference\src\Compiler\Parser.cs:línea 67
+   en System.Diagnostics.Process.StartWithCreateProcess(ProcessStartInfo startInfo)
+   en Compiler.Program.assembleAndRun(String ilFileName, String outputFileName, String ilasmFileName, Boolean run) en d:\Kagueto\Desktop\Tesis\StaDyn - Repositorio\trunk\Inference\src\Compiler\Program.cs:línea 387
+   en Compiler.Program.Run(IDictionary`2 directories, String outputFileName, String debugFilePath, String ilasmFileName, String typeTableFileName, TargetPlatform targetPlatform, Boolean run, Boolean dynamic) en d:\Kagueto\Desktop\Tesis\StaDyn - Repositorio\trunk\Inference\src\Compiler\Program.cs:línea 304
+   en Compiler.Parser.Parse(String[] files, String outputFileName, TargetPlatform targetPlatform, String debugFilePath, String ilasmFileName, String typeTableFileName, Boolean run, Boolean dynamic) en d:\Kagueto\Desktop\Tesis\StaDyn - Repositorio\trunk\Inference\src\Compiler\Parser.cs:línea 67

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application name="testDynamics.CommonOperators">
+    <namespace name="Testing.Dynamics">
+        <class name="CommonOperators">
+          <method name="Main">
+            <dynvar name="local" />
+          </method>
+        </class>
+    </namespace>
+</application>

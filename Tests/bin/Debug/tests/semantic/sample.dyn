@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application name="sample">
+    <namespace name="Testing.Sample">
+        <class name="While">
+          <method name="Main">
+            <dynvar name="myFigure" />
+          </method>
+          <method name="unionTypes">
+            <dynvar name="reference" />
+          </method>
+        </class>
+    </namespace>
+</application>

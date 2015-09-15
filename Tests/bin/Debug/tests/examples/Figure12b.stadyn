@@ -1,0 +1,52 @@
+using System;
+
+namespace Figure12
+{
+	class Node
+	{
+		private dynamic data, next;
+		
+		public void setData(dynamic data)
+		{
+			this.data = data;			
+		}
+		
+		public dynamic getData()
+		{
+			return this.data;			
+		}
+		
+		public dynamic getNext()
+		{
+			return this.next;			
+		}
+		
+		public Node(dynamic data, dynamic next)
+		{
+			this.data = data;
+			this.next = next;
+		}
+
+		public Node(dynamic data)
+		{
+			this.data = data;			
+		}		
+	}	
+	
+	class AssignmentConstraints
+	{
+		static void Main()
+		{	
+			dynamic node1 = new Node(1);
+			dynamic node2 = new Node(1,node1);
+			bool b;
+			int x;
+			b = node2.getNext().getData(); // compiler error
+			x = node2.getNext().getData();
+			
+			node1.setData(true);
+			b = node2.getNext().getData();
+			x = node2.getNext().getData(); //compiler error			
+		}	
+	}
+}

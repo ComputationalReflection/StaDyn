@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application name="CG.UnionTypes1">
+   <namespace name="CG.UnionTypes">
+      <class name="Test">
+         <method name="m2">
+            <dynvar name="obj" />
+         </method>
+      </class>
+   </namespace>
+</application>

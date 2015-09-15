@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application name="testDynamicsPromotion">
+    <namespace name="Testing.Wrong.Dynamics">
+        <class name="Promotion">
+          <method name="test">
+                <dynvar name="dynamicRef" />
+            </method>
+        </class>
+    </namespace>
+</application>

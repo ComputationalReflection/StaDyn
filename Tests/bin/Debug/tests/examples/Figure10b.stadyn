@@ -1,0 +1,56 @@
+using System;
+
+namespace Figure10
+{
+	class Circumference
+	{
+		public dynamic x, y, radius;
+		
+		public Circumference()
+		{
+			this.x = this.y = 0;
+			this.radius = 5;
+		}
+	}
+	
+	class Rectangle
+	{
+		public dynamic x, y, width, height;
+		
+		public Rectangle()
+		{
+			this.x = this.y = 0.1;
+			this.width = this.height = 7.5;
+		}
+	}
+	
+	class Triangle
+	{
+		public dynamic x1, y1, x2, y2, x3, y3;
+		
+		public Triangle()
+		{
+			this.x1 = -5;
+			this.y1 = 0;
+			this.x2 = 0;
+			this.y2 = 10;
+			this.x3 = 5;
+			this.y3 = 0;			
+		}
+	}
+	
+	class Constraints
+	{
+		static dynamic getX(dynamic figure)
+		{			
+			return figure.x;
+		}
+		
+		static void Main()
+		{	
+			int xInt = getX(new Circumference());		
+			double xDouble = getX(new Rectangle());			
+			xInt = getX(new Triangle()); // compiler error
+		}	
+	}
+}

@@ -1,0 +1,2 @@
+12,,ErrorManagement.LValueError
+14,,ErrorManagement.TernaryError

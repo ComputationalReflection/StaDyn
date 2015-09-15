@@ -1,0 +1,37 @@
+using System;
+
+namespace Figure05
+{
+	class Point
+	{
+		public dynamic x;
+		public dynamic y;
+		public Point(dynamic x, dynamic y)
+		{
+			this.x = x;
+			this.y = y;
+		}
+	}
+	
+	class Unification 
+	{	
+		static void Main()
+		{								
+			dynamic vector;
+			vector = new Point[10];
+			for(int i = 0 ; i < 10 ; i++)
+				vector[i] = new Point(i+1,0.0);
+			Show(vector);			
+		}	
+		
+		static void Show(dynamic[] v)
+		{
+			for(int i = 0 ; i < v.Length ; i++)
+			{
+				String msg = "(" + v[i].x + "," + v[i].y + ")";
+				Console.WriteLine(msg);
+				//var z = v[i].z; // compiler error
+			}						
+		}
+	}
+}

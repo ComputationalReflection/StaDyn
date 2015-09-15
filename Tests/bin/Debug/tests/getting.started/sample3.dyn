@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<application name="sample3">
+  <namespace name="GettingStarted">
+    <class name="Test">
+          <method name="Main">
+            <dynvar name="exception" />
+          </method>
+        </class>
+    </namespace>    
+</application>
