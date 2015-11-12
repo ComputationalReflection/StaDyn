@@ -9,6 +9,8 @@ namespace UnitTest
 {    
     abstract class Test
     {
+        public static String TESTS_PATH = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "\\res\\tests\\";
+
         #region Fields
         /// <summary>
         /// The two indexes of actual errors
@@ -172,7 +174,7 @@ namespace UnitTest
                 fileNames,
                 this.generateCode ? outputFileName : null,
                 this.generateCode ? this.targetPlatform : TargetPlatform.CLR,
-                AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "\\res\\tests\\",
+                TESTS_PATH,
                 "ilasm.exe",
                 "TypeTable.txt",
                 this.run,

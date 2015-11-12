@@ -1,6 +1,6 @@
 using System;
 
-namespace Specialization
+namespace ProgramSpecialization
 {	
     public class Program
     {
@@ -9,7 +9,9 @@ namespace Specialization
         public static void Main(string[] args)
         {			
             int i = inc(1);
-			System.Console.WriteLine("Result {0} ",i);            
+			double d = inc(2.5);
+			System.Console.WriteLine("Result {0} ",i);					
+			System.Console.WriteLine("Result {0} ",d);					
         }
 	}
 }
