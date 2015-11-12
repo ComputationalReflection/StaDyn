@@ -116,8 +116,8 @@ namespace ErrorManagement {
         /// <summary>
         /// Private constructor of ErrorManager.
         /// </summary>
-        private ErrorManager() {
-            this.logFileName = Application.StartupPath + @"\error.log";
+        private ErrorManager() {            
+            this.logFileName = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + @"\error.log";
             this.errorFound = false;
             this.showMessages = true;
         }

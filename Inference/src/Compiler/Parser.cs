@@ -44,7 +44,7 @@ namespace Compiler {
 #if DEBUG
             ConsoleColor previousColor = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.Error.WriteLine("Compiling...");
+            Console.Out.WriteLine("Compiling...");
             Console.ForegroundColor = previousColor;
             long startTime = DateTime.Now.Ticks;
 #endif
