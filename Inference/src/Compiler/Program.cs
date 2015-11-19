@@ -421,10 +421,12 @@ namespace Compiler
          {
             // * The compilation has successed
             process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = false;
-            process.StartInfo.RedirectStandardError = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
             process.StartInfo.FileName = outputFileName;
             process.Start();
+            Console.Out.WriteLine(process.StandardOutput.ReadToEnd());
+            Console.Error.WriteLine(process.StandardOutput.ReadToEnd());
             process.WaitForExit();
             if (process.ExitCode != 0)
                ErrorManager.Instance.NotifyError(new ExecutionError(outputFileName));

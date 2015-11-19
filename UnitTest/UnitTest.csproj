@@ -105,6 +105,7 @@
     <Content Include="res\tests\CLRCG\Specialization\Specialization9.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="src\tests\CLRCG\Wrong.cs" />
     <Compile Include="src\tests\CLRCG\Specialization.cs" />
     <Content Include="res\tests\CLRCG\Specialization\Specialization1.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
