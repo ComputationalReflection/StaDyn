@@ -25,7 +25,7 @@ namespace Tests {
 
         static Type[] testClasses = { 
             
-            //typeof(GettingStartedTest),                        
+            typeof(GettingStartedTest),                        
             //typeof(SemanticSampleTest),
             //typeof(SemanticDynamicsTest),
             //typeof(SemanticExplicitTest), 

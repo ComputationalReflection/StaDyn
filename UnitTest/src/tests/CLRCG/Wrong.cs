@@ -9,12 +9,16 @@ namespace UnitTest.Tests.CLRCG
     [TestClass]
     public class Wrong
     {
+        private Test GetDefaultTest()
+        {
+            return new Test(true, false, true);
+        }
+
         [TestMethod]
         [TestCategory("CLRCG"),TestCategory("Wrong")]
         public void Wrong1()
         {            
-            CLRCGTest test = new CLRCGTest {Specialized = true, Dynamic = true};
-            test.runTest(new []{ "../../../Wrong Test Cases/Case X/CG.cs" });                       
+            GetDefaultTest().runTest(new[] { "../../../Wrong Test Cases/Case X/CG.cs" });                       
         }
     }
 }

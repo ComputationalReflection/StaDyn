@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using ErrorManagement;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TargetPlatforms;
 
 namespace UnitTest
-{    
-    abstract class Test
+{   
+    public class Test
     {
         public static String TESTS_PATH = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "\\res\\tests\\";
 
@@ -151,23 +153,24 @@ namespace UnitTest
 
         #region Constructor
 
-        protected Test(bool generateCode, bool run, bool dynamic, TargetPlatform targetPlatform, bool server)
+        public Test(bool dynamic, bool server, bool specialized)
         {
-            this.generateCode = generateCode;
-            this.run = run;
-            this.targetPlatform = targetPlatform;
+            this.generateCode = true;
+            this.run = true;
+            this.targetPlatform = TargetPlatform.CLR;
             this.dynamic = dynamic;
             this.server = server;
+            this.specialized = specialized;
         }
         #endregion
 
-        #region runTest()
+        
         /// <summary>
         /// Executes a test
         /// </summary>
         /// <param name="fileNames">The set of file names</param>
         /// <param name="outputFileName">The name of the output file name. Null implies no code generation.</param>
-        protected void runTest(string[] fileNames, string outputFileName)
+        private void runTest(string[] fileNames, string outputFileName)
         {            
             this.FromError = ErrorManager.Instance.ErrorCount;
             Compiler.Parser.Parse(
@@ -187,7 +190,37 @@ namespace UnitTest
             this.Success = ErrorFile.CheckErrors(fileNames, this.FromError, this.ToError, out expectedNumberOfErrors);
             this.ExpectedErrors = expectedNumberOfErrors;
         }
-        #endregion
 
+        /// <summary>
+        /// A code genertion tests calls the run tests the name of the output file
+        /// as the name of the first input file, with exe extension
+        /// </summary>
+        /// <param name="fileNames"></param>
+        public void runTest(string[] fileNames)
+        {            
+            this.runTest(fileNames, Path.ChangeExtension(fileNames[0], ".exe"));            
+            Assert.AreEqual(this.ExpectedErrors, this.ToError - this.FromError, this.ExpectedErrors + " errors expected, " + (this.ToError - this.FromError) + " found.");
+            if (this.ExpectedErrors != 0)
+                Console.Error.WriteLine(this.ExpectedErrors + " errors expected, " + (this.ToError - this.FromError) + " found.");
+            Assert.IsTrue(this.Success);
+        }
+
+        /// <summary>
+        /// A code genertion tests calls the run tests the name of the output file
+        /// as the name of the first input file, with exe extension
+        /// </summary>
+        /// <remarks>
+        /// Method obtains file name based on namespace name
+        /// </remarks>
+        public void runTest()
+        {
+            MethodBase method = new StackTrace().GetFrame(1).GetMethod();
+            Type declaringType = method.DeclaringType;
+            String methodName = "";            
+            if(!declaringType.Namespace.Equals("UnitTest.Tests"))
+                methodName = declaringType.Namespace.Replace("UnitTest.Tests.", "");            
+            methodName += "\\" + declaringType.Name + "\\" + method.Name + ".cs";
+            this.runTest(new[] { TESTS_PATH + methodName });            
+        }        
     }
 }

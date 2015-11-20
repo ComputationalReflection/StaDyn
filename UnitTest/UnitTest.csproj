@@ -51,6 +51,21 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Content Include="res\tests\GettingStarted\Sample1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\GettingStarted\Sample4.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\GettingStarted\Sample5.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\GettingStarted\Sample6.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\GettingStarted\Sample7.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="res\tests\CLRCG\Specialization\Specialization10.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -105,12 +120,39 @@
     <Content Include="res\tests\CLRCG\Specialization\Specialization9.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="res\tests\GettingStarted\Sample1.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\GettingStarted\Sample11.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\GettingStarted\Sample2.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\GettingStarted\Sample3.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\GettingStarted\Sample3b.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\GettingStarted\Sample4.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\GettingStarted\Sample5.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\GettingStarted\Sample6.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\GettingStarted\Sample7.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="src\tests\GettingStarted.cs" />
     <Compile Include="src\tests\CLRCG\Wrong.cs" />
     <Compile Include="src\tests\CLRCG\Specialization.cs" />
     <Content Include="res\tests\CLRCG\Specialization\Specialization1.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="src\tests\CLRCG\CLRCGTest.cs" />
     <Compile Include="src\ErrorDescription.cs" />
     <Compile Include="src\ErrorFile.cs" />
     <Compile Include="src\Test.cs" />
@@ -121,6 +163,15 @@
       <Project>{6ab60528-1ada-4e5c-8f4e-802f0ca11c3c}</Project>
       <Name>Inference</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="res\tests\GettingStarted\Sample3.dyn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\GettingStarted\Sample6.dyn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

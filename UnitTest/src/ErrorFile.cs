@@ -40,13 +40,22 @@ namespace UnitTest {
             if (toError - fromError != expectedErrors)
                 return false;
             // * Checks all the errors
-            for (int errorNumber = fromError; errorNumber < toError; errorNumber++) {
+            for (int errorNumber = fromError; errorNumber < toError; errorNumber++)
+            {
+                IError error = ErrorManager.Instance.GetError(errorNumber);
                 bool found = false;
                 foreach (ErrorDescription errorDescription in expectedErrorList)
-                    if (errorDescription.Equals(ErrorManager.Instance.GetError(errorNumber)))
+                    if (errorDescription.Equals(error))
                         found = true;
                 if (!found)
+                {
+                    ErrorAdapter ea = error as ErrorAdapter;
+                    if(ea != null)
+                        Console.Error.WriteLine("Unexpected " + ea.ErrorType + " [" + ea.Location.Line + "," + ea.Location.Column + "]:" + ea.Description);
+                    else
+                        Console.Error.WriteLine("Unexpected error: " + ErrorManager.Instance.GetError(errorNumber));
                     return false;
+                }
             }
             return true;
         }
