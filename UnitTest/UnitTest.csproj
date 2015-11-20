@@ -147,6 +147,22 @@
     <Content Include="res\tests\GettingStarted\Sample7.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="res\tests\Benchmarks\Static\Pystone.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Benchmarks\Static\JGFFFT.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Benchmarks\Static\JGFNumericSortTest.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Benchmarks\Static\JGFRayTracer.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Benchmarks\Static\JGFSparseMatmult.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="src\tests\Benchmarks\Static.cs" />
     <Compile Include="src\tests\GettingStarted.cs" />
     <Compile Include="src\tests\Wrong.cs" />
     <Compile Include="src\tests\CLRCG\Specialization.cs" />

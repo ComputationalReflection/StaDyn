@@ -400,9 +400,9 @@ namespace Compiler
         {
          Process process = new Process();
          process.StartInfo.UseShellExecute = false;
-         //process.StartInfo.CreateNoWindow = true; //Uncomment this to execute large source code, but StandardOutput and StandardError will be not visible.
-         process.StartInfo.RedirectStandardOutput = true; //Set to false to execute large source code
-         process.StartInfo.RedirectStandardError = true; //Set to false to execute large source code  
+         process.StartInfo.CreateNoWindow = true; //Uncomment this to execute large source code, but StandardOutput and StandardError will be not visible.
+         process.StartInfo.RedirectStandardOutput = false; //Set to false to execute large source code
+         process.StartInfo.RedirectStandardError = false; //Set to false to execute large source code  
 
          process.StartInfo.FileName = ilasmFileName;         
          process.StartInfo.Arguments = "\"" + ilFileName + "\"" + " /output=" + "\"" + outputFileName + "\" /optimize";
