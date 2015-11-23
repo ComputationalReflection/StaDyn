@@ -125,9 +125,9 @@ namespace CodeGeneration
         {
             Expression clonedFirstOperand = (Expression)node.FirstOperand.Accept(this, obj);
             Expression clonedSecondOperand = (Expression)node.SecondOperand.Accept(this, obj);
-            if (node.MoveStat != null)
-                node.MoveStat.Accept(this, obj);
             AssignmentExpression clonedAssignmentExpression = new AssignmentExpression(clonedFirstOperand, clonedSecondOperand, node.Operator, node.Location);
+            if (node.MoveStat != null)
+                clonedAssignmentExpression.MoveStat = (MoveStatement)node.MoveStat.Accept(this, obj);            
             return clonedAssignmentExpression;
         }
 
@@ -529,7 +529,12 @@ namespace CodeGeneration
 
         public override Object Visit(IfElseStatement node, Object obj)
         {
-            return new IfElseStatement((Expression)node.Condition.Accept(this, obj),(Statement)node.TrueBranch.Accept(this, obj),(Statement)node.FalseBranch.Accept(this, obj),node.Location);
+            IfElseStatement clonedIfElseStatement = new IfElseStatement((Expression)node.Condition.Accept(this, obj),(Statement)node.TrueBranch.Accept(this, obj),(Statement)node.FalseBranch.Accept(this, obj),node.Location);
+            foreach (var afterCondition in node.AfterCondition)            
+                clonedIfElseStatement.AfterCondition.Add((MoveStatement)afterCondition.Accept(this, obj));
+            foreach (var thetaStatement in node.ThetaStatements)
+                clonedIfElseStatement.ThetaStatements.Add((ThetaStatement)thetaStatement.Accept(this, obj));
+            return clonedIfElseStatement;
         }
 
         #endregion
@@ -631,7 +636,7 @@ namespace CodeGeneration
             for (int i = 0; i < node.BeforeCondition.Count; i++)
                 clonedWhileStatement.BeforeCondition.Add((ThetaStatement) node.BeforeCondition[i].Accept(this, obj));
             for (int i = 0; i < node.AfterCondition.Count; i++)
-                clonedWhileStatement.AfterCondition.Add((MoveStatement)node.AfterCondition[i].Accept(this, obj));
+                clonedWhileStatement.AfterCondition.Add((MoveStatement)node.AfterCondition[i].Accept(this, obj));            
             return clonedWhileStatement;
         }
 

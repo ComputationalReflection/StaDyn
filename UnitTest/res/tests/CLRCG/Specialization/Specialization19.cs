@@ -23,7 +23,7 @@ namespace ProgramSpecialization
 		public static void Main()
         {		
 			DerivedClass dc = new DerivedClass();
-			var result = dc.DerivedClassMethod("Hola");
+			var result = dc.DerivedClassMethod("Hello");
 			System.Console.WriteLine("Result {0}", result.ToString());
         }
 	}

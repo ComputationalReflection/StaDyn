@@ -162,6 +162,12 @@
     <Content Include="res\tests\Benchmarks\Static\JGFSparseMatmult.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="res\tests\CLRCG\Specialization\Specialization20.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\CLRCG\Specialization\Specialization21.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="src\tests\Benchmarks\Static.cs" />
     <Compile Include="src\tests\GettingStarted.cs" />
     <Compile Include="src\tests\Wrong.cs" />
