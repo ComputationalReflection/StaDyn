@@ -27,3 +27,16 @@
 /Wrong Test Cases/StaDyn.exe
 /Wrong Test Cases/antlr.runtime.dll
 /Tests/bin/Release
+/CommandLine/obj/Release
+*.user
+/Inference/bin/Release
+/Inference/obj/Release
+/Tests/obj/Release
+/UnitTest/bin
+/UnitTest/obj
+/Wrong Test Cases/Case X/CG.exe
+/Wrong Test Cases/Case X/CG.il
+/Wrong Test Cases/Case X/CG.log
+/Wrong Test Cases/Case X/CG.out.txt
+/Wrong Test Cases/Case X/TypeTable.txt
+/Wrong Test Cases/error.log
