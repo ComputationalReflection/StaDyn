@@ -470,6 +470,29 @@ namespace TypeSystem {
         }
         #endregion
 
+
+        #region CloneType()
+        /// <summary>
+        /// This method creates a new type variable.
+        /// It these type variables where bounded to types or other
+        /// type variables, they are maintained.
+        /// </summary>
+        /// <param name="typeVariableMappings">Each new type varaiable represent a copy of another existing one.
+        /// This parameter is a mapping between them, wher tmpName=old and value=new.</param>
+        /// <returns>The new cloned class type</returns>
+        public override TypeExpression CloneType(IDictionary<TypeVariable, TypeVariable> typeVariableMappings)
+        {
+            if (!this.HasTypeVariables())
+                return this;
+            UnionType newUnionType = (UnionType)this.MemberwiseClone();
+            newUnionType.typeSet = new List<TypeExpression>();
+            // * Clones all the types in the union
+            foreach (TypeExpression type in this.typeSet)
+                newUnionType.typeSet.Add(type.CloneType(typeVariableMappings));
+            return newUnionType;
+        }
+        #endregion
+
         // Loop Detection
 
         #region Remove()

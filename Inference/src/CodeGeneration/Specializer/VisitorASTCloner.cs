@@ -44,6 +44,10 @@ namespace CodeGeneration
                 clonedArgs[i] = originalParamType;
                 clonedParametersInfo.Add(new Parameter() { Identifier = originalParameter.Identifier, Column = originalParameter.Column, Line = originalParameter.Line, ParamType = originalParamType.typeExpression });
             }
+            //TODO: Constraints
+            //IList<EquivalenceClass> equivalenceClasses = new List<EquivalenceClass>();
+            //clonedMethodType.AddConstraint(originalMethodType.Constraints.CloneTypeVariables(typeVariableMappings, equivalenceClasses));            
+
             SingleIdentifierExpression clonedSingleIdentifierExpression = new SingleIdentifierExpression(node.IdentifierExp.Identifier, node.IdentifierExp.Location);            
             
             Block clonedBlock = (Block)node.Body.Accept(this,null);
