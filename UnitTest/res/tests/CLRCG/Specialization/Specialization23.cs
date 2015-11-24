@@ -4,9 +4,9 @@ namespace ProgramSpecialization
 {
     public class A
     {
-        private int data;
+        private var data;
 
-        public A(int data)
+        public A(var data)
         {
             this.data = data;
         }
@@ -19,9 +19,9 @@ namespace ProgramSpecialization
 
     public class B
     {
-        private int data;
+        private var data;
 
-        public B(int data)
+        public B(var data)
         {
             this.data = data;
         }
@@ -38,9 +38,9 @@ namespace ProgramSpecialization
         {
             var result;
             if (className == 'A')
-                result = 1 + data;
+                result = new A(data);
             else
-                result = 2 + data;
+                result = new B(data);
             return result;
         }
 

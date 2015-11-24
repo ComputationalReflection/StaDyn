@@ -362,6 +362,13 @@ namespace TypeSystem {
             // * The new class type is returned
             return newTypeVariable;
         }
+
+        public override TypeExpression CloneType(IDictionary<TypeVariable, TypeVariable> typeVariableMappings, IDictionary<TypeExpression, TypeExpression> typeExpresionVariableMapping)
+        {
+            if (typeExpresionVariableMapping.ContainsKey(this))
+                return typeExpresionVariableMapping[this];
+            return CloneType(typeVariableMappings);            
+        }
         #endregion
 
         #region CloneTypeVariables()

@@ -333,7 +333,7 @@ namespace Compiler
 
 #if DEBUG
          // * Dumps the types table
-        // debug(debugFilePath, typeTableFileName);
+         debug(debugFilePath, typeTableFileName);
 #endif
 
          ClearMemory();

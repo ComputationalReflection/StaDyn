@@ -4,9 +4,9 @@ namespace ProgramSpecialization
 {
     public class A
     {
-        private int data;
+        public var data;
 
-        public A(int data)
+        public A(var data)
         {
             this.data = data;
         }
@@ -19,9 +19,9 @@ namespace ProgramSpecialization
 
     public class B
     {
-        private int data;
+        public var data;
 
-        public B(int data)
+        public B(var data)
         {
             this.data = data;
         }
@@ -34,21 +34,18 @@ namespace ProgramSpecialization
 
     public class Program
     {
-        public var Method(var className, var data)
+        public var Method(var dataClass)
         {
-            var result;
-            if (className == 'A')
-                result = 1 + data;
-            else
-                result = 2 + data;
-            return result;
+            return dataClass.data;
         }
 
         public static void Main()
         {
             Program program = new Program();
-            var result = program.Method('A', 1);
-            System.Console.WriteLine(result.ToString());
+            var resultA = program.Method(new A(1));
+            System.Console.WriteLine(resultA.ToString());
+            var resultB = program.Method(new B(1));
+            System.Console.WriteLine(resultB.ToString());
         }
     }
 }

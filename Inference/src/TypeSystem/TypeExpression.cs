@@ -23,7 +23,8 @@ using ErrorManagement;
 using Tools;
 using TypeSystem.Operations;
 
-namespace TypeSystem {
+namespace TypeSystem
+{
     /// <summary>
     /// Abstract class that represents all different types.
     /// </summary>
@@ -31,8 +32,9 @@ namespace TypeSystem {
     /// Implements Composite pattern [Component].
     /// </remarks>
     /// //visto
-    public abstract class TypeExpression {
-        
+    public abstract class TypeExpression
+    {
+
         #region Fields
 
         /// <summary>
@@ -83,7 +85,8 @@ namespace TypeSystem {
         /// Note: WriteType expression is the longest recursive representation of a type expression. 
         /// Fullname is the sortest one.
         /// </summary>
-        public virtual string FullName {
+        public virtual string FullName
+        {
             get { return this.fullName; }
             set { this.fullName = value; }
         }
@@ -91,11 +94,14 @@ namespace TypeSystem {
         /// <summary>
         /// To implement a type expression cache
         /// </summary>
-        internal virtual bool ValidTypeExpression {
+        internal virtual bool ValidTypeExpression
+        {
             get { return validTypeExpression; }
-            set {
+            set
+            {
                 validTypeExpression = value;
-                if (!value) {
+                if (!value)
+                {
                     // * Updates the full name
                     this.BuildFullName();
                     this.typeExpression = this.fullName;
@@ -106,7 +112,8 @@ namespace TypeSystem {
         /// <summary>
         /// Indicates if the type has been set as dynamic
         /// </summary>
-        public virtual bool IsDynamic {
+        public virtual bool IsDynamic
+        {
             get { return this.isDynamic; }
             set { this.isDynamic = value; }
         }
@@ -115,10 +122,12 @@ namespace TypeSystem {
         // * Constructors
 
         #region Construtors
-        public TypeExpression() {
+        public TypeExpression()
+        {
             this.isDynamic = false;
         }
-        public TypeExpression(bool isDynamic) {
+        public TypeExpression(bool isDynamic)
+        {
             this.isDynamic = isDynamic;
         }
         #endregion
@@ -133,8 +142,10 @@ namespace TypeSystem {
         /// Fullname is the sortest one.
         /// </summary>
         /// <returns>string with the type expression associated.</returns>
-        public override string ToString() {
-            if (!this.ValidTypeExpression) {
+        public override string ToString()
+        {
+            if (!this.ValidTypeExpression)
+            {
                 this.typeExpression = this.BuildTypeExpressionString(MAX_DEPTH_LEVEL_TYPE_EXPRESSION);
                 this.ValidTypeExpression = true;
             }
@@ -148,7 +159,8 @@ namespace TypeSystem {
         /// Returns the type expression 
         /// <param name="depthLevel">The maximum depth of recursion to construct type expressions</param>
         /// </summary>
-        public virtual string BuildTypeExpressionString(int depthLevel) {
+        public virtual string BuildTypeExpressionString(int depthLevel)
+        {
             return this.typeExpression;
         }
         #endregion
@@ -170,7 +182,8 @@ namespace TypeSystem {
         /// (string=String, int=Int32, []=Array...)
         /// </summary>
         /// <returns>The class type is there is a map, null otherwise</returns>
-        public virtual ClassType AsClassType() {
+        public virtual ClassType AsClassType()
+        {
             return null;
         }
 
@@ -195,7 +208,8 @@ namespace TypeSystem {
         /// The default implementation is return false
         /// </summary>
         /// <returns>If it has any type variable</returns>
-        public virtual bool HasTypeVariables() {
+        public virtual bool HasTypeVariables()
+        {
             return false;
         }
         #endregion
@@ -205,7 +219,8 @@ namespace TypeSystem {
         /// To know if it is a type variable with no substitution
         /// </summary>
         /// <returns>True in case it is a fresh variable with no substitution</returns>
-        public virtual bool IsFreshVariable() {
+        public virtual bool IsFreshVariable()
+        {
             return false;
         }
         #endregion
@@ -215,7 +230,8 @@ namespace TypeSystem {
         /// To know if it is a type variable with no substitution
         /// </summary>
         /// <returns>True in case it is a fresh variable with no substitution. This method has a different behaviour than IsFreshVariable with UnionTypes, the rest of types have the same.</returns>
-        public virtual bool HasFreshVariable() {
+        public virtual bool HasFreshVariable()
+        {
             return IsFreshVariable();
         }
         #endregion
@@ -225,7 +241,8 @@ namespace TypeSystem {
         /// To know if it is a type variable with no substitution
         /// </summary>
         /// <returns>True in case it is a fresh variable with no substitution. This method has a different behaviour than IsFreshVariable with UnionTypes, the rest of types have the same.</returns>
-        public virtual bool HasIntersectionVariable() {
+        public virtual bool HasIntersectionVariable()
+        {
             return false;
         }
         #endregion
@@ -240,9 +257,15 @@ namespace TypeSystem {
         /// <param name="typeVariableMappings">Each new type varaiable represent a copy of another existing one.
         /// This parameter is a mapping between them, wher tmpName=old and value=new.</param>
         /// <returns>The new cloned class type</returns>
-        public virtual TypeExpression CloneType(IDictionary<TypeVariable, TypeVariable> typeVariableMappings) {
+        public virtual TypeExpression CloneType(IDictionary<TypeVariable, TypeVariable> typeVariableMappings)
+        {
             // * By default, no clone is performed (built-in types)
             return this;
+        }
+
+        public virtual TypeExpression CloneType(IDictionary<TypeVariable, TypeVariable> typeVariableMappings, IDictionary<TypeExpression, TypeExpression> typeExpresionVariableMapping)
+        {
+            return CloneType(typeVariableMappings);            
         }
         #endregion
 
@@ -257,7 +280,8 @@ namespace TypeSystem {
         /// <param name="equivalenceClasses">Each equivalence class of all the type variables.</param>
         /// <param name="clonedClasses">This parameter collects the set of all cloned classes. It is used to detect infinite recursion.</param>
         /// <returns>The new type expression (itself by default)</returns>
-        public virtual TypeExpression CloneTypeVariables(IDictionary<TypeVariable, TypeVariable> typeVariableMappings, IList<EquivalenceClass> equivalenceClasses, IList<ClassType> clonedClasses) {
+        public virtual TypeExpression CloneTypeVariables(IDictionary<TypeVariable, TypeVariable> typeVariableMappings, IList<EquivalenceClass> equivalenceClasses, IList<ClassType> clonedClasses)
+        {
             return this;
         }
         #endregion
@@ -269,7 +293,8 @@ namespace TypeSystem {
         /// <param name="typeVariableMappings">Each new type varaiable represent a copy of another existing one.
         /// This parameter is a mapping between them, wher tmpName=old and value=new.</param>
         /// <param name="previouslyUpdated">To detect infinite loops. Previously updated type expressions.</param>
-        public virtual void UpdateEquivalenceClass(IDictionary<TypeVariable, TypeVariable> typeVariableMappings, IList<TypeExpression> previouslyUpdated) {
+        public virtual void UpdateEquivalenceClass(IDictionary<TypeVariable, TypeVariable> typeVariableMappings, IList<TypeExpression> previouslyUpdated)
+        {
             // * Does nothing (built-in types are not recursive)
         }
         #endregion
@@ -280,7 +305,8 @@ namespace TypeSystem {
         /// </summary>
         /// <param name="typeVariableMappings">Each new type varaiable represent a copy of another existing one.
         /// This parameter is a mapping between them, wher tmpName=old and value=new.</param>
-        public virtual void ReplaceTypeVariables(IDictionary<TypeVariable, TypeVariable> typeVariableMappings) {
+        public virtual void ReplaceTypeVariables(IDictionary<TypeVariable, TypeVariable> typeVariableMappings)
+        {
             // * Nothing to to (built-in types)
         }
         #endregion
@@ -292,7 +318,8 @@ namespace TypeSystem {
         /// If this type's substitution changes, the frozen type does not.
         /// <returns>The frozen type</returns>
         /// </summary>
-        public virtual TypeExpression Freeze() {
+        public virtual TypeExpression Freeze()
+        {
             return this;
         }
         #endregion
@@ -310,7 +337,8 @@ namespace TypeSystem {
         /// equivalence classes need to be updated with the new cloned type variables.</param>
         /// <param name="methodAnalyzed">The method that is being analyzed when the operation is performed.</param>
         /// <returns>The cloned type</returns>
-        internal virtual TypeExpression Clone(IDictionary<int, TypeVariable> clonedTypeVariables, IList<EquivalenceClass> equivalenceClasses, MethodType methodAnalyzed) {
+        internal virtual TypeExpression Clone(IDictionary<int, TypeVariable> clonedTypeVariables, IList<EquivalenceClass> equivalenceClasses, MethodType methodAnalyzed)
+        {
             if (this.HasTypeVariables())
                 throw new InvalidOperationException("The type should implement a Clone method.");
             // * Default implementation (types with no type variables)
@@ -327,7 +355,8 @@ namespace TypeSystem {
         /// </summary>
         /// <param name="toRemove">The type variable to remove</param>
         /// <returns>If it has been actually removed</returns>
-        public virtual bool Remove(TypeVariable toRemove) {
+        public virtual bool Remove(TypeVariable toRemove)
+        {
             return false;
         }
         #endregion
@@ -339,7 +368,8 @@ namespace TypeSystem {
         /// Gets the type name to use in IL code.
         /// </summary>
         /// <returns>Returns the type name to use in IL code.</returns>
-        public virtual string ILType() {
+        public virtual string ILType()
+        {
             return this.fullName;
         }
 
@@ -363,7 +393,8 @@ namespace TypeSystem {
         /// <typeparam name="T">A concrete type expression</typeparam>
         /// <param name="type">The general type expression</param>
         /// <returns>The cast type</returns>
-        public static T As<T>(TypeExpression type) where T : TypeExpression {
+        public static T As<T>(TypeExpression type) where T : TypeExpression
+        {
             TypeVariable typeVariable = type as TypeVariable;
             if (typeVariable != null)
                 type = typeVariable.Substitution;
@@ -371,7 +402,7 @@ namespace TypeSystem {
             return castType;
         }
         #endregion
-        
+
         #region Is<T>()
         /// <summary>
         /// Tells if a type expression is a type or a type variable
@@ -380,12 +411,14 @@ namespace TypeSystem {
         /// <typeparam name="T">A concrete type expression</typeparam>
         /// <param name="type">The general type expression</param>
         /// <returns>If the type is the expected one</returns>
-        public static bool Is<T>(TypeExpression type) where T : TypeExpression {
+        public static bool Is<T>(TypeExpression type) where T : TypeExpression
+        {
             return TypeExpression.As<T>(type) != null;
         }
         #endregion
 
-        virtual public BCLClassType getBCLType() {
+        virtual public BCLClassType getBCLType()
+        {
             System.Diagnostics.Debug.Assert(true, "getBCLType called in type expression inconsistence in the program");
             return null;
         }

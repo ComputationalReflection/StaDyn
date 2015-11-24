@@ -491,6 +491,40 @@ namespace TypeSystem {
                 newUnionType.typeSet.Add(type.CloneType(typeVariableMappings));
             return newUnionType;
         }
+
+        public override TypeExpression CloneType(IDictionary<TypeVariable, TypeVariable> typeVariableMappings, IDictionary<TypeExpression, TypeExpression> typeExpresionVariableMapping)
+        {
+            if (typeExpresionVariableMapping.ContainsKey(this))
+                return typeExpresionVariableMapping[this];
+
+            foreach (TypeExpression type in this.typeSet)
+            {
+                if (typeExpresionVariableMapping.ContainsKey(type))
+                {
+                    if (!typeExpresionVariableMapping.ContainsKey(this))
+                        typeExpresionVariableMapping.Add(this, typeExpresionVariableMapping[type]);
+                    if (!typeExpresionVariableMapping[this].Equals(typeExpresionVariableMapping[type]))
+                    {
+                        typeExpresionVariableMapping.Remove(this);
+                        break;
+                    }
+                }                
+            }
+
+            if (typeExpresionVariableMapping.ContainsKey(this))
+                return typeExpresionVariableMapping[this];
+
+
+            
+            if (!this.HasTypeVariables())
+                return this;
+            UnionType newUnionType = (UnionType)this.MemberwiseClone();
+            newUnionType.typeSet = new List<TypeExpression>();
+            // * Clones all the types in the union
+            foreach (TypeExpression type in this.typeSet)
+                newUnionType.typeSet.Add(type.CloneType(typeVariableMappings,typeExpresionVariableMapping));            
+            return newUnionType;
+        }
         #endregion
 
         // Loop Detection

@@ -38,9 +38,9 @@ namespace ProgramSpecialization
         {
             var result;
             if (className == 'A')
-                result = 1 + data;
+                result = new A(data);
             else
-                result = 2 + data;
+                result = new B(data);
             return result;
         }
 

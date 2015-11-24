@@ -35,3 +35,8 @@
 /Inference/bin/Release
 /Inference/obj/Release
 /Wrong Test Cases/error.log
+/Wrong Test Cases/Case X/CG.exe
+/Wrong Test Cases/Case X/CG.il
+/Wrong Test Cases/Case X/CG.log
+/Wrong Test Cases/Case X/CG.out.txt
+/Wrong Test Cases/Case X/TypeTable.txt
