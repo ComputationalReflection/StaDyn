@@ -17,63 +17,63 @@ namespace UnitTest.Tests.CLRCG
 
         [TestMethod]
         [TestCategory("CLRCG"),TestCategory("Specialization")]
-        public void Specialization1()
+        public void Specialization01()
         {            
             GetDefaultTest().runTest();
         }
 
         [TestMethod]
         [TestCategory("CLRCG"), TestCategory("Specialization")]
-        public void Specialization2()
+        public void Specialization02()
         {
             GetDefaultTest().runTest();
         }
 
         [TestMethod]
         [TestCategory("CLRCG"), TestCategory("Specialization")]
-        public void Specialization3()
+        public void Specialization03()
         {
             GetDefaultTest().runTest();
         }
 
         [TestMethod]
         [TestCategory("CLRCG"), TestCategory("Specialization")]
-        public void Specialization4()
+        public void Specialization04()
         {
             GetDefaultTest().runTest();
         }
 
         [TestMethod]
         [TestCategory("CLRCG"), TestCategory("Specialization")]
-        public void Specialization5()
+        public void Specialization05()
         {
             GetDefaultTest().runTest();
         }
 
         [TestMethod]
         [TestCategory("CLRCG"), TestCategory("Specialization")]
-        public void Specialization6()
+        public void Specialization06()
         {
             GetDefaultTest().runTest();
         }
 
         [TestMethod]
         [TestCategory("CLRCG"), TestCategory("Specialization")]
-        public void Specialization7()
+        public void Specialization07()
         {
             GetDefaultTest().runTest();
         }
 
         [TestMethod]
         [TestCategory("CLRCG"), TestCategory("Specialization")]
-        public void Specialization8()
+        public void Specialization08()
         {
             GetDefaultTest().runTest();
         }
 
         [TestMethod]
         [TestCategory("CLRCG"), TestCategory("Specialization")]
-        public void Specialization9()
+        public void Specialization09()
         {
             GetDefaultTest().runTest();
         }

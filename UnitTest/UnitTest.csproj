@@ -96,28 +96,28 @@
     <Content Include="res\tests\CLRCG\Specialization\Specialization19.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\CLRCG\Specialization\Specialization2.cs">
+    <Content Include="res\tests\CLRCG\Specialization\Specialization02.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\CLRCG\Specialization\Specialization3.cs">
+    <Content Include="res\tests\CLRCG\Specialization\Specialization03.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\CLRCG\Specialization\Specialization4.cs">
+    <Content Include="res\tests\CLRCG\Specialization\Specialization04.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\CLRCG\Specialization\Specialization5.cs">
+    <Content Include="res\tests\CLRCG\Specialization\Specialization05.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\CLRCG\Specialization\Specialization6.cs">
+    <Content Include="res\tests\CLRCG\Specialization\Specialization06.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\CLRCG\Specialization\Specialization7.cs">
+    <Content Include="res\tests\CLRCG\Specialization\Specialization07.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\CLRCG\Specialization\Specialization8.cs">
+    <Content Include="res\tests\CLRCG\Specialization\Specialization08.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\CLRCG\Specialization\Specialization9.cs">
+    <Content Include="res\tests\CLRCG\Specialization\Specialization09.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="res\tests\GettingStarted\Sample1.cs">
@@ -177,11 +177,14 @@
     <Content Include="res\tests\CLRCG\Specialization\Specialization24.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="res\tests\CLRCG\Specialization\Specialization25.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="src\tests\Benchmarks\Static.cs" />
     <Compile Include="src\tests\GettingStarted.cs" />
     <Compile Include="src\tests\Wrong.cs" />
     <Compile Include="src\tests\CLRCG\Specialization.cs" />
-    <Content Include="res\tests\CLRCG\Specialization\Specialization1.cs">
+    <Content Include="res\tests\CLRCG\Specialization\Specialization01.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="src\ErrorDescription.cs" />

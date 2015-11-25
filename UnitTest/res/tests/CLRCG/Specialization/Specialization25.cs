@@ -14,11 +14,14 @@ namespace ProgramSpecialization
             return param;
         }
 
+
         public static void Main()
         {
             Program program = new Program();
-            int i = program.MainMethod(1);			
-            String s = program.MainMethod("1");            
+            var result = program.Method(1);            
+            System.Console.WriteLine(result.ToString());
+            result = program.Method("1");
+            System.Console.WriteLine(result.ToString());
         }
     }
 }

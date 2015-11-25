@@ -72,9 +72,10 @@ namespace Compiler {
                 else
                     ErrorManager.Instance.NotifyError(new CommandLineArgumentsError());
             }   catch (System.Exception e) {
-               Program.ClearMemory();
+               Program.ClearMemory();                
                Console.Error.WriteLine("An internal error has ocurred. Please, see " + Path.ChangeExtension(outputFileName,".log") + " for details.");
-               File.WriteAllLines(Path.ChangeExtension(outputFileName, ".log") , new[] { "Exception: " + e, e.StackTrace });                
+               File.WriteAllLines(Path.ChangeExtension(outputFileName, ".log") , new[] { "Exception: " + e, e.StackTrace });
+               ErrorManager.Instance.NotifyError(new CodeGenerationError("Code Generation Error"));
             }
 #if DEBUG
             double elapsedTime = ((DateTime.Now.Ticks - startTime) / TimeSpan.TicksPerMillisecond) / 1000.0;
