@@ -57,8 +57,7 @@ namespace CodeGeneration
                         typeExpresionVariableMapping.Add(cc.ReturnType, typeExpresionVariableMapping[cc.FirstOperand]);                    
                 }
             }
-            MethodType clonedMethodType = new MethodType(originalMethodType.Return.CloneType(typeVariableMappings,typeExpresionVariableMapping));            
-           //TODO: esto esta mal
+            MethodType clonedMethodType = new MethodType(originalMethodType.Return.CloneType(typeVariableMappings,typeExpresionVariableMapping));                       
             currentMethodType = clonedMethodType;
 
             SingleIdentifierExpression clonedSingleIdentifierExpression = new SingleIdentifierExpression(node.IdentifierExp.Identifier, node.IdentifierExp.Location);
@@ -119,6 +118,8 @@ namespace CodeGeneration
             Expression clonedFirstOperand = (Expression)node.FirstOperand.Accept(this, obj);
             Expression clonedSecondOperand = (Expression)node.SecondOperand.Accept(this, obj);
             ArithmeticExpression clonedArithmeticExpression = new ArithmeticExpression(clonedFirstOperand, clonedSecondOperand, node.Operator, node.Location);
+            //if (node.ExpressionType != null)
+              //  clonedArithmeticExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
             return clonedArithmeticExpression;
         }
 
@@ -233,7 +234,8 @@ namespace CodeGeneration
 
             if (node.Init != null)
                 clonedNewArrayExpression.Init = (CompoundExpression)node.Init.Accept(this, obj);
-            clonedNewArrayExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
+            if (node.ExpressionType != null)
+                 clonedNewArrayExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
             return clonedNewArrayExpression;
         }
 
@@ -244,7 +246,8 @@ namespace CodeGeneration
         public override Object Visit(RelationalExpression node, Object obj)
         {
             RelationalExpression clonedRelationalExpression = new RelationalExpression((Expression)node.FirstOperand.Accept(this, obj), (Expression)node.SecondOperand.Accept(this, obj), node.Operator, node.Location);
-            clonedRelationalExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
+            //if (node.ExpressionType != null)
+                // clonedRelationalExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
             return clonedRelationalExpression;
         }
 
@@ -316,7 +319,8 @@ namespace CodeGeneration
         public override Object Visit(CastExpression node, Object obj)
         {
             CastExpression clonedCastExpression = new CastExpression(node.CastId, (Expression)node.Expression.Accept(this, obj), node.Location);
-            clonedCastExpression.CastType = node.CastType.CloneType(typeVariableMappings, this.typeExpresionVariableMapping);
+            if(node.CastType != null)
+                clonedCastExpression.CastType = node.CastType.CloneType(typeVariableMappings, this.typeExpresionVariableMapping);
             return clonedCastExpression;
         }
 
@@ -327,7 +331,8 @@ namespace CodeGeneration
         public override Object Visit(IsExpression node, Object obj)
         {
             IsExpression clonedIsExpression = new IsExpression((Expression)node.Expression.Accept(this, obj), node.TypeId, node.Location);
-            clonedIsExpression.TypeExpr = node.TypeExpr.CloneType(typeVariableMappings, this.typeExpresionVariableMapping);
+            if(node.TypeExpr != null)
+                clonedIsExpression.TypeExpr = node.TypeExpr.CloneType(typeVariableMappings, this.typeExpresionVariableMapping);
             return clonedIsExpression;
         }
 
@@ -350,7 +355,8 @@ namespace CodeGeneration
         public override Object Visit(NullExpression node, Object obj)
         {
             NullExpression clonedNullExpression = new NullExpression(node.Location);
-            clonedNullExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings,this.typeExpresionVariableMapping);
+            //if (node.ExpressionType != null)
+                //clonedNullExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings,this.typeExpresionVariableMapping);
             return clonedNullExpression;
         }
 
@@ -361,7 +367,8 @@ namespace CodeGeneration
         public override Object Visit(InvocationExpression node, Object obj)
         {
             InvocationExpression clonedInvocationExpression = new InvocationExpression((Expression)node.Identifier.Accept(this, obj), (CompoundExpression)node.Arguments.Accept(this, obj), node.Location);
-            clonedInvocationExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
+            //if (node.ExpressionType != null)
+              //  clonedInvocationExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
             clonedInvocationExpression.ActualMethodCalled = node.ActualMethodCalled;
             clonedInvocationExpression.Accept(visitorSpecializer, obj);
             return clonedInvocationExpression;
@@ -392,7 +399,8 @@ namespace CodeGeneration
         public override Object Visit(BaseExpression node, Object obj)
         {
             BaseExpression clonedBaseExpression = new BaseExpression(node.Location);
-            clonedBaseExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
+            //if (node.ExpressionType != null)
+              //  clonedBaseExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
             return clonedBaseExpression;
         }
 
@@ -563,7 +571,9 @@ namespace CodeGeneration
         {
             Expression clonedReturnExpression = (Expression)node.ReturnExpression.Accept(this, obj);
             ReturnStatement clonedReturnStatement = new ReturnStatement(clonedReturnExpression, node.ReturnExpression.Location);
-            clonedReturnStatement.CurrentMethodType = currentMethodType;            
+            clonedReturnStatement.CurrentMethodType = currentMethodType;
+            //if (node.ReturnExpression.ExpressionType != null)
+              //  clonedReturnStatement.ReturnExpression.ExpressionType = node.ReturnExpression.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
             return clonedReturnStatement;
         }
 

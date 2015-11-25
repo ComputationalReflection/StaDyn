@@ -18,9 +18,9 @@ namespace ProgramSpecialization
         public static void Main()
         {
             Program program = new Program();
-            var result = program.Method(1);            
+            var result = program.MainMethod(1);
             System.Console.WriteLine(result.ToString());
-            result = program.Method("1");
+            result = program.MainMethod("1");
             System.Console.WriteLine(result.ToString());
         }
     }
