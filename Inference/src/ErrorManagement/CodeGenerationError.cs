@@ -30,9 +30,11 @@ namespace ErrorManagement {
         /// <param name="type1"></param>
         /// <param name="type2"></param>
         public CodeGenerationError(string str) {
-            this.Description = str;
+            this.Description = "Code Generation Error";
+            this.location = new Location(str, 0, 0);
+            this.ErrorType = "Code Generation Error";
 
-        #endregion
+            #endregion
         }
     }
 }

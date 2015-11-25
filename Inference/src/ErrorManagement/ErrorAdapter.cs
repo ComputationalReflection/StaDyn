@@ -31,6 +31,8 @@ namespace ErrorManagement {
         /// Gets description of the error.
         /// </summary>
         string description;
+        string errorType;
+
         #endregion
         #region Properties
      
@@ -43,13 +45,15 @@ namespace ErrorManagement {
         /// Gets the name for the error type.
         /// </summary>
         public string ErrorType {
-            get { return "Semantic error"; }
+            get { return String.IsNullOrEmpty(errorType) ? "Semantic Error" : this.errorType; }
+            set { this.errorType = value; }
         }
 
         /// <summary>
         /// Gets the description for the error type.
         /// </summary>
-        public string Description {
+        public string Description
+        {
             get { return this.description; }
             set { this.description = value; }
         }
