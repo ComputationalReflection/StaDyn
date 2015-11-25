@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using AST;
@@ -15,15 +15,13 @@ namespace CodeGeneration
 {
     class VisitorSpelializer: VisitorAdapter
     {
-        private VisitorTypeInference visitorTypeInference;
-        private VisitorASTCloner visitorASTCloner;
+        private VisitorTypeInference visitorTypeInference;        
         private Dictionary<String, MethodDefinition> specilizedMethods;
         private bool isCurrentMethodDynamic;
 
         public VisitorSpelializer(VisitorTypeInference visitorTypeInference)
         {
-            this.visitorTypeInference = visitorTypeInference;
-            visitorASTCloner = new VisitorASTCloner();
+            this.visitorTypeInference = visitorTypeInference;            
             specilizedMethods = new Dictionary<string, MethodDefinition>();
         }
 
@@ -44,9 +42,14 @@ namespace CodeGeneration
             MethodDefinition originalMethodDefinition = originalMemberTypeExpression.ASTNode as MethodDefinition;
             if (originalMethodDefinition == null)
                 return null;
+            TypeExpression[] originalParamsType = new TypeExpression[originalMemberTypeExpression.ParameterListCount];
+            for (int i = 0 ; i < originalMemberTypeExpression.ParameterListCount ; i++)
+                originalParamsType[i] = originalMemberTypeExpression.GetParameter(i);
+            var originalMethodIndentificator = MethodIndentificator(originalMethodDefinition.FullName, originalParamsType);
+            if(!specilizedMethods.ContainsKey(originalMethodIndentificator))
+                specilizedMethods.Add(originalMethodIndentificator,originalMethodDefinition);
 
             TypeExpression[] args = this.compoundExpressionToArray(node.Arguments);
-
             var methodIndentificator = MethodIndentificator(originalMethodDefinition.FullName, args);
             MethodDefinition method = !HasUnionTypes(originalMethodDefinition.FullName, methodIndentificator) ? SpecilizeMethod(methodIndentificator, originalMethodDefinition, args) : CreateMethod(methodIndentificator, originalMethodDefinition, args,node);
             node.ActualMethodCalled = method.TypeExpr;
@@ -59,7 +62,7 @@ namespace CodeGeneration
             }
             else
                 node.Identifier = method.IdentifierExp;
-            return obj;            
+            return null;            
         }
 
         #region compoundExpressionToArray()        
@@ -185,8 +188,9 @@ namespace CodeGeneration
                 newMethodDefinition.Accept(visitorTypeInference, null);
                 DynVarOptions.Instance.EverythingDynamic = previousDynamism;
                 foreach (var invocation in invocations)
-                {                
-                    invocation.ActualMethodCalled = ((UnionType) invocation.ActualMethodCalled).TypeSet[1];
+                {
+                    if (invocation.ActualMethodCalled is UnionType)
+                        invocation.ActualMethodCalled = ((UnionType) invocation.ActualMethodCalled).TypeSet[1];
                 }                
                 foreach (var castExpression in castExpressions)
                 {
@@ -276,7 +280,7 @@ namespace CodeGeneration
             MethodDefinition clonedMethodDefinition;
             if (!specilizedMethods.ContainsKey(methodIndentificator))
             {                
-                clonedMethodDefinition = (MethodDefinition) originalMethodDefinition.Accept(visitorASTCloner, args);
+                clonedMethodDefinition = (MethodDefinition) originalMethodDefinition.Accept(new VisitorASTCloner(this), args);
                 specilizedMethods.Add(methodIndentificator, clonedMethodDefinition);
                 clonedMethodDefinition.Accept(visitorTypeInference, null);                
             }

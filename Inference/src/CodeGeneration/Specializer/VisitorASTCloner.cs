@@ -16,6 +16,13 @@ namespace CodeGeneration
         private MethodType currentMethodType;
         private Dictionary<TypeVariable, TypeVariable> typeVariableMappings;
         private Dictionary<TypeExpression, TypeExpression> typeExpresionVariableMapping;
+        private VisitorSpelializer visitorSpecializer;
+
+        public VisitorASTCloner(VisitorSpelializer visitorSpecializer)
+        {
+            this.visitorSpecializer = visitorSpecializer;
+        }
+
 
         #region Visit(MethodDefinition node, Object obj)
 
@@ -24,8 +31,7 @@ namespace CodeGeneration
             typeVariableMappings = new Dictionary<TypeVariable, TypeVariable>();
             typeExpresionVariableMapping = new Dictionary<TypeExpression, TypeExpression>();            
             MethodType originalMethodType = (MethodType)node.TypeExpr;
-            MethodType clonedMethodType = new MethodType(originalMethodType.Return);
-            currentMethodType = clonedMethodType;
+            
             TypeExpression[] args = (TypeExpression[])obj;
             TypeExpression[] clonedArgs = new TypeExpression[args.Count()];
             List<Parameter> clonedParametersInfo = new List<Parameter>();
@@ -51,13 +57,14 @@ namespace CodeGeneration
                         typeExpresionVariableMapping.Add(cc.ReturnType, typeExpresionVariableMapping[cc.FirstOperand]);                    
                 }
             }
-
-
+            MethodType clonedMethodType = new MethodType(originalMethodType.Return.CloneType(typeVariableMappings,typeExpresionVariableMapping));            
+           //TODO: esto esta mal
+            currentMethodType = clonedMethodType;
 
             SingleIdentifierExpression clonedSingleIdentifierExpression = new SingleIdentifierExpression(node.IdentifierExp.Identifier, node.IdentifierExp.Location);
 
             Block clonedBlock = (Block)node.Body.Accept(this, null);
-            MethodDefinition clonedMethodDefinition = new MethodDefinition(clonedSingleIdentifierExpression, clonedBlock, node.ReturnTypeInfo, clonedParametersInfo, node.ModifiersInfo, node.Location);
+            MethodDefinition clonedMethodDefinition = new MethodDefinition(clonedSingleIdentifierExpression, clonedBlock, clonedMethodType.Return.typeExpression, clonedParametersInfo, node.ModifiersInfo, node.Location);
             clonedMethodDefinition.FullName = node.FullName;
             clonedMethodType.MemberInfo = new AccessModifier(originalMethodType.MemberInfo.Modifiers, clonedSingleIdentifierExpression.Identifier, clonedMethodType, false);
             clonedMethodType.MemberInfo.Class = originalMethodType.MemberInfo.Class;
@@ -68,7 +75,7 @@ namespace CodeGeneration
             }
             clonedMethodType.ASTNode = clonedMethodDefinition;
             clonedMethodDefinition.TypeExpr = clonedMethodType;
-
+            
             TypeDefinition originalTypeDefinition = clonedMethodType.MemberInfo.TypeDefinition;
             originalTypeDefinition.AddMethod(clonedMethodDefinition);
 
@@ -355,6 +362,8 @@ namespace CodeGeneration
         {
             InvocationExpression clonedInvocationExpression = new InvocationExpression((Expression)node.Identifier.Accept(this, obj), (CompoundExpression)node.Arguments.Accept(this, obj), node.Location);
             clonedInvocationExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
+            clonedInvocationExpression.ActualMethodCalled = node.ActualMethodCalled;
+            clonedInvocationExpression.Accept(visitorSpecializer, obj);
             return clonedInvocationExpression;
         }
 
@@ -554,7 +563,7 @@ namespace CodeGeneration
         {
             Expression clonedReturnExpression = (Expression)node.ReturnExpression.Accept(this, obj);
             ReturnStatement clonedReturnStatement = new ReturnStatement(clonedReturnExpression, node.ReturnExpression.Location);
-            clonedReturnStatement.CurrentMethodType = currentMethodType;
+            clonedReturnStatement.CurrentMethodType = currentMethodType;            
             return clonedReturnStatement;
         }
 
