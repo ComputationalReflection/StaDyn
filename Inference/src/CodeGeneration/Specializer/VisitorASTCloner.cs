@@ -61,7 +61,7 @@ namespace CodeGeneration
             currentMethodType = clonedMethodType;
 
             SingleIdentifierExpression clonedSingleIdentifierExpression = new SingleIdentifierExpression(node.IdentifierExp.Identifier, node.IdentifierExp.Location);
-
+            
             Block clonedBlock = (Block)node.Body.Accept(this, null);
             MethodDefinition clonedMethodDefinition = new MethodDefinition(clonedSingleIdentifierExpression, clonedBlock, clonedMethodType.Return.typeExpression, clonedParametersInfo, node.ModifiersInfo, node.Location);
             clonedMethodDefinition.FullName = node.FullName;
@@ -94,7 +94,7 @@ namespace CodeGeneration
                 am.Type = intersection;
                 originalClass.Members[clonedMethodDefinition.Identifier] = am;
             }
-
+            
             return clonedMethodDefinition;
         }
 

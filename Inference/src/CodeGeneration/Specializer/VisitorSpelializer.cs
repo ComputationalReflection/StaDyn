@@ -54,12 +54,15 @@ namespace CodeGeneration
 
             MethodDefinition method = !HasUnionTypes(originalMethodDefinition.FullName, methodIndentificator) ? SpecilizeMethod(methodIndentificator, originalMethodDefinition, args) : CreateMethod(methodIndentificator, originalMethodDefinition, args,node);
             node.ActualMethodCalled = method.TypeExpr;
+            method.IdentifierExp.ExpressionType = method.TypeExpr;
             node.ExpressionType = ((MethodType) method.TypeExpr).Return;
+            
 
             if (node.Identifier is FieldAccessExpression)
             {
                 FieldAccessExpression fae = new FieldAccessExpression(((FieldAccessExpression) node.Identifier).Expression,method.IdentifierExp, node.Location);
                 fae.FieldName.IndexOfSSA = -1;
+                fae.ExpressionType = method.TypeExpr;
                 node.Identifier = fae;
             }
             else
