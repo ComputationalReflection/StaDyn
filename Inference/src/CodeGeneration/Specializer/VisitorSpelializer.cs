@@ -46,11 +46,12 @@ namespace CodeGeneration
             for (int i = 0 ; i < originalMemberTypeExpression.ParameterListCount ; i++)
                 originalParamsType[i] = originalMemberTypeExpression.GetParameter(i);
             var originalMethodIndentificator = MethodIndentificator(originalMethodDefinition.FullName, originalParamsType);
-            if(!specilizedMethods.ContainsKey(originalMethodIndentificator))
-                specilizedMethods.Add(originalMethodIndentificator,originalMethodDefinition);
-
             TypeExpression[] args = this.compoundExpressionToArray(node.Arguments);
             var methodIndentificator = MethodIndentificator(originalMethodDefinition.FullName, args);
+
+            if (methodIndentificator.Equals(originalMethodIndentificator)) //Method does not need to be specialized
+                return false;
+
             MethodDefinition method = !HasUnionTypes(originalMethodDefinition.FullName, methodIndentificator) ? SpecilizeMethod(methodIndentificator, originalMethodDefinition, args) : CreateMethod(methodIndentificator, originalMethodDefinition, args,node);
             node.ActualMethodCalled = method.TypeExpr;
             node.ExpressionType = ((MethodType) method.TypeExpr).Return;
