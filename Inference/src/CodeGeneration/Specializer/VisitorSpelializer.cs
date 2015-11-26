@@ -17,12 +17,14 @@ namespace CodeGeneration
     {
         private VisitorTypeInference visitorTypeInference;        
         private Dictionary<String, MethodDefinition> specilizedMethods;
+        private IList<Pair<TypeExpression, TypeExpression>> previouslyUnified;
         private bool isCurrentMethodDynamic;
 
         public VisitorSpelializer(VisitorTypeInference visitorTypeInference)
         {
             this.visitorTypeInference = visitorTypeInference;            
             specilizedMethods = new Dictionary<string, MethodDefinition>();
+            previouslyUnified = new List<Pair<TypeExpression, TypeExpression>>();
         }
 
         public override Object Visit(ClassDefinition node, Object obj)
@@ -32,6 +34,8 @@ namespace CodeGeneration
                 node.GetMemberElement(i).Accept(this, obj);
             return null;
         }
+
+        
         
         public override Object Visit(InvocationExpression node, Object obj)
         {            
@@ -55,7 +59,13 @@ namespace CodeGeneration
             MethodDefinition method = !HasUnionTypes(originalMethodDefinition.FullName, methodIndentificator) ? SpecilizeMethod(methodIndentificator, originalMethodDefinition, args) : CreateMethod(methodIndentificator, originalMethodDefinition, args,node);
             node.ActualMethodCalled = method.TypeExpr;
             method.IdentifierExp.ExpressionType = method.TypeExpr;
-            node.ExpressionType = ((MethodType) method.TypeExpr).Return;
+            TypeExpression returnTypeExpresion = ((MethodType) method.TypeExpr).Return;
+
+            if (node.ExpressionType is TypeVariable)
+                ((TypeVariable)node.ExpressionType).EquivalenceClass.add(returnTypeExpresion, SortOfUnification.Equivalent, previouslyUnified);
+            
+
+            node.ExpressionType = returnTypeExpresion;
             
 
             if (node.Identifier is FieldAccessExpression)
