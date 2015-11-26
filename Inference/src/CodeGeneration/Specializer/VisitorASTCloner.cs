@@ -441,8 +441,7 @@ namespace CodeGeneration
         #region Visit(AssertStatement node, Object obj)
         public override Object Visit(IdDeclaration node, Object obj)
         {
-            SingleIdentifierExpression clonedIdentifierExp = new SingleIdentifierExpression(node.IdentifierExp.Identifier, node.IdentifierExp.Location);
-            clonedIdentifierExp.IndexOfSSA = node.IdentifierExp.IndexOfSSA;
+            SingleIdentifierExpression clonedIdentifierExp = (SingleIdentifierExpression)node.IdentifierExp.Accept(this,obj);            
             IdDeclaration clonedIdDeclaration = new IdDeclaration(clonedIdentifierExp, clonedIdentifierExp.IndexOfSSA, node.TypeExpr.typeExpression, node.Location);
             clonedIdDeclaration.TypeExpr = node.TypeExpr.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
             Symbol originalSymbol = node.Symbol;

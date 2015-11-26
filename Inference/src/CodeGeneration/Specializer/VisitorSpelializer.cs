@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Runtime.InteropServices;
 using System.Text;
 using AST;
@@ -50,6 +51,8 @@ namespace CodeGeneration
             for (int i = 0 ; i < originalMemberTypeExpression.ParameterListCount ; i++)
                 originalParamsType[i] = originalMemberTypeExpression.GetParameter(i);
             var originalMethodIndentificator = MethodIndentificator(originalMethodDefinition.FullName, originalParamsType);
+            if (specilizedMethods.ContainsKey(originalMethodIndentificator))
+                return specilizedMethods[originalMethodIndentificator];
             TypeExpression[] args = this.compoundExpressionToArray(node.Arguments);
             var methodIndentificator = MethodIndentificator(originalMethodDefinition.FullName, args);
 

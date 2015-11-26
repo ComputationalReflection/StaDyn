@@ -1,27 +1,97 @@
 using System;
 
-namespace ProgramSpecialization
+namespace Points
 {
-    public class Program
+	public class Node
     {
-        public var MainMethod(var param)
+        public var data;
+        public var next;
+        public Node(var data, var next)
         {
-            return NestedMethod(param);
+            this.data = data;
+            this.next = next;
         }
+		
+		public override String ToString()
+        {
+		    return "Node [data:" + data + ",next:" + next + "]";
+		}
+    }
 
-        public var NestedMethod(var param)
-        {
-            return param;
-        }
+	
+	public class Point3D
+	{
+		public var x;
+		public var y;
+		public var z;		
+		public var dimensions;
+		public Point3D(var x, var y, var z, var dimensions)
+		{
+			this.x = x;
+			this.y = y;
+			this.z = z;	
+			this.dimensions = dimensions;			
+		}
 
-        public static void Main()
+        public override String ToString()
         {
-            Program program = new Program();
-            var result;
-			result = 1 + program.MainMethod(1);  			
-            System.Console.WriteLine("Result {0}", result); 
-            result = program.MainMethod("1");
-            System.Console.WriteLine("Result {0}", result);
+		    return "3D [x:" + x + ",y:" + y + ",z:" + z + "]";
+		}
+	}
+	
+	public class Point2D
+	{		
+		public var x;
+		public var y;		
+		public var dimensions;
+		public Point2D(var x, var y, var dimensions)
+		{
+			this.x = x;
+			this.y = y;			
+			this.dimensions = dimensions;
+		}
+        
+        public override String ToString()
+        {
+            return "2D [x:" + x + ",y:" + y + "]";
         }
+	}
+	
+	public class Points
+	{	
+		private var createPoint(var dimensions, var x, var y, var z) 
+		{
+			var point;
+			if (dimensions==2)
+				point = new Point2D(x,y,2);
+			else
+				point = new Point3D(x,y,z,3);
+			return point;
+		}
+		
+		private var createPoints(var number)
+        {
+            var list;
+			var point;
+            point = createPoint(3, 0, 0, 0);
+            list = new Node(point, 0);
+            return list;
+        }
+					
+        public void Run() 
+		{          			
+            var list = createPoints(1);
+            System.Console.WriteLine("Result {0}", list);
+        }
+    }
+	
+	public class Program 
+	{
+		public static void Main(string[] args) 
+		{
+			Points points = new Points();
+			points.Run();
+			Console.WriteLine("Successful!!");
+		}
     }
 }
