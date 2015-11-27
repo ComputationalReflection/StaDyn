@@ -73,14 +73,22 @@ namespace Points
         {
             var list;
 			var point;
+			var i;
             point = createPoint(3, 0, 0, 0);
             list = new Node(point, 0);
+			i = 1;
+			while (i < number)
+            {
+                point = createPoint(2, 0, 0, 0);
+                list = new Node(point, list);
+                i = i + 1;
+            }
             return list;
         }
 					
         public void Run() 
 		{          			
-            var list = createPoints(1);
+            var list = createPoints(3);
             System.Console.WriteLine("Result {0}", list);
         }
     }
