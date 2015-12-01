@@ -58,7 +58,10 @@ namespace CodeGeneration
             var methodIndentificator = MethodIndentificator(originalMethodDefinition.FullName, args);
 
             if (methodIndentificator.Equals(originalMethodIndentificator)) //Method does not need to be specialized
+            {
+                specilizedMethods[originalMethodIndentificator] = originalMethodDefinition;
                 return false;
+            }
 
             bool specializeOrCreate = !HasUnionTypes(originalMethodDefinition.FullName, methodIndentificator);
             MethodDefinition method =  specializeOrCreate ? SpecilizeMethod(methodIndentificator, originalMethodDefinition, args) : CreateMethod(methodIndentificator, originalMethodDefinition, args,node);

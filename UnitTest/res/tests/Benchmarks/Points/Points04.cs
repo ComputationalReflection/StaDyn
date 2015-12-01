@@ -70,22 +70,23 @@ namespace Points
             }
             return list;
         }
-		
-		var positiveX(var list, var n) {
-			var i;
-			var l, result;
-			i = 0;
-			result = i;
-			l = list;
-			while(i < n)
-			{
-				if(l.data.x >= 0)
-					result = new Node(l.data,result);
-				l = l.next;
-				i = i + 1;
-			}
-			return result;
-		}
+
+        var positiveX(var list, var n)
+        {
+            var i;
+            var l, result;
+            i = 0;
+            result = i;
+            l = list;
+            while (i < n)
+            {
+                if (l.data.x >= 0)
+                    result = new Node(l.data, result);
+                l = l.next;
+                i = i + 1;
+            }
+            return result;
+        }
 
         public void Run()
         {
@@ -93,7 +94,7 @@ namespace Points
             var list, positive, point;
             numberOfPoints = 10000;
             list = createPoints(numberOfPoints);
-			positive = positiveX(list, numberOfPoints);  
+            positive = positiveX(list, numberOfPoints);
         }
     }
 
