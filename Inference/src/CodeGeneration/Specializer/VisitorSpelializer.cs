@@ -38,6 +38,7 @@ namespace CodeGeneration
 
         
         
+        
         public override Object Visit(InvocationExpression node, Object obj)
         {            
             MethodType originalMemberTypeExpression = node.ActualMethodCalled as MethodType;
@@ -59,18 +60,17 @@ namespace CodeGeneration
             if (methodIndentificator.Equals(originalMethodIndentificator)) //Method does not need to be specialized
                 return false;
 
-            MethodDefinition method = !HasUnionTypes(originalMethodDefinition.FullName, methodIndentificator) ? SpecilizeMethod(methodIndentificator, originalMethodDefinition, args) : CreateMethod(methodIndentificator, originalMethodDefinition, args,node);
+            bool specializeOrCreate = !HasUnionTypes(originalMethodDefinition.FullName, methodIndentificator);
+            MethodDefinition method =  specializeOrCreate ? SpecilizeMethod(methodIndentificator, originalMethodDefinition, args) : CreateMethod(methodIndentificator, originalMethodDefinition, args,node);
             node.ActualMethodCalled = method.TypeExpr;
             method.IdentifierExp.ExpressionType = method.TypeExpr;
             TypeExpression returnTypeExpresion = ((MethodType) method.TypeExpr).Return;
-
-            if (node.ExpressionType is TypeVariable)
-                ((TypeVariable)node.ExpressionType).EquivalenceClass.add(returnTypeExpresion, SortOfUnification.Equivalent, previouslyUnified);
+                
+            if (!specializeOrCreate && node.ExpressionType is TypeVariable) //TODO: FieldAcces, UnionType, etc.
+                ((TypeVariable) node.ExpressionType).EquivalenceClass.add(returnTypeExpresion,SortOfUnification.Equivalent, previouslyUnified);
             
-
             node.ExpressionType = returnTypeExpresion;
             
-
             if (node.Identifier is FieldAccessExpression)
             {
                 FieldAccessExpression fae = new FieldAccessExpression(((FieldAccessExpression) node.Identifier).Expression,method.IdentifierExp, node.Location);

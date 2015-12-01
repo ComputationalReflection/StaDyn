@@ -192,6 +192,9 @@
     <Content Include="res\tests\Benchmarks\Points\Points02.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="res\tests\Benchmarks\Points\Points03.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="src\tests\Benchmarks\Points.cs" />
     <Compile Include="src\tests\Benchmarks\Static.cs" />
     <Compile Include="src\tests\GettingStarted.cs" />

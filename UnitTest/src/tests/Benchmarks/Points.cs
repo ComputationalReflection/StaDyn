@@ -24,6 +24,13 @@ namespace UnitTest.Tests.Benchmarks
             GetDefaultTest().runTest();
         }
 
+        [TestMethod]
+        [TestCategory("Benchmarks"), TestCategory("Points")]
+        public void Points03()
+        {
+            GetDefaultTest().runTest();
+        }
+
        
         //[TestMethod]
         [TestCategory("Benchmarks"), TestCategory("Points")]

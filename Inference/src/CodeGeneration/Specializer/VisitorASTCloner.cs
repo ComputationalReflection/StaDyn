@@ -438,9 +438,12 @@ namespace CodeGeneration
 
         #endregion
 
+
+        public static int count = 1;
         #region Visit(AssertStatement node, Object obj)
         public override Object Visit(IdDeclaration node, Object obj)
         {
+            count++;
             SingleIdentifierExpression clonedIdentifierExp = (SingleIdentifierExpression)node.IdentifierExp.Accept(this,obj);            
             IdDeclaration clonedIdDeclaration = new IdDeclaration(clonedIdentifierExp, clonedIdentifierExp.IndexOfSSA, node.TypeExpr.typeExpression, node.Location);
             clonedIdDeclaration.TypeExpr = node.TypeExpr.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
