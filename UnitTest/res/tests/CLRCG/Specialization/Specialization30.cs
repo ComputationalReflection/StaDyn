@@ -15,19 +15,19 @@ namespace ProgramSpecialization
     {
         public var Method(var node)
         {
-            return node;
+            return node.data;
         }
 
         public static void Main(string[] args)
         {
             var node;
             var result;
-            node = new Node(1);
-            result = Method(node.data);
-            System.Console.WriteLine("Result {0}", result.ToString());
-            node = new Node("One");
-            result = Method(node.data);
-            System.Console.WriteLine("Result {0}", result.ToString());
+            if(true)
+                node = new Node(1);
+            else
+                node = new Node("One");
+            result = Method(node);
+            System.Console.WriteLine("Result {0}", result);
             Console.WriteLine("Successful!!");
         }
     }

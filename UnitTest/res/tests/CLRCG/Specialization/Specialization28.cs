@@ -15,7 +15,7 @@ namespace ProgramSpecialization
     {
         public var Method(var node)
         {
-            return node;
+            return node.data;
         }
 
         public static void Main(string[] args)
@@ -23,11 +23,11 @@ namespace ProgramSpecialization
             var node;
             var result;
             node = new Node(1);
-            result = Method(node.data);
-            System.Console.WriteLine("Result {0}", result.ToString());
-            node = new Node("One");
-            result = Method(node.data);
-            System.Console.WriteLine("Result {0}", result.ToString());
+            result = Method(node);
+            System.Console.WriteLine("Result {0}", result);
+            node = new Node("1");
+            result = Method(node);
+            System.Console.WriteLine("Result {0}", result);
             Console.WriteLine("Successful!!");
         }
     }
