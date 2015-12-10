@@ -35,9 +35,6 @@ namespace CodeGeneration
                 node.GetMemberElement(i).Accept(this, obj);
             return null;
         }
-
-        
-        
         
         public override Object Visit(InvocationExpression node, Object obj)
         {            
@@ -51,7 +48,7 @@ namespace CodeGeneration
             TypeExpression[] originalParamsType = new TypeExpression[originalMemberTypeExpression.ParameterListCount];
             for (int i = 0 ; i < originalMemberTypeExpression.ParameterListCount ; i++)
                 originalParamsType[i] = originalMemberTypeExpression.GetParameter(i);
-            var originalMethodIndentificator = MethodIndentificator(originalMethodDefinition.FullName, originalParamsType);
+            var originalMethodIndentificator = MethodIndentificator(originalMethodDefinition.FullName, originalParamsType,true);
             if (specilizedMethods.ContainsKey(originalMethodIndentificator))
                 return specilizedMethods[originalMethodIndentificator];
             TypeExpression[] args = this.compoundExpressionToArray(node.Arguments);
@@ -94,7 +91,13 @@ namespace CodeGeneration
             for (int i = 0; i < args.ExpressionCount; i++) 
             {
                 if ((te = args.GetExpressionElement(i).ILTypeExpression) != null)
+                {
+                    if (te is FieldType)
+                    {
+                        te = ((FieldType) te).FieldTypeExpression;
+                    }
                     aux[i] = te;
+                }
                 else
                     return null;
             }
@@ -312,18 +315,18 @@ namespace CodeGeneration
             return clonedMethodDefinition;
         }
 
-        private static string MethodIndentificator(String methodIndentificator, TypeExpression[] args)
+        private static string MethodIndentificator(String methodIndentificator, TypeExpression[] args, bool original = false)
         {
             methodIndentificator += "_";
             int i = 1;
             foreach (var typeExpression in args)
             {
-                methodIndentificator += "_" + i++ + "_" + TypeExpressionRepresentation(typeExpression);
+                methodIndentificator += "_" + i++ + "_" + TypeExpressionRepresentation(typeExpression, original);
             }            
             return methodIndentificator;
         }
 
-        private static String TypeExpressionRepresentation(TypeExpression typeExpression)
+        private static String TypeExpressionRepresentation(TypeExpression typeExpression, bool original = false)
         {
             if (typeExpression.ILType().Contains("class"))
                 return typeExpression.ILType().Replace("class ", "").Replace(".", "_");
@@ -342,12 +345,13 @@ namespace CodeGeneration
                 List<String> result = new List<string>();
                 foreach (var expression in ut.TypeSet)
                 {
-                    result.Add(TypeExpressionRepresentation(expression));
+                    result.Add(TypeExpressionRepresentation(expression,original));
                 }
                 result.Sort();                
                 return String.Join("_or_",result.ToArray());
             }
-
+            if (original && typeExpression is TypeVariable)
+                return TypeVariable.NewTypeVariable.ILType();
             return typeExpression.ILType();
         }
 
