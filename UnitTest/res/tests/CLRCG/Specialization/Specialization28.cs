@@ -17,24 +17,19 @@ namespace Specialization
         {
             return node.data;
         }
-
-        public void Run()
-        {
-            var node;
-            var result;
-            node = new Node(1);
-            result = this.GetData(node);
-            System.Console.WriteLine("Result {0}", result.ToString());
-            node = new Node("One");
-            result = this.GetData(node);
-            System.Console.WriteLine("Result {0}", result.ToString());
-            Console.WriteLine("Successful!!");
-        }
-
+        
         public static void Main(string[] args)
         {
             Test test = new Test();
-            test.Run();
+            var node;
+            var result;
+            node = new Node(1);
+            result = test.GetData(node);
+            System.Console.WriteLine("Result {0}", result.ToString());
+            node = new Node("One");
+            result = test.GetData(node);
+            System.Console.WriteLine("Result {0}", result.ToString());
+            Console.WriteLine("Successful!!");
         }
     }
 }

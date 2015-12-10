@@ -18,23 +18,18 @@ namespace Specialization
             return node.data;
         }
         
-        public void Run()
+        public static void Main(string[] args)
         {
+            Test test = new Test();
             var node;
             var result;
             if (true)
                 node = new Node(1);
             else
                 node = new Node("One");
-            result = this.GetData(node);
+            result = test.GetData(node);
             System.Console.WriteLine("Result {0}", result);
             Console.WriteLine("Successful!!");
-        }
-
-        public static void Main(string[] args)
-        {
-            Test test = new Test();
-            test.Run();
         }
     }
 }
