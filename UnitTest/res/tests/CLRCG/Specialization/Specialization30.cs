@@ -1,6 +1,6 @@
 using System;
 
-namespace ProgramSpecialization
+namespace Specialization
 {
     public class Node
     {
@@ -11,24 +11,30 @@ namespace ProgramSpecialization
         }
     }
 
-    public class Program
+    public class Test
     {
-        public var Method(var node)
+        public var GetData(var node)
         {
             return node.data;
+        }
+        
+        public void Run()
+        {
+            var node;
+            var result;
+            if (true)
+                node = new Node(1);
+            else
+                node = new Node("One");
+            result = this.GetData(node);
+            System.Console.WriteLine("Result {0}", result);
+            Console.WriteLine("Successful!!");
         }
 
         public static void Main(string[] args)
         {
-            var node;
-            var result;
-            if(true)
-                node = new Node(1);
-            else
-                node = new Node("One");
-            result = Method(node);
-            System.Console.WriteLine("Result {0}", result);
-            Console.WriteLine("Successful!!");
+            Test test = new Test();
+            test.Run();
         }
     }
 }

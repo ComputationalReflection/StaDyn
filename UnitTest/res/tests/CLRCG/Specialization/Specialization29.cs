@@ -1,33 +1,39 @@
 using System;
 
-namespace ProgramSpecialization
+namespace Specialization
 {
-    public class Program
+    public class Test
     {
-        public var Method(var node)
+        public var GetData(var data)
         {
-            return node;
+            return data;
         }
 
-        public static void Main(string[] args)
+        public void Run()
         {
             var data;
             var result;
             if (true)
             {
                 data = 1;
-                result = Method(data);
+                result = this.GetData(data);
                 System.Console.WriteLine("Result {0}", result);
             }
             else
             {
                 data = "1";
-                result = Method(data);
+                result = this.GetData(data);
                 System.Console.WriteLine("Result {0}", result);
             }
-            result = Method(data);
+            result = this.GetData(data);
             System.Console.WriteLine("Result {0}", result);
             Console.WriteLine("Successful!!");
+        }
+
+        public static void Main(string[] args)
+        {
+            Test test = new Test();
+            test.Run();
         }
     }
 }
