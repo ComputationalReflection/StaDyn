@@ -39,7 +39,7 @@ namespace UnitTest.Tests.Benchmarks
         }
 
        
-        //[TestMethod]
+        [TestMethod]
         [TestCategory("Benchmarks"), TestCategory("Points")]
         public void PointsFull()
         {

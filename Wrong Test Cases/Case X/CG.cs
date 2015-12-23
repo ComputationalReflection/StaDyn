@@ -1,40 +1,17 @@
 using System;
 
-namespace Specialization
+namespace ProgramSpecialization
 {
-    public class Node
+    public class Program
     {
-        public var data;
-        public Node(var data)
-        {
-            this.data = data;
-        }
-    }
-
-    public class Test
-    {
-        public var GetData(var data)
-        {
-            return data;
-        }
-
-        public void Run()
-        {
-            var node;
-            var result;
-            node = new Node(1);
-            result = this.GetData(node.data);
-            System.Console.WriteLine("Result {0}", result.ToString());
-            node = new Node("One");
-            result = this.GetData(node.data);
-            System.Console.WriteLine("Result {0}", result.ToString());
-            Console.WriteLine("Successful!!");
-        }
-
         public static void Main(string[] args)
         {
-            Test test = new Test();
-            test.Run();
+            var i = 0;
+            while (i < 10)
+            {
+                i = i + 1;
+            }            
+            System.Console.WriteLine("Result {0}", i.ToString());            
         }
     }
 }
