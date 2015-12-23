@@ -264,27 +264,32 @@ namespace CodeGeneration.Operations {
             else
                 evaluated.Add(typeExpression);
             if (IsValueType(typeExpression) || typeExpression is StringType)
-                typeSet.Add(typeExpression);
+            {
+                if(typeExpression is TypeVariable)
+                    typeSet.Add(((TypeVariable) typeExpression).Substitution);
+                else
+                    typeSet.Add(typeExpression);
+            }
             else if (typeExpression is TypeVariable)
             {
-                if (((TypeVariable)typeExpression).Substitution != null)
-                    typeSet.AddRange(GetTypes(((TypeVariable)typeExpression).Substitution,evaluated));
+                if (((TypeVariable) typeExpression).Substitution != null)
+                    typeSet.AddRange(GetTypes(((TypeVariable) typeExpression).Substitution, evaluated));
             }
             else if (typeExpression is UnionType)
             {
                 UnionType union = typeExpression as UnionType;
                 foreach (var expression in union.TypeSet)
-                    typeSet.AddRange(GetTypes(expression,evaluated));
+                    typeSet.AddRange(GetTypes(expression, evaluated));
             }
             else if (typeExpression is FieldType)
             {
                 FieldType fieldType = typeExpression as FieldType;
-                typeSet.AddRange(GetTypes(fieldType.FieldTypeExpression,evaluated));
+                typeSet.AddRange(GetTypes(fieldType.FieldTypeExpression, evaluated));
             }
             else if (typeExpression is PropertyType)
             {
                 PropertyType propertyType = typeExpression as PropertyType;
-                typeSet.AddRange(GetTypes(propertyType.PropertyTypeExpression,evaluated));
+                typeSet.AddRange(GetTypes(propertyType.PropertyTypeExpression, evaluated));
             }
             return typeSet;
         }
