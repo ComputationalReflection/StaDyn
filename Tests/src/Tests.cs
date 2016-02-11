@@ -25,32 +25,32 @@ namespace Tests {
 
         static Type[] testClasses = { 
             
-            typeof(GettingStartedTest),                        
-            typeof(SemanticSampleTest),
-            typeof(SemanticDynamicsTest),
-            typeof(SemanticExplicitTest), 
-            typeof(SemanticVarTest),
-            typeof(WrongExplicitTests),
-            typeof(WrongVarTests), //testWrongVar.SSA.nested.cs and testWrongVar.SSA.while.cs commented
-            typeof(WrongDynamicsTests), 
-            typeof(CLRCGAccessTest),
-            typeof(CLRCGArithmeticTest),
-            typeof(CLRCGArrayTest),
-            typeof(CLRCGCastingTest),
-            typeof(CLRCGCollectionsTest),
-            typeof(CLRCGConditionalsTest),
-            typeof(CLRCGExceptionTest),
-            typeof(CLRCGInheritanceTest),
-            typeof(CLRCGOperatorTest),
-            typeof(CLRCGPromotionTest),
-            typeof(CLRCGPropertyTest),
-            typeof(CLRCGUnionTypes),
-            typeof(CLRCGSampleTest),
-            typeof(CLRCGExamplesTestCases),
+            //typeof(GettingStartedTest),                        
+            //typeof(SemanticSampleTest),
+            //typeof(SemanticDynamicsTest),
+            //typeof(SemanticExplicitTest), 
+            //typeof(SemanticVarTest),
+            //typeof(WrongExplicitTests),
+            //typeof(WrongVarTests), //testWrongVar.SSA.nested.cs and testWrongVar.SSA.while.cs commented
+            //typeof(WrongDynamicsTests), 
+            //typeof(CLRCGAccessTest),
+            //typeof(CLRCGArithmeticTest),
+            //typeof(CLRCGArrayTest),
+            //typeof(CLRCGCastingTest),
+            //typeof(CLRCGCollectionsTest),
+            //typeof(CLRCGConditionalsTest),
+            //typeof(CLRCGExceptionTest),
+            //typeof(CLRCGInheritanceTest),
+            //typeof(CLRCGOperatorTest),
+            //typeof(CLRCGPromotionTest),
+            //typeof(CLRCGPropertyTest),
+            //typeof(CLRCGUnionTypes),
+            //typeof(CLRCGSampleTest),
+            //typeof(CLRCGExamplesTestCases),
             //typeof(Benchmarks), //no.inference.cs commented.   
             //typeof(Compilation),            
             
-            //typeof(CLRCGSpecialization),         
+            typeof(CLRCGSpecialization),         
         };
 
         static void Main() {            

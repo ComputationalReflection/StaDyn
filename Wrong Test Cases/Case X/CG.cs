@@ -1,22 +1,52 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ProgramSpecialization
+public class Integer
 {
-    public class Program
+    public int data;
+    public Integer(int data)
     {
-        public static void Main(string[] args)
-        {
-            dynamic i_0 = 0; //i_0 : int
-            i_2 = i_0; //Move
-
-            //i_2 = phi(i_0, i_1) //i_2 : \/(int, typeof(i_1))
-            while (i_2 < 10)
-            {
-                i_1 = i_2 + 1; //i_1 : \/(typeof(i_2), int)
-                i_2 = i_1; //Move
-            }            
-            System.Console.WriteLine("Result {0}", i.ToString());            
-        }
+        this.data = data;
+    }
+    public override string ToString()
+    {
+        return this.data.ToString();
     }
 }
 
+public class Double
+{
+    public double data;
+    public Double(double data)
+    {
+        this.data = data;
+    }
+    public override string ToString()
+    {
+        return this.data.ToString();
+    }
+}
+
+public class AddOp { }
+
+public class EvaluateExpression
+{
+    public static Integer Visit(Integer op1, AddOp op, Integer op2) { return new Integer(op1.data + op2.data); }
+    public static Double Visit(Double op1, AddOp op, Double op2) { return new Double(op1.data + op2.data); }   
+}
+
+public class Program
+{
+    static var Evaluate(var exp1, var op, var exp2)
+    {
+        return EvaluateExpression.Visit(exp1, op, exp2);
+    }
+    static void Main()
+    {
+		var result = Evaluate(new Integer(1), new AddOp(), new Integer(2));
+        Console.WriteLine("1+2 = {0}", result);       		
+    }
+}
