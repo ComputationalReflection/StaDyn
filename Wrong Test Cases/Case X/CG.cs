@@ -1,52 +1,54 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-public class Integer
+namespace ProgramSpecialization
 {
-    public int data;
-    public Integer(int data)
+    public class A
     {
-        this.data = data;
-    }
-    public override string ToString()
-    {
-        return this.data.ToString();
-    }
-}
+        private int data;
 
-public class Double
-{
-    public double data;
-    public Double(double data)
-    {
-        this.data = data;
-    }
-    public override string ToString()
-    {
-        return this.data.ToString();
-    }
-}
+        public A(int data)
+        {
+            this.data = data;
+        }
 
-public class AddOp { }
-
-public class EvaluateExpression
-{
-    public static Integer Visit(Integer op1, AddOp op, Integer op2) { return new Integer(op1.data + op2.data); }
-    public static Double Visit(Double op1, AddOp op, Double op2) { return new Double(op1.data + op2.data); }   
-}
-
-public class Program
-{
-    static var Evaluate(var exp1, var op, var exp2)
-    {
-        return EvaluateExpression.Visit(exp1, op, exp2);
+        public override String ToString()
+        {
+            return "A Class";
+        }
     }
-    static void Main()
+
+    public class B
     {
-		var result = Evaluate(new Integer(1), new AddOp(), new Integer(2));
-        Console.WriteLine("1+2 = {0}", result);       		
+        private int data;
+
+        public B(int data)
+        {
+            this.data = data;
+        }
+
+        public override String ToString()
+        {
+            return "B Class";
+        }
+    }
+
+    public class Program
+    {
+        public var Method(var className, var data)
+        {
+            var result;
+            if (className == 'A')
+                result = new A(data);
+            else
+                result = new B(data);
+            return result;
+        }
+
+        public static void Main()
+        {
+            Program program = new Program();
+            var result = program.Method('A', 1);
+            System.Console.WriteLine(result.ToString());
+        }
     }
 }

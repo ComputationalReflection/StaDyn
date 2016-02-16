@@ -10,14 +10,19 @@ namespace TypeSystem.Operations {
     public enum KindOfPromotion { Simple, Verbose };
 
     public abstract class PromotionOperation : TypeSystemOperation {
+        protected bool NotifyError { set; get; }
 
-        public static PromotionOperation Create(TypeExpression type, MethodType methodAnalyzed, Location location) {
-            return new SimplePromotionOperation(type, methodAnalyzed, location);
+        protected PromotionOperation(bool notifyError)
+        {
+            this.NotifyError = notifyError;
         }
 
-        public static PromotionOperation Create(TypeExpression type, Enum op, MethodType methodAnalyzed, Location location) {
+        public static PromotionOperation Create(TypeExpression type, MethodType methodAnalyzed, Location location, bool notifyError = true) {
+            return new SimplePromotionOperation(type, methodAnalyzed, location, notifyError);
+        }
 
-            return new VerbosePromotionOperation(type, op, methodAnalyzed, location);
+        public static PromotionOperation Create(TypeExpression type, Enum op, MethodType methodAnalyzed, Location location, bool notifyError = true) {
+            return new VerbosePromotionOperation(type, op, methodAnalyzed, location, notifyError);
         }
 
         public abstract KindOfPromotion KindOfPromotion {

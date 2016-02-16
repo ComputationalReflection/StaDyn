@@ -192,6 +192,7 @@
     <Compile Include="src\CodeGeneration\Specializer\VisitorSpelializer.cs" />
     <Compile Include="src\TargetPlatforms\TargetPlatform.cs" />
     <Compile Include="src\TargetPlatforms\TargetPlatformRepresentation.cs" />
+    <Compile Include="src\TypeSystem\Constraints\InvocationConstraint.cs" />
     <Compile Include="src\TypeSystem\Operations\CastOperation.cs" />
     <Compile Include="src\TypeSystem\Operations\EqualsForOverloadOperation.cs" />
     <Compile Include="src\TypeSystem\Operations\GetMembersOperation.cs" />

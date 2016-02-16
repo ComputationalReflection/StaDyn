@@ -17,7 +17,7 @@ namespace TypeSystem.Operations {
         #endregion
 
         #region Constructor
-        internal SimplePromotionOperation(TypeExpression to, MethodType methodAnalyzed, Location location) {
+        internal SimplePromotionOperation(TypeExpression to, MethodType methodAnalyzed, Location location, bool notifyError):base(notifyError) {
             this.to = to;
             this.methodAnalyzed = methodAnalyzed;
             this.location = location;
@@ -70,7 +70,8 @@ namespace TypeSystem.Operations {
 
         #region Report Errors
         public override object ReportError(TypeExpression from) {
-            ErrorManager.Instance.NotifyError(new TypePromotionError(from.FullName, this.to.FullName, this.location));
+            if(NotifyError)
+                ErrorManager.Instance.NotifyError(new TypePromotionError(from.FullName, this.to.FullName, this.location));
             return null;
         }
         #endregion
