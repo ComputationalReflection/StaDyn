@@ -267,6 +267,7 @@ namespace CodeGeneration
                 clonedSingleIdentifierExpression.IdSymbol = symbol;
             }
             clonedSingleIdentifierExpression.IndexOfSSA = node.IndexOfSSA;
+            clonedSingleIdentifierExpression.IdMode = node.IdMode;
             return clonedSingleIdentifierExpression;
         }
 

@@ -31,23 +31,20 @@ public class Double
     }
 }
 
+public class AddOp { }
 
 public class EvaluateExpression
 {
-    public static Integer Visit(Integer op1) { return new Integer(op1.data); }
-    public static Double Visit(Double op1) { return new Double(op1.data); }
-    
+    public static Integer Visit(Integer op1, AddOp op, Integer op2) { return new Integer(op1.data + op2.data); }
+    public static Double Visit(Double op1, AddOp op, Double op2) { return new Double(op1.data + op2.data); }
 }
 
 public class Program
 {
-    static object Evaluate(object exp1)
+    static var Evaluate(var exp1, var op, var exp2)
     {
-		if(exp1 is Integer)
-			return EvaluateExpression.Visit((Integer)exp1);
-		return EvaluateExpression.Visit((Double)exp1);
+        return EvaluateExpression.Visit(exp1, op, exp2);
     }
-
     static void Main()
     {
         var result;
@@ -56,8 +53,8 @@ public class Program
             op1 = new Integer(1);
         else
             op1 = new Double(1);
-        result = Evaluate(op1);
-        Console.WriteLine("Result = {0}", result);
+        result = Evaluate(op1, new AddOp(), op1);
+        Console.WriteLine("1+2 = {0}", result);
 
     }
 }

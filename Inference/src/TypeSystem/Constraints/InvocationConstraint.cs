@@ -8,6 +8,9 @@ namespace TypeSystem.Constraints
 {
     /// <summary>
     /// A InvocationContraint it is used to check a method invocation taking into account method overloading.
+    /// It represents constraints of the form:
+    ///         ret := op1(paramList_1 OR paramList_2 OR ... paramList_n)
+    /// where op1 is a method, paramList_X is the list of parameters of each method overload.
     /// </summary>
     /// <remarks>
     /// Each constraint list represents one method overload.
@@ -106,19 +109,21 @@ namespace TypeSystem.Constraints
         protected override string BuildTypeExpressionString()
         {            
             StringBuilder sb = new StringBuilder();
-            sb.Append(MethodName + "{");
-            foreach (var constraintList in ConstraintLists)
-            {
+            sb.Append(MethodName + "(");
+            for (int i = 0; i < ConstraintLists.Count; i++)
+            { 
                 sb.Append("[");
-                for (int i = 0; i < constraintList.Constraints.Count; i++)
+                for (int j = 0; j < ConstraintLists[i].Constraints.Count; j++)
                 {
-                    sb.Append(constraintList.Constraints[i].ToString());
-                    if (i < constraintList.Constraints.Count - 1)
+                    sb.Append(ConstraintLists[i].Constraints[j].ToString());
+                    if (j < ConstraintLists[i].Constraints.Count - 1)
                         sb.Append(", ");
                 }
                 sb.Append("]");
+                if (i < ConstraintLists.Count - 1)
+                    sb.Append(" OR ");
             }
-            sb.Append("}");
+            sb.Append(")");
             return sb.ToString();
         }
         #endregion
