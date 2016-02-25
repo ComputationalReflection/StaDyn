@@ -245,5 +245,12 @@ namespace UnitTest.Tests.CLRCG
         {
             GetDefaultTest().runTest();
         }
+
+        [TestMethod]
+        [TestCategory("CLRCG"), TestCategory("Specialization")]
+        public void Specialization33()
+        {
+            GetDefaultTest().runTest();
+        }
     }
 }
