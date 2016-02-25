@@ -36,12 +36,14 @@ public class AddOp { }
 public class EvaluateExpression
 {
     public static Integer Visit(Integer op1, AddOp op, Integer op2) { return new Integer(op1.data + op2.data); }
+    public static Double Visit(Integer op1, AddOp op, Double op2) { return new Double(op1.data + op2.data); }
+    public static Double Visit(Double op1, AddOp op, Integer op2) { return new Double(op1.data + op2.data); }
     public static Double Visit(Double op1, AddOp op, Double op2) { return new Double(op1.data + op2.data); }
 }
 
 public class Program
 {
-    static var Evaluate(var exp1, var op, var exp2)
+    static var Evaluate(dynamic exp1, dynamic op, dynamic exp2)
     {
         return EvaluateExpression.Visit(exp1, op, exp2);
     }
@@ -55,6 +57,5 @@ public class Program
             op1 = new Double(1);
         result = Evaluate(op1, new AddOp(), op1);
         Console.WriteLine("1+2 = {0}", result);
-
     }
 }

@@ -112,6 +112,7 @@ namespace TypeSystem.Operations {
                         ic.Add(cl);
                         break;
                     }
+                    ic = null;
                 }
 
                 if (ic == null)
