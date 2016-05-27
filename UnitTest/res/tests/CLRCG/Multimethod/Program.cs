@@ -25,14 +25,7 @@ namespace Multimethod
             Console.WriteLine("3+StaDyn = {0}", result);
             result = Evaluate(stringValue, new AndOperator(), doubleValue);
             Console.WriteLine("StaDyn && 23.34 = {0}", result);
-            //result = Evaluate(boolValue, doubleValue, stringValue); //Compilation error       
-            dynamic union;
-            if (true)
-                union = integerValue;
-            else
-                union = doubleValue;
-            result = Evaluate(union, new AddOperator(), union);
-            Console.WriteLine("1+23.34 = {0}", result);
+            //result = Evaluate(boolValue, doubleValue, stringValue); //Compilation error                  
             Console.WriteLine("Successful!!");
         }
     }
