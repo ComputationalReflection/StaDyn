@@ -222,8 +222,24 @@
     <Content Include="res\tests\CLRCG\Specialization\Specialization33.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="res\tests\CLRCG\Multimethod\Program.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\CLRCG\Multimethod\EvaluateExpression.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\CLRCG\Multimethod\Value.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\CLRCG\Multimethod\Operators.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\CLRCG\Multimethod\Chronometer.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="src\tests\Benchmarks\Points.cs" />
     <Compile Include="src\tests\Benchmarks\Static.cs" />
+    <Compile Include="src\tests\CLRCG\Multimethod.cs" />
     <Compile Include="src\tests\GettingStarted.cs" />
     <Compile Include="src\tests\Wrong.cs" />
     <Compile Include="src\tests\CLRCG\Specialization.cs" />

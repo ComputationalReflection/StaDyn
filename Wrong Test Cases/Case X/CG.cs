@@ -1,86 +1,51 @@
 using System;
-using System.Text;
 
-
-public class IntegerValue
-{
-    public int Data;
-    public IntegerValue(int Data)
-    {
-        this.Data = Data;
-    }
-    public override string ToString()
-    {
-        return this.Data.ToString();
+public class Integer {
+    public int data;
+    public Integer(int data){this.data = data;}
+    public override string ToString() {
+        return this.data.ToString();
     }
 }
 
-public class DoubleValue
-{
-    public double Data;
-    public DoubleValue(double Data)
-    {
-        this.Data = Data;
-    }
-    public override string ToString()
-    {
-        return this.Data.ToString();
+public class Double {
+    public double data;
+    public Double(double data){this.data = data;}
+    public override string ToString(){
+        return this.data.ToString();
     }
 }
 
-public class AddOp
-{
-    public override string ToString()
-    {
-        return "+";
+public class AddOp { }
+
+public class EvaluateExpression {
+    public static Integer Visit(Integer op1, AddOp op, Integer op2) { return new Integer(op1.data + op2.data); }
+    public static Double Visit(Double op1, AddOp op, Double op2) { return new Double(op1.data + op2.data); }
+}
+
+public class Program {
+    static object Evaluate(object exp1, object op, object exp2) {...}
+    static void Main() {        
+        var op1;
+        if (true)
+            op1 = new Integer(1);
+        else
+            op1 = new Double(1);        
+        var result = EvaluateDispatcher(op1, new AddOp(), op1);
+        Console.WriteLine("1+2 = {0}", result);
     }
-}
-
-public class EvaluateExpression
-{
-    public static IntegerValue Visit(IntegerValue op1, AddOp op, IntegerValue op2) { return new IntegerValue(op1.Data + op2.Data); }
-    public static DoubleValue Visit(IntegerValue op1, AddOp op, DoubleValue op2) { return new DoubleValue(op1.Data + op2.Data); }
-    public static DoubleValue Visit(DoubleValue op1, AddOp op, IntegerValue op2) { return new DoubleValue(op1.Data + op2.Data); }
-    public static DoubleValue Visit(DoubleValue op1, AddOp op, DoubleValue op2) { return new DoubleValue(op1.Data + op2.Data); }
-}
-
-public class Program
-{
-    static var Evaluate(var exp1, var op, var exp2)
-    {
+		
+    static object EvaluateDispatcher(object exp1, object op, object exp2){
+        if(exp1 is Integer && op is AddOp && exp2 is Integer)
+            return Evaluate((Integer)exp1, (AddOp)op, (Integer)exp2);
+        if (exp1 is Double && op is AddOp && exp2 is Double)
+            return Evaluate((Double)exp1, (AddOp)op, (Double)exp2);
+        return Evaluate(exp1, op, exp2);
+    }
+	static var Evaluate(Integer exp1, AddOp op, Integer exp2) {
         return EvaluateExpression.Visit(exp1, op, exp2);
     }
-    static void Main()
-    {
-		int expressionsLength = 2;
-		int operatorsLength = 1;
-		
-        var expressions = new var[expressionsLength];		
-		expressions[0] = new IntegerValue(3);
-		expressions[1] = new DoubleValue(4.3);
-				
-        var operators = new var[operatorsLength];
-		operators[0] = new AddOp();
-		int i = 0;
-        for (; i < expressionsLength ; i=i+1)
-		{
-			int j = 0;
-			for (; j < operatorsLength ; j=j+1)			
-			{
-				int k = 0;
-                for (; k < expressionsLength ; k=k+1)
-                {
-					var op1 = expressions[i];
-					var op = operators[j];
-					var op2 = expressions[k];
-					var result = Evaluate(op1, op, op2);
-					String op1s = op1.ToString();					
-					String ops = op.ToString();
-					String op2s = op2.ToString();
-					String results = result.ToString();					
-                    Console.WriteLine(op1s + " " + ops  + " " + op2s + " = " + results);                                    
-                }				
-			}
-		}
+    static var Evaluate(Double exp1, AddOp op, Double exp2){
+        return EvaluateExpression.Visit(exp1, op, exp2);
     }
 }

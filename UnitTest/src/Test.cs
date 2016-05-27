@@ -170,7 +170,7 @@ namespace UnitTest
         /// </summary>
         /// <param name="fileNames">The set of file names</param>
         /// <param name="outputFileName">The name of the output file name. Null implies no code generation.</param>
-        private void runTest(string[] fileNames, string outputFileName)
+        public void runTest(string[] fileNames, string outputFileName)
         {            
             this.FromError = ErrorManager.Instance.ErrorCount;
             Compiler.Parser.Parse(
@@ -188,7 +188,11 @@ namespace UnitTest
             this.ToError = ErrorManager.Instance.ErrorCount;
             int expectedNumberOfErrors;
             this.Success = ErrorFile.CheckErrors(fileNames, this.FromError, this.ToError, out expectedNumberOfErrors);
-            this.ExpectedErrors = expectedNumberOfErrors;
+            this.ExpectedErrors = expectedNumberOfErrors;           
+            if (this.ExpectedErrors != 0)
+                Console.Error.WriteLine(this.ExpectedErrors + " errors expected, " + (this.ToError - this.FromError) + " found.");
+            Assert.AreEqual(this.ExpectedErrors, this.ToError - this.FromError, this.ExpectedErrors + " errors expected, " + (this.ToError - this.FromError) + " found.");
+            Assert.IsTrue(this.Success);
         }
 
         /// <summary>
@@ -199,10 +203,6 @@ namespace UnitTest
         public void runTest(string[] fileNames)
         {            
             this.runTest(fileNames, Path.ChangeExtension(fileNames[0], ".exe"));            
-            Assert.AreEqual(this.ExpectedErrors, this.ToError - this.FromError, this.ExpectedErrors + " errors expected, " + (this.ToError - this.FromError) + " found.");
-            if (this.ExpectedErrors != 0)
-                Console.Error.WriteLine(this.ExpectedErrors + " errors expected, " + (this.ToError - this.FromError) + " found.");
-            Assert.IsTrue(this.Success);
         }
 
         /// <summary>
