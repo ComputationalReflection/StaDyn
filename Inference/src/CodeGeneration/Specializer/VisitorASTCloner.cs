@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using AST;
 using ErrorManagement;
+using Semantic;
 using Symbols;
 using Tools;
 using TypeSystem;
@@ -20,7 +21,7 @@ namespace CodeGeneration
 
         public VisitorASTCloner(VisitorSpelializer visitorSpecializer)
         {
-            this.visitorSpecializer = visitorSpecializer;
+            this.visitorSpecializer = visitorSpecializer;           
         }
 
 
@@ -74,7 +75,18 @@ namespace CodeGeneration
             }
             clonedMethodType.ASTNode = clonedMethodDefinition;
             clonedMethodDefinition.TypeExpr = clonedMethodType;
+
             
+            var previousShowMessages = ErrorManager.Instance.ShowMessages;
+            ErrorManager.Instance.ShowMessages = false;            
+            clonedMethodDefinition.Accept(this.visitorSpecializer.visitorTypeInference, null);
+            ErrorManager.Instance.ShowMessages = previousShowMessages;
+            if (ErrorManager.Instance.UnNotifiedErrors)
+            {
+                ErrorManager.Instance.UnNotifiedErrors = false;
+                return null;
+            }
+
             TypeDefinition originalTypeDefinition = clonedMethodType.MemberInfo.TypeDefinition;
             originalTypeDefinition.AddMethod(clonedMethodDefinition);
 

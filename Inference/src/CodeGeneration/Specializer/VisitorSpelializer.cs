@@ -16,7 +16,7 @@ namespace CodeGeneration
 {
     class VisitorSpelializer: VisitorAdapter
     {
-        private VisitorTypeInference visitorTypeInference;        
+        public VisitorTypeInference visitorTypeInference;        
         private Dictionary<String, MethodDefinition> specilizedMethods;
         private IList<Pair<TypeExpression, TypeExpression>> previouslyUnified;
         private bool isCurrentMethodDynamic;
@@ -57,11 +57,12 @@ namespace CodeGeneration
             if (methodIndentificator.Equals(originalMethodIndentificator)) //Method does not need to be specialized
             {
                 specilizedMethods[originalMethodIndentificator] = originalMethodDefinition;
-                return false;
+                return null;
             }
 
             bool specializeOrCreate = !HasUnionTypes(originalMethodDefinition.FullName, methodIndentificator);
             MethodDefinition method =  specializeOrCreate ? SpecilizeMethod(methodIndentificator, originalMethodDefinition, args) : CreateMethod(methodIndentificator, originalMethodDefinition, args,node);
+            if (method == null) return null;
             node.ActualMethodCalled = method.TypeExpr;
             method.IdentifierExp.ExpressionType = method.TypeExpr;
             TypeExpression returnTypeExpresion = ((MethodType) method.TypeExpr).Return;
@@ -113,7 +114,9 @@ namespace CodeGeneration
                 List<MethodDefinition> methods = new List<MethodDefinition>();                
                 foreach (TypeExpression[] listOfArgs in GetTypes(args))
                 {
-                    methods.Add(SpecilizeMethod(MethodIndentificator(originalMethodDefinition.FullName, listOfArgs),originalMethodDefinition, listOfArgs));
+                    MethodDefinition md = SpecilizeMethod(MethodIndentificator(originalMethodDefinition.FullName, listOfArgs), originalMethodDefinition, listOfArgs);
+                    if(md != null)
+                        methods.Add(md);
                 }
 
                 MethodType originalMethodType = (MethodType) originalMethodDefinition.TypeExpr;
@@ -305,8 +308,8 @@ namespace CodeGeneration
             if (!specilizedMethods.ContainsKey(methodIndentificator))
             {                
                 clonedMethodDefinition = (MethodDefinition) originalMethodDefinition.Accept(new VisitorASTCloner(this), args);
-                specilizedMethods.Add(methodIndentificator, clonedMethodDefinition);
-                clonedMethodDefinition.Accept(visitorTypeInference, null);                
+                if(clonedMethodDefinition != null)
+                    specilizedMethods.Add(methodIndentificator, clonedMethodDefinition);                               
             }
             else
             {

@@ -55,6 +55,11 @@ namespace ErrorManagement {
         private bool showMessages;
 
         /// <summary>
+        /// TRUE if an error was not notified.
+        /// </summary>
+        private bool unNotifiedErrors;
+
+        /// <summary>
         /// The list of errors previusly shown
         /// </summary>
         private IList<IError> errorList = new List<IError>();
@@ -62,6 +67,15 @@ namespace ErrorManagement {
         #endregion
 
         #region Properties
+        
+        /// <summary>
+        /// TRUE if an error was not notified.
+        /// </summary>
+        public bool UnNotifiedErrors
+        {
+            get { return unNotifiedErrors; }
+            set { unNotifiedErrors = value; }
+        }
 
         /// <summary>
         /// Gets the unique instance of ErrorManager
@@ -209,17 +223,19 @@ namespace ErrorManagement {
         /// Notify the error
         /// </summary>
         /// <param name="error">Error to notify.</param>
-        public void NotifyError(IError error) {
+        public void NotifyError(IError error)
+        {            
+            if (!unNotifiedErrors)
+                UnNotifiedErrors = true;
             if (!this.showMessages)
                 return;
-
             // * Checks if the error was previously shown
             if (this.errorList.Contains(error))
                 return;
             this.errorList.Add(error);
-
-
+            
             errorFound = true;
+            
             try {
                 StreamWriter writer = new StreamWriter(this.logFileName, true);
 
@@ -233,6 +249,7 @@ namespace ErrorManagement {
                 writeErrorLogEntry(writer, error);
 
                 writer.Close();
+                UnNotifiedErrors = false;
             } catch (Exception e) {
                 Console.Error.WriteLine("[ErrorManager]: It has not been possible to write in error log.");
                 Console.Error.WriteLine(e.Message);

@@ -31,61 +31,11 @@ public class DoubleValue
     }
 }
 
-public class BoolValue
-{
-    public bool Data;
-    public BoolValue(bool Data)
-    {
-        this.Data = Data;
-    }
-    public override string ToString()
-    {
-        return this.Data.ToString();
-    }
-}
-
-public class StringValue
-{
-    public string Data;
-    public StringValue(string Data)
-    {
-        this.Data = Data;
-    }
-    public override string ToString()
-    {
-        return this.Data.ToString();
-    }
-}
-
 public class AddOp
 {
     public override string ToString()
     {
         return "+";
-    }
-}
-
-public class EqualToOp
-{
-    public override string ToString()
-    {
-        return "==";
-    }
-}
-
-public class AndOp
-{
-    public override string ToString()
-    {
-        return "&&";
-    }
-}
-
-public class OrOp
-{
-    public override string ToString()
-    {
-        return "||";
     }
 }
 
@@ -114,6 +64,7 @@ public class Program
 
         var operators = new var[operatorsLength];
         operators[0] = new AddOp();
+
         int i = 0;
         for (; i < expressionsLength; i = i + 1)
         {
@@ -127,11 +78,7 @@ public class Program
                     var op = operators[j];
                     var op2 = expressions[k];
                     var result = Evaluate(op1, op, op2);
-                    String op1s = op1.ToString();
-                    String ops = op.ToString();
-                    String op2s = op2.ToString();
-                    String results = result.ToString();
-                    Console.WriteLine(op1s + " " + ops + " " + op2s + " = " + results);
+                    Console.WriteLine(op1.ToString() + " " + op.ToString() + " " + op2.ToString() + " = " + result.ToString());
                 }
             }
         }
