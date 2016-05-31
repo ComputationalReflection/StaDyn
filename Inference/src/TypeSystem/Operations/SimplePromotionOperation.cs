@@ -47,7 +47,7 @@ namespace TypeSystem.Operations {
 
         #region UnionType-->
         public override object Exec(UnionType from, object arg) {
-            return from.AcceptOperation(PromotionOperation.Create(this.to, AssignmentOperator.Assign, this.methodAnalyzed, this.location), arg);
+            return from.AcceptOperation(PromotionOperation.Create(this.to, AssignmentOperator.Assign, this.methodAnalyzed, this.location,this.NotifyError), arg);
         }
         #endregion
 
