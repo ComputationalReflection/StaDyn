@@ -356,7 +356,7 @@ namespace TypeSystem {
             // * The substitution is not altered
             // * Since equivalence classes and type variables have a bidirectional association,
             //   the new equivalence classes will make type variables update their new equivalence classes
-            foreach (EquivalenceClass equivalenceClass in equivalenceClasses)
+            foreach (EquivalenceClass equivalenceClass in new List<EquivalenceClass>(equivalenceClasses))
                 equivalenceClass.UpdateEquivalenceClass(typeVariableMappings);
             newTypeVariable.ValidTypeExpression = false;
             // * The new class type is returned
@@ -581,7 +581,7 @@ namespace TypeSystem {
         }
 
         #endregion
-
+        
     }
 }
 

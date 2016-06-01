@@ -75,7 +75,11 @@ namespace Compiler {
                Program.ClearMemory();                
                Console.Error.WriteLine("An internal error has ocurred. Please, see " + Path.ChangeExtension(outputFileName,".log") + " for details.");
                File.WriteAllLines(Path.ChangeExtension(outputFileName, ".log") , new[] { "Exception: " + e, e.StackTrace });
-               ErrorManager.Instance.NotifyError(new CodeGenerationError(outputFileName));
+
+                var previousShowMessages = ErrorManager.Instance.ShowMessages;
+                ErrorManager.Instance.ShowMessages = true;
+                ErrorManager.Instance.NotifyError(new CodeGenerationError(outputFileName));
+                ErrorManager.Instance.ShowMessages = previousShowMessages;
             }
 #if DEBUG
             double elapsedTime = ((DateTime.Now.Ticks - startTime) / TimeSpan.TicksPerMillisecond) / 1000.0;

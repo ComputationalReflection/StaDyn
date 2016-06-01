@@ -16,13 +16,13 @@ namespace Specialization
             var result;
             if (true)
             {
-                data = 1;
+                data = "One";
                 result = test.GetData(data);
-                System.Console.WriteLine("Result {0}", result);
+                System.Console.WriteLine("Result {0}", result);                
             }
             else
             {
-                data = "1";
+                data = 1;
                 result = test.GetData(data);
                 System.Console.WriteLine("Result {0}", result);
             }
