@@ -4,7 +4,7 @@ namespace Specialization
 {
     public class Test
     {
-        public var GetData(var data)
+        public dynamic GetData(dynamic data)
         {
             return data;
         }

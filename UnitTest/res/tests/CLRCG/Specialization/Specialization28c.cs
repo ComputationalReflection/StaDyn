@@ -22,27 +22,22 @@ namespace Specialization
         {
             return param;
         }
-
-        public static dynamic GetData(dynamic param)
-        {
-            return param.data;
-        }
-
+        
         public static void Main(string[] args)
         {            
             var node;
             var result;
             node = new Node(1);
             result = Test.GetParam(node);
-            System.Console.WriteLine("GetParam Result {0}", result.ToString());
-            result = Test.GetData(node);
-            System.Console.WriteLine("GetData Result {0}", result.ToString());
+            System.Console.WriteLine("Result {0}", result.ToString());
+            result = Test.GetParam(node.data);
+            System.Console.WriteLine("Result {0}", result.ToString());
             
             node = new Node("One");
             result = Test.GetParam(node);
-            System.Console.WriteLine("GetParam Result {0}", result.ToString());
-            result = Test.GetData(node);
-            System.Console.WriteLine("GetData Result {0}", result.ToString());
+            System.Console.WriteLine("Result {0}", result.ToString());
+            result = Test.GetParam(node.data);
+            System.Console.WriteLine("Result {0}", result.ToString());
         }
     }
 }
