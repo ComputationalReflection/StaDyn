@@ -11,6 +11,10 @@ namespace Points
             this.data = data;
             this.next = next;
         }
+        public override string ToString()
+        {
+            return "Node[data=" + data.ToString() + ",next=" + next.ToString() + "]";
+        }
     }
 
     public class Point3D
@@ -26,6 +30,10 @@ namespace Points
             this.z = z;
             this.dimensions = dimensions;
         }
+        public override string ToString()
+        {
+            return "Point3D[x=" + x.ToString() + ",y=" + y.ToString() + ",z=" + z.ToString() + "]";
+        }
     }
 
     public class Point2D
@@ -38,6 +46,10 @@ namespace Points
             this.x = x;
             this.y = y;
             this.dimensions = dimensions;
+        }
+        public override string ToString()
+        {
+            return "Point3D[x=" + x.ToString() + ",y=" + y.ToString() + "]";
         }
     }
 
@@ -92,9 +104,11 @@ namespace Points
         {
             var numberOfPoints;
             var list, positive, point;
-            numberOfPoints = 10000;
+            numberOfPoints = 100;
             list = createPoints(numberOfPoints);
+            System.Console.WriteLine("Result {0}", list);
             positive = positiveX(list, numberOfPoints);
+            System.Console.WriteLine("Result {0}", positive);
         }
     }
 

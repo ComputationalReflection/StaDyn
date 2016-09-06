@@ -1072,7 +1072,7 @@ namespace CodeGeneration {
                         UnionType unionType = node.FieldName.ExpressionType as UnionType;
                         for (int i = 0; i < unionType.TypeSet.Count; i++)
                         {                            
-                            if (i != unionType.TypeSet.Count - 1 && unionType.TypeSet[i] is FieldType)
+                            if (i != unionType.TypeSet.Count && unionType.TypeSet[i] is FieldType)
                             {
                                 if (!String.IsNullOrEmpty(nextLabel))
                                     this.codeGenerator.WriteLabel(indent, nextLabel);
@@ -1083,7 +1083,7 @@ namespace CodeGeneration {
                                 WriteLoadField(unionType.TypeSet[i] as FieldType, node.FieldName.Identifier, objRight);                                
                                 this.codeGenerator.br(indent, finalLabel);
                             }
-                            else if (i == unionType.TypeSet.Count - 1)
+                            if (i == unionType.TypeSet.Count - 1)
                             {
                                 if (!String.IsNullOrEmpty(nextLabel))
                                     this.codeGenerator.WriteLabel(indent, nextLabel);

@@ -92,7 +92,7 @@ namespace Points
         {
             var numberOfPoints;
             var list, positive, point;
-            numberOfPoints = 10000;
+            numberOfPoints = 10;
             list = createPoints(numberOfPoints);
             positive = positiveX(list, numberOfPoints);
         }

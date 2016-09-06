@@ -1,1 +1,1 @@
-..\StaDyn.exe .\CG.cs -ed
+..\StaDyn.exe .\CG.cs -ed -d

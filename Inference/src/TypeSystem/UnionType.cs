@@ -699,5 +699,108 @@ namespace TypeSystem {
 
         #endregion
 
+
+        #region Simplify()
+        /// <summary>
+        /// Gets the simplified version of the typeexpression.
+        /// </summary>
+        /// <returns>Returns the simplified type.</returns>
+        public TypeExpression Simplify()
+        {
+            List<TypeExpression> typeSet = new List<TypeExpression>();
+            IDictionary<string,TypeExpression> evaluated = new Dictionary<string, TypeExpression>();
+            for (int i = 0; i < this.TypeSet.Count; i++)
+                typeSet.AddRange(GetTypes(this.TypeSet[i],evaluated));
+            typeSet = new List<TypeExpression>(new HashSet<TypeExpression>(typeSet));
+            if (typeSet.Count == 1)
+                return typeSet[0];
+            else
+            {
+                this.typeSet = typeSet;
+                return this;
+            }
+        }
+        
+        private List<TypeExpression> GetTypes(TypeExpression typeExpression, IDictionary<string, TypeExpression> evaluated = null)
+        {
+            List<TypeExpression> typeSet = new List<TypeExpression>();
+            if (evaluated == null)
+                evaluated = new Dictionary<string, TypeExpression>();
+            if (evaluated.Keys.Contains(typeExpression.FullName))
+            {
+                if (evaluated[typeExpression.FullName] is ClassType)
+                    MergeClassType((ClassType) evaluated[typeExpression.FullName], (ClassType)typeExpression);
+                return typeSet;
+            }
+            else
+                evaluated.Add(typeExpression.FullName, typeExpression);
+            if (typeExpression.IsValueType() || typeExpression is StringType)
+            {
+                if (typeExpression is TypeVariable)
+                    typeSet.Add(((TypeVariable)typeExpression).Substitution);
+                else
+                    typeSet.Add(typeExpression);
+            }
+            else if (typeExpression is TypeVariable)
+            {
+                if (((TypeVariable)typeExpression).Substitution != null)
+                    typeSet.AddRange(GetTypes(((TypeVariable)typeExpression).Substitution, evaluated));
+            }
+            else if (typeExpression is UnionType)
+            {
+                UnionType union = typeExpression as UnionType;
+                foreach (var expression in union.TypeSet)
+                    typeSet.AddRange(GetTypes(expression, evaluated));
+            }
+            else if (typeExpression is FieldType)
+            {
+                FieldType fieldType = typeExpression as FieldType;
+                typeSet.AddRange(GetTypes(fieldType.FieldTypeExpression, evaluated));
+            }
+            else if (typeExpression is PropertyType)
+            {
+                PropertyType propertyType = typeExpression as PropertyType;
+                typeSet.AddRange(GetTypes(propertyType.PropertyTypeExpression, evaluated));
+            }
+            else if (typeExpression is ClassType)
+            {             
+                typeSet.Add(typeExpression);
+            }
+
+            return typeSet;
+        }
+
+        private void MergeClassType(ClassType targeClassType, ClassType classTypeToInclude)
+        {
+            foreach (var targetMember in targeClassType.Members)
+            {
+                if (targetMember.Value.Type is FieldType)
+                {
+                    var fieldType = ((FieldType)targetMember.Value.Type).FieldTypeExpression;
+                    var fieldTypeToInclude = ((FieldType)classTypeToInclude.Members[targetMember.Key].Type).FieldTypeExpression;
+                    var ut = fieldType as UnionType;
+                    if (ut == null)
+                        ut = new UnionType(fieldType);
+                    if (fieldTypeToInclude is UnionType)
+                        ut.typeSet.AddRange(((UnionType) fieldTypeToInclude).typeSet);
+                    else if(!ut.typeSet.Contains(fieldTypeToInclude))
+                            ut.typeSet.Add(fieldTypeToInclude);                    
+                    FieldType newFieldType = null;                    
+                    if (ut.typeSet.Count == 1)
+                        newFieldType = new FieldType(ut.typeSet[0]);
+                    else
+                        newFieldType = new FieldType(ut);
+                    
+                    var originalMemberInfo = ((FieldType) targetMember.Value.Type).MemberInfo;
+                    newFieldType.MemberInfo = new AccessModifier(originalMemberInfo.Modifiers,originalMemberInfo.MemberIdentifier, newFieldType,false);
+                    newFieldType.MemberInfo.Class = targeClassType;
+
+                    ut.BuildFullName();
+                    targetMember.Value.Type = newFieldType;
+                }
+            }            
+        }
+
+        #endregion
     }
 }

@@ -97,6 +97,10 @@ namespace CodeGeneration
                     {
                         te = ((FieldType) te).FieldTypeExpression;
                     }
+                    else if (te is UnionType)
+                    {
+                        te = ((UnionType)te).Simplify();
+                    }
                     aux[i] = te;
                 }
                 else
@@ -324,16 +328,18 @@ namespace CodeGeneration
             int i = 1;
             foreach (var typeExpression in args)
             {
-                methodIndentificator += "_" + i++ + "_" + TypeExpressionRepresentation(typeExpression, original);
+                List<string> result = new List<string>(TypeExpressionRepresentation(typeExpression, original));
+                result.Sort();                
+                methodIndentificator += "_" + i++ + "_" + String.Join("_or_", result.ToArray());
             }            
             return methodIndentificator;
         }
 
-        private static String TypeExpressionRepresentation(TypeExpression typeExpression, bool original = false)
+        private static String[] TypeExpressionRepresentation(TypeExpression typeExpression, bool original = false)
         {
             if (typeExpression.ILType().Contains("class"))
-                return typeExpression.ILType().Replace("class ", "").Replace(".", "_");
-
+                return new string[] {typeExpression.ILType().Replace("class ", "").Replace(".", "_")};
+            
             UnionType ut = null;
             if (typeExpression is UnionType)
             {
@@ -341,22 +347,23 @@ namespace CodeGeneration
             }
             else if (typeExpression is TypeVariable && ((TypeVariable)typeExpression).Substitution is UnionType)
             {
-                ut = (UnionType)((TypeVariable)typeExpression).Substitution;                               
+                ut = (UnionType)((TypeVariable)typeExpression).Substitution;                
             }
+
             if (ut != null)
-            {
+            {                
                 List<String> result = new List<string>();
                 foreach (var expression in ut.TypeSet)
-                {
-                    result.Add(TypeExpressionRepresentation(expression,original));
-                }
-                result.Sort();                
-                return String.Join("_or_",result.ToArray());
+                    foreach (var typeRepresentation in TypeExpressionRepresentation(expression, original))
+                        if(!result.Contains(typeRepresentation))
+                            result.Add(typeRepresentation);                                 
+                return result.ToArray();
             }
             if (original && typeExpression is TypeVariable)
-                return TypeVariable.NewTypeVariable.ILType();
-            return typeExpression.ILType();
+                return new string[] { TypeVariable.NewTypeVariable.ILType() };
+            return new string[] { typeExpression.ILType()};
         }
+
 
         public override Object Visit(BaseCallExpression node, Object obj)
         {
