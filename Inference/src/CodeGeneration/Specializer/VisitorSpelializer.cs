@@ -42,21 +42,23 @@ namespace CodeGeneration
             if (node.Arguments.ExpressionCount == 0 || originalMemberTypeExpression == null || !originalMemberTypeExpression.HasTypeVariables())
                 return null;
 
+            TypeExpression[] args = this.compoundExpressionToArray(node.Arguments); //VisitorInference pass when error?? 
+            if (args == null)
+                return null;
+
             MethodDefinition originalMethodDefinition = originalMemberTypeExpression.ASTNode as MethodDefinition;
             if (originalMethodDefinition == null)
                 return null;
+
             TypeExpression[] originalParamsType = new TypeExpression[originalMemberTypeExpression.ParameterListCount];
             for (int i = 0 ; i < originalMemberTypeExpression.ParameterListCount ; i++)
                 originalParamsType[i] = originalMemberTypeExpression.GetParameter(i);
             var originalMethodIndentificator = MethodIndentificator(originalMethodDefinition.FullName, originalParamsType,true);
-            if (specilizedMethods.ContainsKey(originalMethodIndentificator))
-                return specilizedMethods[originalMethodIndentificator];
-            TypeExpression[] args = this.compoundExpressionToArray(node.Arguments);
             var methodIndentificator = MethodIndentificator(originalMethodDefinition.FullName, args);
-
             if (methodIndentificator.Equals(originalMethodIndentificator)) //Method does not need to be specialized
             {
-                specilizedMethods[originalMethodIndentificator] = originalMethodDefinition;
+                if(!specilizedMethods.ContainsKey(originalMethodIndentificator))
+                    specilizedMethods[originalMethodIndentificator] = originalMethodDefinition;
                 return null;
             }
 
@@ -71,7 +73,8 @@ namespace CodeGeneration
                 ((TypeVariable) node.ExpressionType).EquivalenceClass.add(returnTypeExpresion,SortOfUnification.Equivalent, previouslyUnified);
             
             node.ExpressionType = returnTypeExpresion;
-            
+            node.FrozenTypeExpression = node.ExpressionType.Freeze();
+
             if (node.Identifier is FieldAccessExpression)
             {
                 FieldAccessExpression fae = new FieldAccessExpression(((FieldAccessExpression) node.Identifier).Expression,method.IdentifierExp, node.Location);
@@ -89,7 +92,7 @@ namespace CodeGeneration
             TypeExpression[] aux = new TypeExpression[args.ExpressionCount];
             TypeExpression te;
 
-            for (int i = 0; i < args.ExpressionCount; i++) 
+            for (int i = 0; i < args.ExpressionCount; i++)
             {
                 if ((te = args.GetExpressionElement(i).ILTypeExpression) != null)
                 {

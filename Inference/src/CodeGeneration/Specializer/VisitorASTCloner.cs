@@ -131,7 +131,7 @@ namespace CodeGeneration
             Expression clonedSecondOperand = (Expression)node.SecondOperand.Accept(this, obj);
             ArithmeticExpression clonedArithmeticExpression = new ArithmeticExpression(clonedFirstOperand, clonedSecondOperand, node.Operator, node.Location);
             //if (node.ExpressionType != null)
-              //  clonedArithmeticExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
+            //  clonedArithmeticExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
             return clonedArithmeticExpression;
         }
 
@@ -179,7 +179,9 @@ namespace CodeGeneration
 
         public override Object Visit(BoolLiteralExpression node, Object obj)
         {
-            return new BoolLiteralExpression(node.BoolValue, node.Location);
+            var clonedBoolLiteral = new BoolLiteralExpression(node.BoolValue, node.Location);
+            clonedBoolLiteral.ExpressionType = node.ExpressionType;
+            return clonedBoolLiteral;
         }
 
         #endregion
@@ -188,7 +190,9 @@ namespace CodeGeneration
 
         public override Object Visit(CharLiteralExpression node, Object obj)
         {
-            return new CharLiteralExpression(node.CharValue, node.Location);
+            var clonedCharlLiteral = new CharLiteralExpression(node.CharValue, node.Location);
+            clonedCharlLiteral.ExpressionType = node.ExpressionType;
+            return clonedCharlLiteral;
         }
 
         #endregion
@@ -197,7 +201,9 @@ namespace CodeGeneration
 
         public override Object Visit(DoubleLiteralExpression node, Object obj)
         {
-            return new DoubleLiteralExpression(node.DoubleValue, node.Location);
+            var clonedDoublelLiteral = new DoubleLiteralExpression(node.DoubleValue, node.Location);
+            clonedDoublelLiteral.ExpressionType = node.ExpressionType;
+            return clonedDoublelLiteral;
         }
 
         #endregion
@@ -218,7 +224,9 @@ namespace CodeGeneration
 
         public override Object Visit(IntLiteralExpression node, Object obj)
         {
-            return new IntLiteralExpression(node.IntValue, node.Location);
+            var clonedIntLiteral = new IntLiteralExpression(node.IntValue, node.Location);
+            clonedIntLiteral.ExpressionType = node.ExpressionType;
+            return clonedIntLiteral;
         }
 
         #endregion
@@ -381,7 +389,7 @@ namespace CodeGeneration
         {
             InvocationExpression clonedInvocationExpression = new InvocationExpression((Expression)node.Identifier.Accept(this, obj), (CompoundExpression)node.Arguments.Accept(this, obj), node.Location);
             //if (node.ExpressionType != null)
-              //  clonedInvocationExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
+            //  clonedInvocationExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
             clonedInvocationExpression.ActualMethodCalled = node.ActualMethodCalled;
             clonedInvocationExpression.Accept(visitorSpecializer, obj);
             return clonedInvocationExpression;

@@ -49,7 +49,7 @@ namespace Points
         }
         public override string ToString()
         {
-            return "Point3D[x=" + x.ToString() + ",y=" + y.ToString() + "]";
+            return "Point2D[x=" + x.ToString() + ",y=" + y.ToString() + "]";
         }
     }
 
