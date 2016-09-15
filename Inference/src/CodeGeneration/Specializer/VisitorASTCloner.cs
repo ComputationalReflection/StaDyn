@@ -387,9 +387,14 @@ namespace CodeGeneration
 
         public override Object Visit(InvocationExpression node, Object obj)
         {
-            InvocationExpression clonedInvocationExpression = new InvocationExpression((Expression)node.Identifier.Accept(this, obj), (CompoundExpression)node.Arguments.Accept(this, obj), node.Location);
+            CompoundExpression arguments = (CompoundExpression) node.Arguments.Accept(this, obj);
+            var previousShowMessages = ErrorManager.Instance.ShowMessages;
+            ErrorManager.Instance.ShowMessages = false;
+            arguments.Accept(visitorSpecializer.visitorTypeInference, obj);
+            ErrorManager.Instance.ShowMessages = previousShowMessages;
+            InvocationExpression clonedInvocationExpression = new InvocationExpression((Expression)node.Identifier.Accept(this, obj),arguments, node.Location);
             //if (node.ExpressionType != null)
-            //  clonedInvocationExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
+              //  clonedInvocationExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
             clonedInvocationExpression.ActualMethodCalled = node.ActualMethodCalled;
             clonedInvocationExpression.Accept(visitorSpecializer, obj);
             return clonedInvocationExpression;

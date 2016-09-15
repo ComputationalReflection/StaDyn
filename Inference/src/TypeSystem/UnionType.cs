@@ -712,8 +712,10 @@ namespace TypeSystem {
             for (int i = 0; i < this.TypeSet.Count; i++)
                 typeSet.AddRange(GetTypes(this.TypeSet[i],evaluated));
             typeSet = new List<TypeExpression>(new HashSet<TypeExpression>(typeSet));
-            if (typeSet.Count == 1)
-                return typeSet[0];
+            if (typeSet.Count == 0)
+                return this;
+            else if (typeSet.Count == 1)
+                return typeSet[0];            
             else
             {
                 this.typeSet = typeSet;
