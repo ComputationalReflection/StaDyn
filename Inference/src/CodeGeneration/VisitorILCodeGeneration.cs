@@ -54,7 +54,7 @@ namespace CodeGeneration {
         /// Method tha returns the next auxFieldVar.
         /// </summary>
         /// <returns></returns>
-        private static String GetAuxFielVar()
+        protected static String GetAuxFielVar()
         {
             return auxFieldVar + (auxFieldVarNumber++) + "_";
         }
@@ -1148,7 +1148,7 @@ namespace CodeGeneration {
         /// <param name="node">The AST expression node</param>
         /// <param name="memberName">The name of the member</param>
         /// <param name="obj">The visitor paramenter</param>        
-        private void InstrospectiveFieldInvocation(Expression node, string memberName, Object obj) {
+        protected virtual void InstrospectiveFieldInvocation(Expression node, string memberName, Object obj) {
             this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Type", "[mscorlib]System.Object", "GetType", null);
             this.codeGenerator.ldstr(this.indent, memberName);
             this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Reflection.FieldInfo", "[mscorlib]System.Type", "GetField", new string[] { "string" });
@@ -1175,7 +1175,7 @@ namespace CodeGeneration {
 
         #region InstrospectiveFieldInvocation()
 
-        private void InstrospectiveFieldAssignation(Expression node, string memberName, Object obj)
+        protected virtual void InstrospectiveFieldAssignation(Expression node, string memberName, Object obj)
         {
             string id = GetAuxFielVar() + memberName;            
             this.codeGenerator.WriteAuxiliarLocalVariable(this.indent, id, "object");                

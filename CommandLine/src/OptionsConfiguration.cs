@@ -21,7 +21,8 @@ namespace CommandLine {
         
         // * Messages
 
-        private const string copyrightMessage = "StaDyn C# 2013 Compiler for Reflective Rotor (SSCLI) and .Net Framework 4+.\n";
+        private const string copyrightMessage = "StaDyn C# 2007 Compiler for Reflective Rotor (SSCLI) 1.0\n" +
+                                                " and Microsoft (R) Windows (R) 2005 Framework.\n";
 
         public const string noInputMessage = copyrightMessage + "\nNo inputs specified. Type /help for help.\n";
         public const string wrongTarget = copyrightMessage + "\nThe target specified is not correct. Type /help for help.\n";
@@ -38,6 +39,8 @@ namespace CommandLine {
                                 "                                   (Short form: /r).\n" +
                                 "/dynamic                 Allows using the dynamic type (disabled by default)\n" +
                                 "                                   (Short form: /d).\n" +
+                                "/server                  Allows using the DLR (disabled by default)\n" +
+                                "                                   (Short form: /s).\n" +
                                 "\n";
         public const string errorMessage = copyrightMessage + "\nSome error in the input parameters. Type /help for help.\n";
         public const string dynAndStaErrorMessage = copyrightMessage + "\nEverything dynamic and static options cannot be both enabled.\n";

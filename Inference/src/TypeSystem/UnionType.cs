@@ -12,7 +12,7 @@
 // Create date: 05-04-2007                                                    
 // Modification date: 05-04-2007                                              
 //////////////////////////////////////////////////////////////////////////////
-
+//visto
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -27,7 +27,7 @@ using TypeSystem.Operations;
 
 namespace TypeSystem {
     /// <summary>
-    /// Represents a union type.
+    /// Representa a union type.
     /// </summary>
     /// <remarks>
     /// Inheritance: TypeExpression.

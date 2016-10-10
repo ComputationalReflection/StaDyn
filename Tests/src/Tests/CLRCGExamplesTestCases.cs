@@ -12,7 +12,7 @@ namespace Tests
         /// Dynamic = true
         /// Target = "clr"
         /// </summary>
-        public CLRCGExamplesTestCases() : base(true, true, true, TargetPlatform.CLR) { }
+        public CLRCGExamplesTestCases() : base(true, true, true, TargetPlatform.CLR,true) { }
         #endregion
 
 

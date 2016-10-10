@@ -53,14 +53,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="antlr.astframe, Version=2.7.7.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\tests\code.generation\antlr.astframe.dll</HintPath>
-    </Reference>
-    <Reference Include="antlr.runtime, Version=2.7.7.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\tests\code.generation\antlr.runtime.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -75,6 +67,7 @@
     <Compile Include="src\Tests.cs" />
     <Compile Include="src\Tests\CLRCGArraysTest.cs" />
     <Compile Include="src\Tests\CLRCGCasting.cs" />
+    <Compile Include="src\Tests\CLRCGExamplesTestCases.cs" />
     <Compile Include="src\Tests\CLRCGExceptionTest.cs" />
     <Compile Include="src\Tests\CLRCGCInheritanceTest.cs" />
     <Compile Include="src\Tests\CLRCGCollectionsTest.cs" />
@@ -91,8 +84,9 @@
     <Compile Include="src\Tests\CLRCGTypes.cs" />
     <Compile Include="src\Tests\CLRCGPromotion.cs" />
     <Compile Include="src\Tests\CLRCGOperator.cs" />
-    <Compile Include="src\Tests\CLRCGExamplesTestCases.cs" />
+    <Compile Include="src\Tests\CLRCGWrongTestCases.cs" />
     <Compile Include="src\Tests\Benchmarks.cs" />
+    <Compile Include="src\Tests\Compilation.cs" />
     <Compile Include="src\Tests\GettingStartedTest.cs" />
     <Compile Include="src\Tests\RrotorCodeGenerationTest.cs" />
     <Compile Include="src\Tests\SemanticDynamicsTest.cs" />

@@ -23,7 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TypeSystem.Operations;
-
+//VISTO
 namespace TypeSystem {
     /// <summary>
     /// WriteType of a namespace 

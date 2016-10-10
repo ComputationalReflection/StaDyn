@@ -55,6 +55,9 @@ namespace Tests {
         /// </summary>
         private bool dynamic;
 
+        // * Server option, make use of the DLR
+        public bool server;
+
         #endregion
 
 
@@ -114,6 +117,14 @@ namespace Tests {
         }
 
         /// <summary>
+        /// Server option, make use of the DLR
+        /// </summary>
+        public bool Server
+        {
+            get { return this.server; }
+        }
+
+        /// <summary>
         /// The name of the target platform
         /// </summary>
         public TargetPlatform TargetPlatform {
@@ -122,11 +133,12 @@ namespace Tests {
         #endregion
 
         #region Constructor
-        public Test(bool generateCode, bool run, bool dynamic, TargetPlatform targetPlatform) {
+        public Test(bool generateCode, bool run, bool dynamic, TargetPlatform targetPlatform, bool server) {
             this.generateCode = generateCode;
             this.run = run;
             this.targetPlatform = targetPlatform;
             this.dynamic = dynamic;
+            this.server = server;
         }
         #endregion
 
@@ -140,7 +152,7 @@ namespace Tests {
             this.FromError = ErrorManager.Instance.ErrorCount;            
             Compiler.Parser.Parse(fileNames, this.generateCode ? outputFileName : null,
                 this.generateCode ? this.targetPlatform : TargetPlatform.CLR,
-                Application.StartupPath + "\\Tests\\", "ilasm.exe", "TypeTable.txt",this.run,this.dynamic);            
+                Application.StartupPath + "\\Tests\\", "ilasm.exe", "TypeTable.txt",this.run,this.dynamic,this.server);            
             this.ToError = ErrorManager.Instance.ErrorCount;
             int expectedNumberOfErrors;
             this.Success = ErrorFile.CheckErrors(fileNames, this.FromError, this.ToError, out expectedNumberOfErrors);

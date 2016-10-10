@@ -26,7 +26,7 @@ using TypeSystem.Operations;
 
 namespace TypeSystem {
     /// <summary>
-    /// Represents an array type.
+    /// Representa an array type.
     /// </summary>
     /// <remarks>
     /// Inheritance: TypeExpression.

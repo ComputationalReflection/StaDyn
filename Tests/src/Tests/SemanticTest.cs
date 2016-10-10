@@ -26,7 +26,7 @@ namespace Tests {
         /// Run = false
         /// Target = null
         /// </summary>
-        public SemanticTest() :base(false,false,false,TargetPlatform.CLR) {
+        public SemanticTest() :base(false,false,false,TargetPlatform.CLR,false) {
         }
         #endregion
 

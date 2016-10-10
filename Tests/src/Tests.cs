@@ -22,7 +22,8 @@ namespace Tests {
     /// </summary>
     class Tests {
 
-        static Type[] testClasses = {             
+        static Type[] testClasses = { 
+            
             typeof(GettingStartedTest),                        
             typeof(SemanticSampleTest),
             typeof(SemanticDynamicsTest),
@@ -44,8 +45,8 @@ namespace Tests {
             typeof(CLRCGPropertyTest),
             typeof(CLRCGUnionTypes),
             typeof(CLRCGSampleTest),
-            typeof(CLRCGExamplesTestCases)                                      
-            };
+            typeof(CLRCGExamplesTestCases),                       
+        };
 
         static void Main() {            
             IDictionary<string, int[]> errorsFound = new Dictionary<string, int[]>();

@@ -32,6 +32,8 @@ namespace TypeSystem {
     /// Inheritance: UserType.
     /// Implements Composite pattern [Composite].
     /// </remarks>
+    //visto
+    /// 
     public class InterfaceType : UserType {
         #region Constructor
 

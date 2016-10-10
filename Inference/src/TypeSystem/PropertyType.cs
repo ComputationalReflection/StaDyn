@@ -22,10 +22,10 @@ using AST;
 using ErrorManagement;
 using Tools;
 using TypeSystem.Operations;
-
+//VISTO
 namespace TypeSystem {
     /// <summary>
-    /// Represents a property type.
+    /// Representa a property type.
     /// </summary>
     /// <remarks>
     /// Inheritance: MemberType.

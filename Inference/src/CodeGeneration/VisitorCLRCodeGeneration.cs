@@ -163,7 +163,7 @@ namespace CodeGeneration {
         /// <param name="obj">The visitor paramenter</param>
         /// <param name="inheritedAttributes">Inherited attributes</param>
         /// <param name="memberName">The name of the member</param>
-        internal void IntrospectiveInvocation(InvocationExpression node, Object obj, Object inheritedAttributes, string memberName) {
+        internal virtual void IntrospectiveInvocation(InvocationExpression node, Object obj, Object inheritedAttributes, string memberName) {
             InheritedAttributes ia = (InheritedAttributes)obj;
             ia.IsParentNodeAnInvocation = true;
             Object o = node.Identifier.Accept(this, ia);

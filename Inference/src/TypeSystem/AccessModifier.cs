@@ -21,7 +21,7 @@ using System.Text;
 
 using AST;
 using TypeSystem.Operations;
-
+//viSto0
 namespace TypeSystem
 {
    #region Modifier
@@ -52,6 +52,7 @@ namespace TypeSystem
    /// Represents the access modifier information about a concrete attribute and
    /// its class.
    /// </summary>
+   /// //VISTO
    public class AccessModifier : ICloneable
    {
       #region Fields

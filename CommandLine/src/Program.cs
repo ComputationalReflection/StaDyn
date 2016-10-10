@@ -30,7 +30,7 @@ namespace CommandLine {
             //ParseArguments(new string[] { "tests/sample.cs", "/out=a.out.exe", "/target=clr", "/everythingDynamic" });
 
             ParseArguments(args);
-            Compiler.Parser.Parse(parameters.InputFileNames, parameters.OutputFileName,parameters.TargetPlatform, Application.StartupPath + "\\", "ilasm.exe","TypeTable.txt", parameters.Run, parameters.Dynamic);            
+            Compiler.Parser.Parse(parameters.InputFileNames, parameters.OutputFileName, parameters.TargetPlatform, Application.StartupPath + "\\", "ilasm.exe", "TypeTable.txt", parameters.Run, parameters.Dynamic, parameters.Server);            
         }
 
         /// <summary>
@@ -122,6 +122,13 @@ namespace CommandLine {
                 if (option.Equals(opString))
                 {
                     parameters.Dynamic = true;
+                    return;
+                }
+            // * Dynamic option
+            foreach (string opString in OptionsConfiguration.serverOptions)
+                if (option.Equals(opString))
+                {
+                    parameters.Server = true;
                     return;
                 }  
             // * Out option

@@ -20,7 +20,7 @@ namespace Tests
         }
 
         /*
-         * To try this test it's necessary to add "process.StartInfo.CreateNoWindow = true" to src/core/Program ln 372
+         * To try this test it's necessary to add "process.StartInfo.CreateNoWindow = true" to src/compiler/Program ln 387
          */
         //public void testnoinference()
         //{
@@ -207,17 +207,19 @@ namespace Tests
             DynVarOptions.Instance.EverythingDynamic = false;
         }
 
-        //public void testJavaGrandeStaticRayTracerTest()
-        //{
-        //    runTest(new string[] { "tests/benchmarks/static/javagrande/JGFRayTracer.cs" });
-        //}
+        public void testJavaGrandeStaticRayTracerTest()
+        {
+            runTest(new string[] { "tests/benchmarks/static/javagrande/JGFRayTracer.cs" });
+        }
 
+        /*
+         * To try this test it's necessary to add "process.StartInfo.CreateNoWindow = true" to src/compiler/Program ln 387
+         */
         //public void testJavaGrandeDynamicRayTracerTest()
         //{
         //    DynVarOptions.Instance.EverythingDynamic = true;
         //    runTest(new string[] { "tests/benchmarks/dynamic/javagrande/JGFRayTracer.cs" });
         //    DynVarOptions.Instance.EverythingDynamic = false;
         //}
-
     }
 }
