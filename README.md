@@ -38,13 +38,13 @@ Dynamic languages follow the opposite point of view. They do not perform type ch
 Opposite to our approach Java uses bounded polymorphism. In standard Java 1.6, the ```min``` method of the ```java.util.Collections``` class (returns the min value in a collection) is declared this way:
 
 ```
-    public static  <T extends Object & Comparable<? super T>> T min(Collection<? extends T> coll)	
+        public static  <T extends Object & Comparable<? super T>> T min(Collection<? extends T> coll)	
 ```
 
 In our language, we simply write:
 
 ```
-public static var min(var coll)	
+        public static var min(var coll)	
 ```
 
 The type system infers the restrictions that the parameter must satisfy, analyzing its source code. These restrictions are automatically annotated by the compiler.
