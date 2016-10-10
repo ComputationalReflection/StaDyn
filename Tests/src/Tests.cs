@@ -45,9 +45,7 @@ namespace Tests {
             typeof(CLRCGPropertyTest),
             typeof(CLRCGUnionTypes),
             typeof(CLRCGSampleTest),
-            typeof(CLRCGExamplesTestCases),
-            typeof(Benchmarks), //no.inference.cs commented.   
-            typeof(Compilation),            
+            typeof(CLRCGExamplesTestCases),                       
         };
 
         static void Main() {            
