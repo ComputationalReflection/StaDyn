@@ -13,7 +13,7 @@ The main objective of this project is combining the benefits of both dynamic and
 
 Static typing is centered on making sure that programs behave correctly at runtime. This is the reason why languages with static typing employ a pessimistic policy regarding to programs correctness. This pessimism causes compilation errors of programs that are dynamically correct. The following Java code shows this limitation:
 
-```
+```C#
         Object[] v=new Object[10]; 
         for (int i = 0; i < 10; i++) { 
             v[i] = "String " + i; 
