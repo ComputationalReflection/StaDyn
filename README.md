@@ -23,7 +23,7 @@ Static typing is centered on making sure that programs behave correctly at runti
 
 Dynamic languages follow the opposite point of view. They do not perform type checking at compile time at all. Dynamic languages are very optimistic, compiling programs that might be identified as erroneous statically. The following code is a Python example:
 
-```
+```Python
         myObjet = object()
         length = myObjet.length()  # No compilation error
 ```                 
@@ -43,7 +43,7 @@ Opposite to our approach Java uses bounded polymorphism. In standard Java 1.6, t
 
 In our language, we simply write:
 
-```
+```C#
         public static var min(var coll)	
 ```
 
