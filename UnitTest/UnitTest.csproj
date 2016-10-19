@@ -264,7 +264,16 @@
     <Content Include="res\tests\CLRCG\Specialization\Specialization40.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="res\tests\CLRCG\Specialization\Specialization41b.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\CLRCG\Specialization\Specialization41c.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="res\tests\CLRCG\Specialization\Specialization41.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\CLRCG\Specialization\Specialization41d.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="src\tests\Benchmarks\Points.cs" />

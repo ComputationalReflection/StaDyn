@@ -102,7 +102,7 @@ namespace CodeGeneration
                     }
                     else if (te is UnionType)
                     {
-                        te = ((UnionType)te).Simplify();
+                        te = ((UnionType)te).Simplify(false);
                     }
                     aux[i] = te;
                 }

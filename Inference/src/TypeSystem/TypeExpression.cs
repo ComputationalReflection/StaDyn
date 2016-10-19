@@ -423,5 +423,18 @@ namespace TypeSystem
             return null;
         }
 
+
+        #region Simplify()
+        /// <summary>
+        /// Gets the simplified version of the typeexpression.
+        /// </summary>
+        /// <returns>Returns the simplified type.</returns>
+        public virtual TypeExpression Simplify(bool includeTypeVariables = true)
+        {
+            return this;
+        }
+
+        #endregion
+
     }
 }

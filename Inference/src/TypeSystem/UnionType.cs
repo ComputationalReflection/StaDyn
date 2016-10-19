@@ -486,8 +486,10 @@ namespace TypeSystem {
                 return this;
             UnionType newUnionType = (UnionType)this.MemberwiseClone();
             newUnionType.typeSet = new List<TypeExpression>();
+            List<TypeExpression> currentTypeSet = new List<TypeExpression>();
+            currentTypeSet.AddRange(this.typeSet);
             // * Clones all the types in the union
-            foreach (TypeExpression type in this.typeSet)
+            foreach (TypeExpression type in currentTypeSet)
                 newUnionType.typeSet.Add(type.CloneType(typeVariableMappings));
             return newUnionType;
         }
@@ -705,12 +707,12 @@ namespace TypeSystem {
         /// Gets the simplified version of the typeexpression.
         /// </summary>
         /// <returns>Returns the simplified type.</returns>
-        public TypeExpression Simplify()
+        public override TypeExpression Simplify(bool includeTypeVariables = true)
         {
             List<TypeExpression> typeSet = new List<TypeExpression>();
             IDictionary<string,TypeExpression> evaluated = new Dictionary<string, TypeExpression>();
             for (int i = 0; i < this.TypeSet.Count; i++)
-                typeSet.AddRange(GetTypes(this.TypeSet[i],evaluated));
+                typeSet.AddRange(GetTypes(this.TypeSet[i],includeTypeVariables, evaluated));
             typeSet = new List<TypeExpression>(new HashSet<TypeExpression>(typeSet));
             if (typeSet.Count == 0)
                 return this;
@@ -718,12 +720,14 @@ namespace TypeSystem {
                 return typeSet[0];            
             else
             {
-                this.typeSet = typeSet;
-                return this;
+                //this.typeSet = typeSet;
+                UnionType ut = (UnionType)this.CloneType(new Dictionary<TypeVariable, TypeVariable>());
+                ut.typeSet = typeSet;                
+                return ut;
             }
         }
         
-        private List<TypeExpression> GetTypes(TypeExpression typeExpression, IDictionary<string, TypeExpression> evaluated = null)
+        private List<TypeExpression> GetTypes(TypeExpression typeExpression, bool includeTypeVariables, IDictionary<string, TypeExpression> evaluated = null)
         {
             List<TypeExpression> typeSet = new List<TypeExpression>();
             if (evaluated == null)
@@ -736,7 +740,13 @@ namespace TypeSystem {
             }
             else
                 evaluated.Add(typeExpression.FullName, typeExpression);
-            if (typeExpression.IsValueType() || typeExpression is StringType)
+            if (typeExpression is UnionType)
+            {
+                UnionType union = typeExpression as UnionType;
+                foreach (var expression in union.TypeSet)
+                    typeSet.AddRange(GetTypes(expression, includeTypeVariables, evaluated));
+            }
+            else if (typeExpression.IsValueType() || typeExpression is StringType)
             {
                 if (typeExpression is TypeVariable)
                     typeSet.Add(((TypeVariable)typeExpression).Substitution);
@@ -746,23 +756,19 @@ namespace TypeSystem {
             else if (typeExpression is TypeVariable)
             {
                 if (((TypeVariable)typeExpression).Substitution != null)
-                    typeSet.AddRange(GetTypes(((TypeVariable)typeExpression).Substitution, evaluated));
-            }
-            else if (typeExpression is UnionType)
-            {
-                UnionType union = typeExpression as UnionType;
-                foreach (var expression in union.TypeSet)
-                    typeSet.AddRange(GetTypes(expression, evaluated));
-            }
+                    typeSet.AddRange(GetTypes(((TypeVariable)typeExpression).Substitution, includeTypeVariables, evaluated));
+                else if(includeTypeVariables)
+                    typeSet.Add(typeExpression);
+            }            
             else if (typeExpression is FieldType)
             {
                 FieldType fieldType = typeExpression as FieldType;
-                typeSet.AddRange(GetTypes(fieldType.FieldTypeExpression, evaluated));
+                typeSet.AddRange(GetTypes(fieldType.FieldTypeExpression, includeTypeVariables, evaluated));
             }
             else if (typeExpression is PropertyType)
             {
                 PropertyType propertyType = typeExpression as PropertyType;
-                typeSet.AddRange(GetTypes(propertyType.PropertyTypeExpression, evaluated));
+                typeSet.AddRange(GetTypes(propertyType.PropertyTypeExpression,includeTypeVariables, evaluated));
             }
             else if (typeExpression is ClassType)
             {             

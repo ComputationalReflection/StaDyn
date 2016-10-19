@@ -1155,31 +1155,110 @@ namespace CodeGeneration {
         /// <param name="memberName">The name of the member</param>
         /// <param name="obj">The visitor paramenter</param>        
         protected virtual void InstrospectiveFieldInvocation(Expression node, string memberName, Object obj) {
-            this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Type", "[mscorlib]System.Object", "GetType", null);
+            if(IsIntrospectiveUnionTypeFieldInvocation(memberName, obj)) return;
+            
+            this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Type",
+                "[mscorlib]System.Object", "GetType", null);
             this.codeGenerator.ldstr(this.indent, memberName);
-            this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Reflection.FieldInfo", "[mscorlib]System.Type", "GetField", new string[] { "string" });
+            this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Reflection.FieldInfo",
+                "[mscorlib]System.Type", "GetField", new string[] {"string"});
             String property = this.codeGenerator.NewLabel;
             String fin = this.codeGenerator.NewLabel;
             this.codeGenerator.dup(this.indent);
             this.codeGenerator.brfalse(this.indent, property);
             node.Accept(this, obj); // ld <implicit object>            
-            this.codeGenerator.CallVirt(this.indent, "instance", "object", "[mscorlib]System.Reflection.FieldInfo", "GetValue", new string[] { "object" });
-            this.codeGenerator.br(this.indent,fin);
-            this.codeGenerator.WriteLabel(this.indent,property);
+            this.codeGenerator.CallVirt(this.indent, "instance", "object", "[mscorlib]System.Reflection.FieldInfo",
+                "GetValue", new string[] {"object"});
+            this.codeGenerator.br(this.indent, fin);
+            this.codeGenerator.WriteLabel(this.indent, property);
             this.codeGenerator.pop(this.indent);
             node.Accept(this, obj); // ld <implicit object>    
-            this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Type", "[mscorlib]System.Object", "GetType", null);
+            this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Type",
+                "[mscorlib]System.Object", "GetType", null);
             this.codeGenerator.ldstr(this.indent, memberName);
-	        this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Reflection.PropertyInfo", "[mscorlib]System.Type", "GetProperty", new string[] { "string" });
-	        this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Reflection.MethodInfo", "[mscorlib]System.Reflection.PropertyInfo", "GetGetMethod", new string[] {});
-	        node.Accept(this, obj); // ld <implicit object>            
-	        this.codeGenerator.ldnull(this.indent);
-	        this.codeGenerator.CallVirt(this.indent, "instance", "object", "[mscorlib]System.Reflection.MethodBase", "Invoke", new string[] { "object","object[]" });	
-            this.codeGenerator.WriteLabel(this.indent, fin);
+            this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Reflection.PropertyInfo",
+                "[mscorlib]System.Type", "GetProperty", new string[] {"string"});
+            this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Reflection.MethodInfo",
+                "[mscorlib]System.Reflection.PropertyInfo", "GetGetMethod", new string[] {});
+            node.Accept(this, obj); // ld <implicit object>            
+            this.codeGenerator.ldnull(this.indent);
+            this.codeGenerator.CallVirt(this.indent, "instance", "object", "[mscorlib]System.Reflection.MethodBase",
+                "Invoke", new string[] {"object", "object[]"});
+            this.codeGenerator.WriteLabel(this.indent, fin);            
         }
+
+        private bool IsIntrospectiveUnionTypeFieldInvocation(string memberName, object obj)
+        {
+            var fa = ((InheritedAttributes) obj).ParentNode as FieldAccessExpression;
+            if (fa != null)
+            {
+                if (fa.Expression.ILTypeExpression is UnionType) { 
+                    this.UnionTypeFieldInvocation(fa.Expression.ILTypeExpression as UnionType, memberName,(InheritedAttributes) obj);
+                    return true;
+                }
+                else if (fa.Expression.ILTypeExpression is TypeVariable && ((TypeVariable) fa.Expression.ILTypeExpression).Substitution is UnionType)
+                { 
+                    this.UnionTypeFieldInvocation(((TypeVariable) fa.Expression.ILTypeExpression).Substitution as UnionType,memberName, (InheritedAttributes) obj);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void UnionTypeFieldInvocation(UnionType unionType, string memberName, InheritedAttributes ia)
+        {
+            String finalLabel = this.codeGenerator.NewLabel;
+            String nextLabel = "";
+            bool sw = false;
+            for (int i = 0; i < unionType.TypeSet.Count; i++)
+            {
+                ClassType classType = unionType.TypeSet[i] as ClassType;
+                if (classType != null && classType.Fields[memberName] != null)
+                {
+                    FieldType fieldType = classType.Fields[memberName].Type as FieldType;
+                    if (!String.IsNullOrEmpty(nextLabel))
+                        this.codeGenerator.WriteLabel(indent, nextLabel);
+                    nextLabel = this.codeGenerator.NewLabel;
+                    this.codeGenerator.dup(indent);
+                    this.codeGenerator.isinst(indent, classType);
+                    this.codeGenerator.brfalse(indent, nextLabel);
+                    WriteLoadField(fieldType, memberName, ia);
+                    this.codeGenerator.br(indent, finalLabel);
+                }
+                else if (!sw)
+                {
+                    var fieldAccessExpression = ia.ParentNode as FieldAccessExpression; //This check is verified in IsIntrospectiveUnionTypeFieldInvocation
+                    if (!String.IsNullOrEmpty(nextLabel))
+                        this.codeGenerator.WriteLabel(indent, nextLabel);
+                    nextLabel = this.codeGenerator.NewLabel;
+                    this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Type","[mscorlib]System.Object", "GetType", null);
+                    this.codeGenerator.ldstr(this.indent, memberName);
+                    this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Reflection.FieldInfo","[mscorlib]System.Type", "GetField", new string[] { "string" });                                       
+                    this.codeGenerator.dup(this.indent);
+                    this.codeGenerator.brfalse(this.indent, nextLabel);
+                    fieldAccessExpression.Expression.Accept(this, ia); // ld <implicit object>            
+                    this.codeGenerator.CallVirt(this.indent, "instance", "object", "[mscorlib]System.Reflection.FieldInfo","GetValue", new string[] { "object" });
+                    this.codeGenerator.br(this.indent, finalLabel);
+                    this.codeGenerator.WriteLabel(this.indent, nextLabel);
+                    this.codeGenerator.pop(this.indent);
+                    fieldAccessExpression.Expression.Accept(this, ia); // ld <implicit object>    
+                    this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Type","[mscorlib]System.Object", "GetType", null);
+                    this.codeGenerator.ldstr(this.indent, memberName);
+                    this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Reflection.PropertyInfo","[mscorlib]System.Type", "GetProperty", new string[] { "string" });
+                    this.codeGenerator.CallVirt(this.indent, "instance class", "[mscorlib]System.Reflection.MethodInfo","[mscorlib]System.Reflection.PropertyInfo", "GetGetMethod", new string[] { });
+                    fieldAccessExpression.Expression.Accept(this, ia); // ld <implicit object>            
+                    this.codeGenerator.ldnull(this.indent);
+                    this.codeGenerator.CallVirt(this.indent, "instance", "object", "[mscorlib]System.Reflection.MethodBase","Invoke", new string[] { "object", "object[]" });
+                    this.codeGenerator.br(indent, finalLabel);
+                    sw = true;
+                }
+            }
+            this.codeGenerator.WriteLabel(this.indent, finalLabel);
+        }
+
         #endregion
 
-        #region InstrospectiveFieldInvocation()
+        #region InstrospectiveFieldAssignation()
 
         protected virtual void InstrospectiveFieldAssignation(Expression node, string memberName, Object obj)
         {

@@ -41,3 +41,6 @@
 /Wrong Test Cases/Case X/CG.out.txt
 /Wrong Test Cases/Case X/TypeTable.txt
 /CommandLine/bin/Release
+/Wrong Test Cases/CG.exe
+/Wrong Test Cases/CG.il
+/Wrong Test Cases/ildasm.exe

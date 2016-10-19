@@ -19,16 +19,17 @@ namespace Points
 
     public class Program
     {
+        public static var PositiveData(var list)
+        {
+            var result = list.data;
+            return result;
+        }
+
         public static void Main(string[] args)
         {
-            var list = new Node(1, new Node(2, 3));
-            var size = 2;
-            while (size > 0)
-            {
-                list = list.next;
-                size = size - 1;
-            }
-            System.Console.WriteLine("Result {0}", list);
+            var list = new Node(1, new Node(-1, 0));
+            var result = Program.PositiveData(list);
+            System.Console.WriteLine("Result {0}", result);
             Console.WriteLine("Successful!!");
         }
     }

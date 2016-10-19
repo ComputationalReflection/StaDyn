@@ -582,6 +582,10 @@ namespace TypeSystem {
 
         #endregion
         
+        public override TypeExpression Simplify(bool includeTypeVariables = true)
+        {
+            return this.Substitution == null ? this : this.Substitution.Simplify(includeTypeVariables);
+        }
     }
 }
 

@@ -23,8 +23,11 @@ namespace Points
         {
             var list = new Node(1, new Node(2, 3));
             var size = 2;
+            var result = 0;
             while (size > 0)
             {
+                if (list.data >= 0)
+                    result = new Node(list.data, result);
                 list = list.next;
                 size = size - 1;
             }
