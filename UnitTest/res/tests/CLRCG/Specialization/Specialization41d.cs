@@ -21,8 +21,7 @@ namespace Points
     {
         public static var PositiveData(var list)
         {
-            var result = list.data;
-            return result;
+            return list.data;            
         }
 
         public static void Main(string[] args)
