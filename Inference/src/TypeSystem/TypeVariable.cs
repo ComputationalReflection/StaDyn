@@ -373,8 +373,8 @@ namespace TypeSystem {
             TypeVariable newTypeVariable = (TypeVariable)this.CloneTypeVariables(typeVariableMappings, equivalenceClasses, new List<ClassType>());
             for (int i = equivalenceClasses.Count - 1; i >= 0; i--)
                 if (equivalenceClasses[i].TypeVariables.Count == 1 && equivalenceClasses[i].TypeVariables.ContainsKey(this.Variable))
-                    equivalenceClasses.RemoveAt(i);
-            foreach (EquivalenceClass equivalenceClass in equivalenceClasses)
+                    equivalenceClasses.RemoveAt(i);          
+            foreach (EquivalenceClass equivalenceClass in new List<EquivalenceClass>(equivalenceClasses))
                 equivalenceClass.UpdateEquivalenceClass(typeVariableMappings);
             newTypeVariable.ValidTypeExpression = false;
             return newTypeVariable;
