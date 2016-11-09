@@ -779,7 +779,7 @@ namespace Semantic {
             this.sortOfUnification = SortOfUnification.Incremental; // * Union types used in unification
             node.Statements.Accept(this, obj); // * WriteType inference
             ErrorManager.Instance.ShowMessages = previousShowErrorMessages; // * Error messages enabled
-            node.Statements.Accept(this, obj); // * WriteType checking
+           // node.Statements.Accept(this, obj); // * WriteType checking
             this.sortOfUnification = previousSortOfUnification;
 
             // * WriteType inference of theta functions (SSA) must be performed at the end (when all the types have been inferred)
