@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading;
 using ErrorManagement;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TargetPlatforms;
@@ -18,7 +19,7 @@ namespace UnitTest.Tests.CLRCG
         [TestMethod]
         [TestCategory("CLRCG"),TestCategory("Specialization")]
         public void Specialization01()
-        {            
+        {                                   
             GetDefaultTest().runTest();
         }
 
@@ -340,6 +341,13 @@ namespace UnitTest.Tests.CLRCG
         [TestMethod]
         [TestCategory("CLRCG"), TestCategory("Specialization")]
         public void Specialization41d()
+        {
+            GetDefaultTest().runTest();
+        }
+
+        [TestMethod]
+        [TestCategory("CLRCG"), TestCategory("Specialization")]
+        public void Specialization41e()
         {
             GetDefaultTest().runTest();
         }

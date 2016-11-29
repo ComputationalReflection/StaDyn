@@ -30,7 +30,8 @@ namespace CodeGeneration
         public override Object Visit(MethodDefinition node, Object obj)
         {
             typeVariableMappings = new Dictionary<TypeVariable, TypeVariable>();
-            typeExpresionVariableMapping = new Dictionary<TypeExpression, TypeExpression>();            
+            typeExpresionVariableMapping = new Dictionary<TypeExpression, TypeExpression>();
+            var previouslyUnified = new List<Pair<TypeExpression, TypeExpression>>();
             MethodType originalMethodType = (MethodType)node.TypeExpr;
             
             TypeExpression[] args = (TypeExpression[])obj;
@@ -42,8 +43,18 @@ namespace CodeGeneration
                 TypeExpression originalParamType = originalMethodType.GetParameter(i);
                 if (originalParamType is TypeVariable)
                 {
-                    typeExpresionVariableMapping.Add(originalParamType, args[i]);
-                    originalParamType = args[i];
+                    TypeVariable clonedParamType = (TypeVariable)originalParamType.CloneType(typeVariableMappings);
+                    if (clonedParamType.EquivalenceClass != null)
+                    {
+                        clonedParamType.EquivalenceClass.add(args[i], SortOfUnification.Override, previouslyUnified);
+                        typeExpresionVariableMapping.Add(originalParamType, clonedParamType);
+                        originalParamType = clonedParamType;
+                    }
+                    else
+                    {
+                        typeExpresionVariableMapping.Add(originalParamType, args[i]);
+                        originalParamType = args[i];
+                    }                    
                 }
                 clonedArgs[i] = originalParamType;
                 clonedParametersInfo.Add(new Parameter() { Identifier = originalParameter.Identifier, Column = originalParameter.Column, Line = originalParameter.Line, ParamType = originalParamType.typeExpression });
