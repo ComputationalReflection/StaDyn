@@ -56,7 +56,7 @@ namespace UnitTest.Tests
         [TestCategory("GettingStarted")]
         public void Sample6()
         {
-            GetDefaultTest().runTest();
+            new Test(true, false, false).runTest();
         }
 
         [TestMethod]

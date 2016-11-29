@@ -17,6 +17,7 @@ using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using AST;
 using CodeGeneration;
 using Debugger;
@@ -412,9 +413,11 @@ namespace Compiler
          if (process.ExitCode != 0)
          {
             ErrorManager.Instance.NotifyError(new AssemblerError(ilFileName));
-            process.StartInfo.RedirectStandardOutput = false;
-            process.StartInfo.RedirectStandardError = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
             process.Start();
+            Console.Out.WriteLine(process.StandardOutput.ReadToEnd());
+            Console.Out.WriteLine(process.StandardError.ReadToEnd());
             process.WaitForExit();
          }
          else if (run)
@@ -426,21 +429,21 @@ namespace Compiler
             process.StartInfo.FileName = outputFileName;
             process.Start();
             Console.Out.WriteLine(process.StandardOutput.ReadToEnd());
-            Console.Error.WriteLine(process.StandardOutput.ReadToEnd());
+            Console.Error.WriteLine(process.StandardError.ReadToEnd());
             process.WaitForExit();
             if (process.ExitCode != 0)
                ErrorManager.Instance.NotifyError(new ExecutionError(outputFileName));
          }
       }
-      #endregion
+        #endregion
 
-      #region debug()
-      /// <summary>
-      /// Calls to debug visit
-      /// <param name="debugFilePath">Path where files with debug info will be created (does not include filename).</param>
-      /// <param name="typeTableFileName">Path to file with types table info that will be created (includes filename).</param>
-      /// </summary>
-      private void debug(string debugFilePath, string typeTableFileName)  {
+        #region debug()
+        /// <summary>
+        /// Calls to debug visit
+        /// <param name="debugFilePath">Path where files with debug info will be created (does not include filename).</param>
+        /// <param name="typeTableFileName">Path to file with types table info that will be created (includes filename).</param>
+        /// </summary>
+        private void debug(string debugFilePath, string typeTableFileName)  {
 #if DEBUG
           //TODO: OJO Si la carpeta Test no existe falla en tiempo de ejecución al menos en consola.
          for (int i = 0; i < this.astList.Count; i++)

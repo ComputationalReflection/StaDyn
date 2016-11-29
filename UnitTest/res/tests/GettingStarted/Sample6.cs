@@ -26,7 +26,7 @@ namespace GettingStarted {
             Console.WriteLine(aString);
             aString=upper(reference); // * Compilation error (reference is static)
 
-            var dynamicReference;
+            dynamic dynamicReference;
             if (new Random().NextDouble() < 1)
                 dynamicReference = "hello";
             else
