@@ -86,22 +86,22 @@ namespace Pybench.Aritmethic
             return null;
         }
     }
-    
+
     public class JGFHeapSortBench
     {
-        private object size;
-        private object datasizes;
+        private int size;
+        private int[] datasizes;
 
-        public object array_rows;
-        public object TestArray;
+        public int array_rows;
+        public int[] TestArray;
         public void buildTestData()
         {
-            TestArray = new int[(int)array_rows];
+            TestArray = new int[array_rows];
             Random rndnum = new Random(1729);
             int i = 0;
-            while (i < (int)array_rows)
+            while (i < array_rows)
             {
-                ((int[])TestArray)[i] = rndnum.Next();
+                TestArray[i] = rndnum.Next();
                 i = i + 1;
             }
         }
@@ -116,14 +116,14 @@ namespace Pybench.Aritmethic
             while ((min + min) <= max)
             {
                 bool inc = false;
-                if ((min + min) < max && ((int[])TestArray)[min + min] < ((int[])TestArray)[min + min + 1])
+                if ((min + min) < max && TestArray[min + min] < TestArray[min + min + 1])
                     inc = true;
                 int k = inc ? min + min + 1 : min + min;
-                if (((int[])TestArray)[min] < ((int[])TestArray)[k])
+                if (TestArray[min] < TestArray[k])
                 {
-                    int temp = ((int[])TestArray)[k];
-                    ((int[])TestArray)[k] = ((int[])TestArray)[min];
-                    ((int[])TestArray)[min] = temp;
+                    int temp = TestArray[k];
+                    TestArray[k] = TestArray[min];
+                    TestArray[min] = temp;
                     min = k;
                 }
                 else
@@ -135,7 +135,7 @@ namespace Pybench.Aritmethic
         {
             int temp;
 
-            int top = (int)array_rows - 1;
+            int top = array_rows - 1;
             int i = top / 2;
             while (i > 0)
             {
@@ -146,19 +146,19 @@ namespace Pybench.Aritmethic
             while (i > 0)
             {
                 NumSift(0, i);
-                temp = ((int[])TestArray)[0];
-                ((int[])TestArray)[0] = ((int[])TestArray)[i];
-                ((int[])TestArray)[i] = temp;
+                temp = TestArray[0];
+                TestArray[0] = TestArray[i];
+                TestArray[i] = temp;
                 i = i - 1;
             }
         }
-        
+
         public JGFHeapSortBench()
         {
             datasizes = new int[3];
-            ((int[])datasizes)[0] = 1000000;
-            ((int[])datasizes)[1] = 5000000;
-            ((int[])datasizes)[2] = 25000000;
+            datasizes[0] = 1000000;
+            datasizes[1] = 5000000;
+            datasizes[2] = 25000000;
         }
 
         public void JGFsetsize(int size)
@@ -168,7 +168,7 @@ namespace Pybench.Aritmethic
 
         public void JGFinitialise()
         {
-            array_rows = ((int[])datasizes)[(int)size];
+            array_rows = datasizes[size];
             buildTestData();
         }
 
@@ -181,9 +181,9 @@ namespace Pybench.Aritmethic
         {
             bool error = false;
             int i = 1;
-            while (i < (int)array_rows)
+            while (i < array_rows)
             {
-                error = (((int[])TestArray)[i] < ((int[])TestArray)[i - 1]);
+                error = TestArray[i] < TestArray[i - 1];
                 if (error)
                 {
                     //Console.WriteLine("Validation failed");

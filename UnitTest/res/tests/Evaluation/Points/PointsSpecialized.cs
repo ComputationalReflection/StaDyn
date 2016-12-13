@@ -74,11 +74,11 @@ namespace Points
 
     public class Point3D
     {
-        public object x;
-        public object y;
-        public object z;
-        public object dimensions;
-        public Point3D(object x, object y, object z, object dimensions)
+        public int x;
+        public int y;
+        public int z;
+        public int dimensions;
+        public Point3D(int x, int y, int z, int dimensions)
         {
             this.x = x;
             this.y = y;
@@ -93,10 +93,10 @@ namespace Points
 
     public class Point2D
     {
-        public object x;
-        public object y;
-        public object dimensions;
-        public Point2D(object x, object y, object dimensions)
+        public int x;
+        public int y;
+        public int dimensions;
+        public Point2D(int x, int y, int dimensions)
         {
             this.x = x;
             this.y = y;
@@ -125,7 +125,7 @@ namespace Points
             }
             return result;
         }
-   
+
         private Node createPoints(int number)
         {
             int i = 1;
@@ -139,7 +139,7 @@ namespace Points
             }
             return list;
         }
-      
+
         private object positiveX(Node list, int n)
         {
             int i = 0;
@@ -151,10 +151,10 @@ namespace Points
                 if (l is Node)
                 {
                     if (((Node)l).data is Point3D)
-                        if ((int)((Point3D)((Node)l).data).x >= 0)
+                        if (((Point3D)((Node)l).data).x >= 0)
                             result = new Node(((Node)l).data, result);
                         else if (((Node)l).data is Point2D)
-                            if ((int)((Point2D)((Node)l).data).x >= 0)
+                            if (((Point2D)((Node)l).data).x >= 0)
                                 result = new Node(((Node)l).data, result);
                     l = ((Node)l).next;
                 }
@@ -162,7 +162,7 @@ namespace Points
             }
             return result;
         }
-        
+
         object distance3D(object point)
         {
             object value = 2147483647;
@@ -173,15 +173,15 @@ namespace Points
                        (int)point.GetType().GetField("y").GetValue(point) *
                        (int)point.GetType().GetField("y").GetValue(point) +
                        (int)point.GetType().GetField("z").GetValue(point) *
-                       (int)point.GetType().GetField("z").GetValue(point);            
+                       (int)point.GetType().GetField("z").GetValue(point);
             return value;
         }
-        
+
         private int distance3D(Point3D point)
         {
             int value = 2147483647;
-            if ((int)point.dimensions == 3)
-                value = (int)point.x * (int)point.x + (int)point.y * (int)point.y + (int)point.z * (int)point.z;            
+            if (point.dimensions == 3)
+                value = point.x * point.x + point.y * point.y + point.z * point.z;
             return value;
         }
 
@@ -191,7 +191,7 @@ namespace Points
                 return (object)distance3D((Point3D)point);
             return distance3D(point);
         }
-        
+
         private object closestToOrigin3D(Node list, int n)
         {
             int i, minDistance;
@@ -226,7 +226,7 @@ namespace Points
             //System.Console.WriteLine("Closest Point: {0}", point);
         }
     }
-    
+
     public class BenchMark
     {
         private int iterations;
@@ -243,9 +243,9 @@ namespace Points
             for (int i = 0; i < iterations; i++)
                 self.runOneIteration();
             return this.microSeconds;
-        }        
+        }
 
-        public override object runOneIteration()
+        public object runOneIteration()
         {
             Chronometer chronometer = new Chronometer();
             Points test = new Points();

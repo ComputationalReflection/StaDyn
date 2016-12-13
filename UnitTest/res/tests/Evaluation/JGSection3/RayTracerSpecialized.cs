@@ -61,9 +61,9 @@ namespace JG
 
     public class Vec
     {
-        public object x;
-        public object y;
-        public object z;
+        public double x;
+        public double y;
+        public double z;
         public Vec(double a, double b, double c)
         {
             x = a;
@@ -81,84 +81,84 @@ namespace JG
         public void add1(Vec a)
         {
 
-            x = (double)a.x + (double)this.x;
-            y = (double)a.y + (double)this.y;
-            z = (double)a.z + (double)this.z;
+            x = a.x + this.x;
+            y = a.y + this.y;
+            z = a.z + this.z;
         }
 
         public static Vec adds(double s, Vec a, Vec b)
         {
-            return new Vec(s * (double)a.x + (double)b.x, s * (double)a.y + (double)b.y, s * (double)a.z + (double)b.z);
+            return new Vec(s * a.x + b.x, s * a.y + b.y, s * a.z + b.z);
         }
 
         public void adds(double s, Vec b)
         {
-            this.x = (double)this.x + (s * (double)b.x);
-            this.y = (double)this.y + (s * (double)b.y);
-            this.z = (double)this.z + (s * (double)b.z);
+            this.x = this.x + (s * b.x);
+            this.y = this.y + (s * b.y);
+            this.z = this.z + (s * b.z);
         }
 
         public static Vec sub1(Vec a, Vec b)
         {
-            return new Vec((double)a.x - (double)b.x, (double)a.y - (double)b.y, (double)a.z - (double)b.z);
+            return new Vec(a.x - b.x, a.y - b.y, a.z - b.z);
         }
 
         public void sub2(Vec a, Vec b)
         {
-            this.x = (double)a.x - (double)b.x;
-            this.y = (double)a.y - (double)b.y;
-            this.z = (double)a.z - (double)b.z;
+            this.x = a.x - b.x;
+            this.y = a.y - b.y;
+            this.z = a.z - b.z;
         }
 
         public static Vec mult1(Vec a, Vec b)
         {
-            return new Vec((double)a.x * (double)b.x, (double)a.y * (double)b.y, (double)a.z * (double)b.z);
+            return new Vec(a.x * b.x, a.y * b.y, a.z * b.z);
         }
 
         public static Vec cross(Vec a, Vec b)
         {
-            return new Vec((double)a.y * (double)b.z - (double)a.z * (double)b.y, (double)a.z * (double)b.x - (double)a.x * (double)b.z, (double)a.x * (double)b.y - (double)a.y * (double)b.x);
+            return new Vec(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
         }
 
         public static double dot(Vec a, Vec b)
         {
-            return (double)a.x * (double)b.x + (double)a.y * (double)b.y + (double)a.z * (double)b.z;
+            return a.x * b.x + a.y * b.y + a.z * b.z;
         }
 
         public static Vec comb(double a, Vec A, double b, Vec B)
         {
-            return new Vec(a * (double)A.x + b * (double)B.x, a * (double)A.y + b * (double)B.y, a * (double)A.z + b * (double)B.z);
+            return new Vec(a * A.x + b * B.x, a * A.y + b * B.y, a * A.z + b * B.z);
         }
 
         public void comb2(double a, Vec A, double b, Vec B)
         {
-            x = a * (double)A.x + b * (double)B.x;
-            y = a * (double)A.y + b * (double)B.y;
-            z = a * (double)A.z + b * (double)B.z;
+            x = a * A.x + b * B.x;
+            y = a * A.y + b * B.y;
+            z = a * A.z + b * B.z;
         }
 
         public void scale(double t)
         {
-            x = t * (double)x;
-            y = t * (double)y;
-            z = t * (double)z;
+            x = t * x;
+            y = t * y;
+            z = t * z;
         }
 
         public void negate()
         {
-            x = -1.0 * (double)x;
-            y = -1.0 * (double)y;
-            z = -1.0 * (double)z;
+            x = -1.0 * x;
+            y = -1.0 * y;
+            z = -1.0 * z;
         }
 
         public double normalize()
         {
-            double len = Math.Sqrt((double)x * (double)x + (double)y * (double)y + (double)z * (double)z);
+            double len = Math.Sqrt(x * x + y * y + z * z);
             while (len > 0.0)
             {
-                x = (double)x / len;
-                y = (double)y / len;
-                z = (double)z / len;
+                x = x / len;
+                y = y / len;
+                z = z / len;
                 len = 0.0;
             }
             return len;
@@ -166,18 +166,18 @@ namespace JG
 
         public override String ToString()
         {
-            return "<" + (double)x + "," + (double)y + "," + (double)z + ">";
+            return "<" + x + "," + y + "," + z + ">";
         }
     }
 
     public class View
     {
-        public object fromVec;
-        public object atVec;
-        public object upVec;
-        public object dist;
-        public object angle;
-        public object aspect;
+        public Vec fromVec;
+        public Vec atVec;
+        public Vec upVec;
+        public double dist;
+        public double angle;
+        public double aspect;
 
         public View(Vec fromVec, Vec atVec, Vec upVec, double dist, double angle, double aspect)
         {
@@ -192,16 +192,16 @@ namespace JG
 
     public class Ray
     {
-        public object P;
-        public object D;
+        public Vec P;
+        public Vec D;
 
         public Ray(Vec pnt, Vec dir)
         {
             P = new Vec();
-            ((Vec)P).add1(pnt);
+            P.add1(pnt);
             D = new Vec();
-            ((Vec)D).add1(dir);
-            ((Vec)D).normalize();
+            D.add1(dir);
+            D.normalize();
         }
 
         public Ray()
@@ -212,7 +212,7 @@ namespace JG
 
         public Vec point(double t)
         {
-            return new Vec((double)((Vec)P).x + (double)((Vec)D).x * t, (double)((Vec)P).y + (double)((Vec)D).y * t, (double)((Vec)P).z + (double)((Vec)D).z * t);
+            return new Vec(P.x + D.x * t, P.y + D.y * t, P.z + D.z * t);
         }
 
         public override String ToString()
@@ -223,12 +223,12 @@ namespace JG
 
     public class Interval
     {
-        public object number;
-        public object width;
-        public object height;
-        public object yfrom;
-        public object yto;
-        public object total;
+        public int number;
+        public int width;
+        public int height;
+        public int yfrom;
+        public int yto;
+        public int total;
 
         public Interval(int number, int width, int height, int yfrom, int yto, int total)
         {
@@ -243,10 +243,10 @@ namespace JG
 
     public class Isect
     {
-        public object t;
-        public object enter;
-        public object prim;
-        public object surf;
+        public double t;
+        public int enter;
+        public Primitive prim;
+        public Surface surf;
 
         public override String ToString()
         {
@@ -256,8 +256,8 @@ namespace JG
 
     public class Light
     {
-        public object pos;
-        public object brightness;
+        public Vec pos;
+        public double brightness;
 
         public Light() { }
 
@@ -270,12 +270,12 @@ namespace JG
 
     public class Surface
     {
-        public object color;
-        public object kd;
-        public object ks;
-        public object shine;
-        public object kt;
-        public object ior;
+        public Vec color;
+        public double kd;
+        public double ks;
+        public double shine;
+        public double kt;
+        public double ior;
 
         public Surface()
         {
@@ -295,7 +295,7 @@ namespace JG
 
     public abstract class Primitive
     {
-        public object surf;
+        public Surface surf;
 
         public Primitive()
         {
@@ -304,7 +304,7 @@ namespace JG
 
         public void setColor(double r, double g, double b)
         {
-            ((Surface)surf).color = new Vec(r, g, b);
+            surf.color = new Vec(r, g, b);
         }
 
         public abstract Isect intersect(Ray ry);
@@ -313,11 +313,11 @@ namespace JG
 
     public class Sphere : Primitive
     {
-        object c;
-        object r;
-        object r2;
-        object v;
-        object b;
+        Vec c;
+        double r;
+        double r2;
+        Vec v;
+        Vec b;
 
         public Sphere(Vec center, double radius) : base()
         {
@@ -330,12 +330,12 @@ namespace JG
 
         public override Isect intersect(Ray ry)
         {
-            Vec p = (Vec)ry.P;
-            Vec d = (Vec)ry.D;
-            ((Vec)v).sub2((Vec)c, p);
-            double b = Vec.dot((Vec)v, d);
-            double dotVV = Vec.dot((Vec)v, (Vec)v);
-            double disc = b * b - dotVV + (double)r2;
+            Vec p = ry.P;
+            Vec d = ry.D;
+            v.sub2(c, p);
+            double b = Vec.dot(v, d);
+            double dotVV = Vec.dot(v, v);
+            double disc = b * b - dotVV + r2;
             if (disc < 0.0)
                 return null;
             disc = Math.Sqrt(disc);
@@ -344,7 +344,7 @@ namespace JG
                 return null;
             Isect ip = new Isect();
             ip.t = t;
-            ip.enter = dotVV > (double)r2 + 1e-6 ? 1.0 : 0.0;
+            ip.enter = dotVV > r2 + 1e-6 ? 1 : 0;
             ip.prim = this;
             ip.surf = this.surf;
             return ip;
@@ -352,19 +352,19 @@ namespace JG
 
         public override Vec normal(Vec p)
         {
-            Vec r = Vec.sub1(p, (Vec)c);
+            Vec r = Vec.sub1(p, c);
             r.normalize();
             return r;
         }
 
         public override String ToString()
         {
-            return "Sphere {" + ((Vec)c).ToString() + "," + (double)r + "}";
+            return "Sphere {" + c.ToString() + "," + r + "}";
         }
 
         public Vec getCenter()
         {
-            return (Vec)c;
+            return c;
         }
         public void setCenter(Vec c)
         {
@@ -374,9 +374,9 @@ namespace JG
 
     public class Scene
     {
-        public object lights;
-        public object objects;
-        private object view;
+        public ArrayList lights;
+        public ArrayList objects;
+        private View view;
 
         public Scene()
         {
@@ -386,12 +386,12 @@ namespace JG
 
         public void addLight(Light l)
         {
-            ((ArrayList)this.lights).Add(l);
+            this.lights.Add(l);
         }
 
         public void addObject(Primitive myobject)
         {
-            ((ArrayList)this.objects).Add(myobject);
+            this.objects.Add(myobject);
         }
 
         public void setView(View view)
@@ -401,66 +401,66 @@ namespace JG
 
         public View getView()
         {
-            return (View)this.view;
+            return this.view;
         }
 
         public Light getLight(int number)
         {
-            return (Light)((ArrayList)this.lights).ToArray()[number];
+            return (Light)this.lights.ToArray()[number];
         }
 
         public Primitive getObject(int number)
         {
-            return (Primitive)((ArrayList)objects).ToArray()[number];
+            return (Primitive)objects.ToArray()[number];
         }
 
         public int getLights()
         {
-            return ((ArrayList)this.lights).Count;
+            return this.lights.Count;
         }
 
         public int getObjects()
         {
-            return ((ArrayList)this.objects).Count;
+            return this.objects.Count;
         }
 
         public void setObject(Primitive myobject, int pos)
         {
-            ((ArrayList)this.objects)[pos] = myobject;
+            this.objects[pos] = myobject;
         }
     }
 
     public class RayTracer
     {
-        public object scene;
-        public object lights;
-        public object prim;
-        public object view;
-        public object tRay;
-        public static object alpha;
-        public static object voidVec;
-        public object L;
-        public object inter;
-        public object height;
-        public object width;
-        public object datasizes;
-        public object checksum;
-        public object size;
-        public object numobjects;
+        public Scene scene;
+        public Light[] lights;
+        public Primitive[] prim;
+        public View view;
+        public Ray tRay;
+        public static int alpha;
+        public static Vec voidVec;
+        public Vec L;
+        public Isect inter;
+        public int height;
+        public int width;
+        public int[] datasizes;
+        public int checksum;
+        public int size;
+        public int numobjects;
 
         public RayTracer()
         {
             datasizes = new int[10];
-            ((int[])datasizes)[0] = 5;
-            ((int[])datasizes)[1] = 10;
-            ((int[])datasizes)[2] = 15;
-            ((int[])datasizes)[3] = 20;
-            ((int[])datasizes)[4] = 25;
-            ((int[])datasizes)[5] = 30;
-            ((int[])datasizes)[6] = 35;
-            ((int[])datasizes)[7] = 40;
-            ((int[])datasizes)[8] = 45;
-            ((int[])datasizes)[9] = 50;
+            datasizes[0] = 5;
+            datasizes[1] = 10;
+            datasizes[2] = 15;
+            datasizes[3] = 20;
+            datasizes[4] = 25;
+            datasizes[5] = 30;
+            datasizes[6] = 35;
+            datasizes[7] = 40;
+            datasizes[8] = 45;
+            datasizes[9] = 50;
             RayTracer.alpha = 255 << 24;
             tRay = new Ray();
             RayTracer.voidVec = new Vec();
@@ -491,10 +491,10 @@ namespace JG
                         double yy = 20.0 / (ny - 1.0) * j - 10.0;
                         double zz = 20.0 / (nz - 1.0) * k - 10.0;
                         p = new Sphere(new Vec(xx, yy, zz), 3.0);
-                        p.setColor(0.0, 0.0, (((double)(i + j)) / ((double)(nx + ny - 2.0))));
-                        ((Surface)p.surf).shine = 15.0;
-                        ((Surface)p.surf).ks = 1.5 - 1.0;
-                        ((Surface)p.surf).kt = 1.5 - 1.0;
+                        p.setColor(0.0, 0.0, (i + j) / (nx + ny - 2.0));
+                        p.surf.shine = 15.0;
+                        p.surf.ks = 1.5 - 1.0;
+                        p.surf.kt = 1.5 - 1.0;
                         scene.addObject(p);
                         k = k + 1.0;
                     }
@@ -522,13 +522,13 @@ namespace JG
             int l = 0;
             while (l < nLights)
             {
-                ((Light[])lights)[l] = scene.getLight(l);
+                lights[l] = scene.getLight(l);
                 l = l + 1;
             }
             int o = 0;
             while (o < nObjects)
             {
-                ((Primitive[])prim)[o] = scene.getObject(o);
+                prim[o] = scene.getObject(o);
                 o = o + 1;
             }
             view = scene.getView();
@@ -541,9 +541,9 @@ namespace JG
             temp.t = 1e9;
             this.inter = temp;
             int i = 0;
-            while (i < ((Primitive[])this.prim).Length)
+            while (i < this.prim.Length)
             {
-                Isect tp = ((Primitive[])this.prim)[i].intersect(r);
+                Isect tp = this.prim[i].intersect(r);
                 bool sw = (tp != null);
                 if (sw)
                 {
@@ -568,9 +568,9 @@ namespace JG
             bool hit = intersect(r, 1e6);
             if (hit)
             {
-                Vec P = r.point((double)((Isect)inter).t);
-                Vec N = ((Primitive)((Isect)inter).prim).normal(P);
-                if (Vec.dot((Vec)r.D, N) >= 0.0)
+                Vec P = r.point(inter.t);
+                Vec N = inter.prim.normal(P);
+                if (Vec.dot(r.D, N) >= 0.0)
                     N.negate();
                 //return shade(level, weight, P, N, r.D, inter);
             }
@@ -588,8 +588,8 @@ namespace JG
 
         public Vec TransDir(Surface m1, Surface m2, Vec I, Vec N)
         {
-            double n1 = m1 == null ? 1.0 : (double)m1.ior;
-            double n2 = m2 == null ? 1.0 : (double)m2.ior;
+            double n1 = m1 == null ? 1.0 : m1.ior;
+            double n2 = m2 == null ? 1.0 : m2.ior;
             double eta = n1 / n2;
             double c1 = -Vec.dot(I, N);
             double cs2 = 1.0 - eta * eta * (1.0 - c1 * c1);
@@ -609,33 +609,33 @@ namespace JG
 
         public void render(Interval interval)
         {
-            View localView = (View)this.view;
-            Vec viewVec = Vec.sub1((Vec)localView.atVec, (Vec)localView.fromVec);
+            View localView = this.view;
+            Vec viewVec = Vec.sub1(localView.atVec, localView.fromVec);
             viewVec.normalize();
-            Vec tmpVec = new Vec((double)viewVec.x, (double)viewVec.y, (double)viewVec.z);
-            double dotValue = Vec.dot((Vec)localView.upVec, viewVec);
+            Vec tmpVec = new Vec(viewVec.x, viewVec.y, viewVec.z);
+            double dotValue = Vec.dot(localView.upVec, viewVec);
             tmpVec.scale(dotValue);
-            Vec upVec = Vec.sub1((Vec)localView.upVec, tmpVec);
+            Vec upVec = Vec.sub1(localView.upVec, tmpVec);
             upVec.normalize();
-            Vec leftVec = Vec.cross((Vec)localView.upVec, viewVec);
+            Vec leftVec = Vec.cross(localView.upVec, viewVec);
             leftVec.normalize();
-            double frustrumwidth = (double)localView.dist * Math.Tan((double)localView.angle);
+            double frustrumwidth = localView.dist * Math.Tan(localView.angle);
             upVec.scale(-frustrumwidth);
-            double scaleValue = (double)localView.aspect * frustrumwidth;
+            double scaleValue = localView.aspect * frustrumwidth;
             leftVec.scale(scaleValue);
-            Ray r = new Ray((Vec)localView.fromVec, (Vec)RayTracer.voidVec);
-            int y = (int)interval.yfrom;
+            Ray r = new Ray(localView.fromVec, RayTracer.voidVec);
+            int y = interval.yfrom;
             int nhits = 0;
-            while (y < (int)interval.yto)
+            while (y < interval.yto)
             {
-                double ylen = (2.0 * y) / (int)interval.width - 1.0;
+                double ylen = (2.0 * y) / interval.width - 1.0;
                 int x = 0;
-                while (x < (int)interval.width)
+                while (x < interval.width)
                 {
-                    double xlen = (2.0 * x) / (int)interval.width - 1.0;
+                    double xlen = (2.0 * x) / interval.width - 1.0;
                     r.D = Vec.comb(xlen, leftVec, ylen, upVec);
-                    ((Vec)r.D).add1(viewVec);
-                    ((Vec)r.D).normalize();
+                    r.D.add1(viewVec);
+                    r.D.normalize();
                     bool hit = this.intersect(r, 1e6);
                     if (hit)
                         nhits = nhits + 1;
@@ -643,7 +643,7 @@ namespace JG
                 }
                 y = y + 1;
             }
-            checksum = (int)checksum + nhits;
+            checksum = checksum + nhits;
         }
     }
 
@@ -656,15 +656,15 @@ namespace JG
 
         public void JGFinitialise()
         {
-            width = height = ((int[])datasizes)[(int)size];
+            width = height = datasizes[size];
             scene = createScene();
-            setScene((Scene)scene);
-            numobjects = ((Scene)scene).getObjects();
+            setScene(scene);
+            numobjects = scene.getObjects();
         }
 
         public void JGFapplication()
         {
-            Interval interval = new Interval(0, (int)width, (int)height, 0, (int)height, 1);
+            Interval interval = new Interval(0, width, height, 0, height, 1);
             render(interval);
         }
 
@@ -681,12 +681,12 @@ namespace JG
             refval[7] = 692;
             refval[8] = 894;
             refval[9] = 1084;
-            int dev = (int)checksum - refval[(int)size];
+            int dev = checksum - refval[size];
             if (dev != 0)
             {
                 Console.WriteLine("Validation failed");
-                Console.WriteLine("Pixel checksum = " + (int)checksum);
-                Console.WriteLine("Reference value = " + refval[(int)size]);
+                Console.WriteLine("Pixel checksum = " + checksum);
+                Console.WriteLine("Reference value = " + refval[size]);
             }
         }
 
