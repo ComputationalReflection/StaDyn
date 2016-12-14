@@ -294,7 +294,9 @@
     <Content Include="res\tests\Evaluation\JGSection2\SparseMatmultSpecialized.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="res\tests\Evaluation\Pystone\PystoneSpecialized.cs" />
+    <Content Include="res\tests\Evaluation\Pystone\PystoneSpecialized.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="src\tests\Benchmarks\Points.cs" />
     <Compile Include="src\tests\Benchmarks\Static.cs" />
     <Compile Include="src\tests\CLRCG\Multimethod.cs" />

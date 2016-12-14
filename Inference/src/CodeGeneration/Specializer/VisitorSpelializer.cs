@@ -364,8 +364,8 @@ namespace CodeGeneration
                             result.Add(typeRepresentation);                                 
                 return result.ToArray();
             }
-            if (original && typeExpression is TypeVariable)
-                return new string[] { TypeVariable.NewTypeVariable.ILType() };
+            if (original && typeExpression is TypeVariable && ((TypeVariable) typeExpression).Substitution == null)
+                    return new string[] {TypeVariable.NewTypeVariable.ILType()};             
             return new string[] { typeExpression.ILType()};
         }
 

@@ -2,7 +2,7 @@ using System;
 
 namespace Pybench.Aritmethic
 {
-	public class Chronometer
+    public class Chronometer
     {
         private DateTime ticks1, ticks2;
         private bool stopped;
@@ -56,178 +56,77 @@ namespace Pybench.Aritmethic
             return TicksToSeconds(ticks1, DateTime.Now);
         }
     }
-    
-	public class BenchMark 
-	{
-		private int iterations;
-		protected int microSeconds;
 
-		public BenchMark(int iterations) 
-		{
-			this.iterations = iterations;
-		}
+    public class BenchMark
+    {
+        private int iterations;
+        protected int microSeconds;
 
-		public int run() 
-		{
-			BenchMark self = this;			
-			for (int i = 0; i < iterations; i++)
-				self.runOneIteration();
-			return this.microSeconds;
-		}
+        public BenchMark(int iterations)
+        {
+            this.iterations = iterations;
+        }
 
-		virtual public object runOneIteration() { return null; }
-	}
-	
-	public class ArithmethicBenchmark : BenchMark 
-	{
-		public ArithmethicBenchmark(int iterations) : base(iterations) { }	
-		public override object runOneIteration() 
-		{				
-			Chronometer chronometer = new Chronometer();
-			Test test = new MethodCalls();						
-			chronometer.Start();				
-			test.test();
-			chronometer.Stop();			
-			this.microSeconds = this.microSeconds + chronometer.GetMicroSeconds();
-			return null;
-		}
-	}
-	
-	public abstract class Test {
+        public int run()
+        {
+            BenchMark self = this;
+            for (int i = 0; i < iterations; i++)
+                self.runOneIteration();
+            return this.microSeconds;
+        }
+
+        virtual public object runOneIteration() { return null; }
+    }
+
+    public class ArithmethicBenchmark : BenchMark
+    {
+        public ArithmethicBenchmark(int iterations) : base(iterations) { }
+        public override object runOneIteration()
+        {
+            Chronometer chronometer = new Chronometer();
+            Test test = new Recursion();
+            chronometer.Start();
+            test.test();
+            chronometer.Stop();
+            this.microSeconds = this.microSeconds + chronometer.GetMicroSeconds();
+            return null;
+        }
+    }
+
+    public abstract class Test
+    {
         public abstract void test();
     }
 
-	public class C 
-	{
-        var x = 2;
-        var y;
-        var t;
-        var s = "string";
-
-        public var f()
+    public class Recursion : Test
+    {
+        public var f(var x)
         {
-            return this.x;
+            if (x > 1)
+                return f(x - 1);
+            return 1;
         }
 
-        public var j(var a, var b)
+        public override void test()
         {
-            this.y = a;
-            this.t = b;
-            return this.y;
-        }
-
-        public void k(var a, var b, var c)
-        {
-            this.y = a;
-            this.s = "" + b;
-            this.t = c;
-        }
-    }
-	
-	public class MethodCalls : Test 
-	{		
-        public override void test() 
-		{
-            var o = new C();
-            var two = 2;
-            var three = 3;
-            var four = 4;
-            for (int i = 0; i < 30000; i = i + 1) 
+            for (var i = 0; i < 100000; i = i + 1)
             {
-                o.f();
-                o.f();
-                o.f();
-                o.f();
-                o.f();
-                o.f();
-                o.j(i, i);
-                o.j(i, i);
-                o.j(i, two);
-                o.j(i, two);
-                o.j(two, two);
-                o.k(i, i, three);
-                o.k(i, two, three);
-                o.k(i, two, three);
-                o.k(i, i, four);
-
-                o.f();
-                o.f();
-                o.f();
-                o.f();
-                o.f();
-                o.f();
-                o.j(i, i);
-                o.j(i, i);
-                o.j(i, two);
-                o.j(i, two);
-                o.j(two, two);
-                o.k(i, i, three);
-                o.k(i, two, three);
-                o.k(i, two, three);
-                o.k(i, i, four);
-
-                o.f();
-                o.f();
-                o.f();
-                o.f();
-                o.f();
-                o.f();
-                o.j(i, i);
-                o.j(i, i);
-                o.j(i, two);
-                o.j(i, two);
-                o.j(two, two);
-                o.k(i, i, three);
-                o.k(i, two, three);
-                o.k(i, two, three);
-                o.k(i, i, four);
-
-                o.f();
-                o.f();
-                o.f();
-                o.f();
-                o.f();
-                o.f();
-                o.j(i, i);
-                o.j(i, i);
-                o.j(i, two);
-                o.j(i, two);
-                o.j(two, two);
-                o.k(i, i, three);
-                o.k(i, two, three);
-                o.k(i, two, three);
-                o.k(i, i, four);
-
-                o.f();
-                o.f();
-                o.f();
-                o.f();
-                o.f();
-                o.f();
-                o.j(i, i);
-                o.j(i, i);
-                o.j(i, two);
-                o.j(i, two);
-                o.j(two, two);
-                o.k(i, i, three);
-                o.k(i, two, three);
-                o.k(i, two, three);
-                o.k(i, i, four);
+                f(10);
+                f(10);
+                f(10);
+                f(10);
+                f(10);
             }
         }
     }
-	
-	public class Program 
-	{
-		public static void Main(string[] args) 
-		{
-			//if (args.Length<1) {
-			//	Console.Error.WriteLine("You must pass the number of thousands iterations.");
-			//		System.Environment.Exit(-1);
-			//}
-			//int iterations = Convert.ToInt32(args[0]);
-			ArithmethicBenchmark arith = new ArithmethicBenchmark(1);
-			Console.WriteLine(arith.run());
-		}
+
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+          
+            ArithmethicBenchmark arith = new ArithmethicBenchmark(1);
+            Console.WriteLine(arith.run());
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace CodeGeneration
                 TypeExpression originalParamType = originalMethodType.GetParameter(i);
                 if (originalParamType is TypeVariable)
                 {
-                    TypeVariable clonedParamType = (TypeVariable)originalParamType.CloneType(typeVariableMappings);
+                    TypeVariable clonedParamType = (TypeVariable)originalParamType.CloneType(typeVariableMappings);                    
                     if (clonedParamType.EquivalenceClass != null)
                     {
                         clonedParamType.EquivalenceClass.add(args[i], SortOfUnification.Override, previouslyUnified);
@@ -155,6 +155,8 @@ namespace CodeGeneration
             Expression clonedFirstOperand = (Expression)node.FirstOperand.Accept(this, obj);
             Expression clonedSecondOperand = (Expression)node.SecondOperand.Accept(this, obj);
             ArrayAccessExpression clonedArrayAccessExpression = new ArrayAccessExpression(clonedFirstOperand, clonedSecondOperand, node.Location);
+            if (node.ExpressionType != null)
+                clonedArrayAccessExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
             return clonedArrayAccessExpression;
         }
 
