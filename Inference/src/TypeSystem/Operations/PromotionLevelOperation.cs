@@ -35,7 +35,16 @@ namespace TypeSystem.Operations {
             // * Array and bounded type variable
             ArrayType array = TypeExpression.As<ArrayType>(this.secondOperand);
             if (array != null)
-                return firstOperand.ArrayTypeExpression.Equals(array.ArrayTypeExpression) ? 0 : -1;
+            {
+                TypeExpression firstOperandArrayTypeExpression = firstOperand.ArrayTypeExpression;
+                TypeExpression secondOperandArrayTypeExpression = array.ArrayTypeExpression;
+                if (firstOperandArrayTypeExpression is TypeVariable && ((TypeVariable)firstOperandArrayTypeExpression).Substitution != null)
+                    firstOperandArrayTypeExpression = ((TypeVariable) firstOperandArrayTypeExpression).Substitution;
+                if (secondOperandArrayTypeExpression is TypeVariable && ((TypeVariable)secondOperandArrayTypeExpression).Substitution != null)
+                    secondOperandArrayTypeExpression = ((TypeVariable)secondOperandArrayTypeExpression).Substitution;
+                return firstOperandArrayTypeExpression.Equals(secondOperandArrayTypeExpression) ? 0 : -1;
+            }
+                
             // * A free variable is a complete promotion
             TypeVariable typeVariable = this.secondOperand as TypeVariable;
             if (typeVariable != null && typeVariable.Substitution == null)
