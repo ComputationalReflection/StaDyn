@@ -279,9 +279,26 @@
     <Content Include="res\tests\CLRCG\Specialization\Specialization41e.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="res\tests\Evaluation\JGSection2\FFTSpecialized.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Evaluation\JGSection2\HeapSortSpecialized.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Evaluation\Points\PointsSpecialized.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Evaluation\JGSection3\RayTracerSpecialized.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Evaluation\JGSection2\SparseMatmultSpecialized.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="res\tests\Evaluation\Pystone\PystoneSpecialized.cs" />
     <Compile Include="src\tests\Benchmarks\Points.cs" />
     <Compile Include="src\tests\Benchmarks\Static.cs" />
     <Compile Include="src\tests\CLRCG\Multimethod.cs" />
+    <Compile Include="src\tests\Evaluation\Points.cs" />
     <Compile Include="src\tests\GettingStarted.cs" />
     <Compile Include="src\tests\Wrong.cs" />
     <Compile Include="src\tests\CLRCG\Specialization.cs" />
@@ -307,6 +324,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

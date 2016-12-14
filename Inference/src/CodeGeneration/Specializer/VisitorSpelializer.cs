@@ -340,6 +340,8 @@ namespace CodeGeneration
 
         private static String[] TypeExpressionRepresentation(TypeExpression typeExpression, bool original = false)
         {
+            if (typeExpression.ILType().Equals("class [mscorlib]System.Object"))
+                return new string[] { "object" };
             if (typeExpression.ILType().Contains("class"))
                 return new string[] {typeExpression.ILType().Replace("class ", "").Replace(".", "_")};
             

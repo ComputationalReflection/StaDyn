@@ -1224,6 +1224,8 @@ namespace CodeGeneration {
                     this.codeGenerator.brfalse(indent, nextLabel);
                     WriteLoadField(fieldType, memberName, ia);
                     this.codeGenerator.br(indent, finalLabel);
+                    if(i == unionType.TypeSet.Count -1)
+                        this.codeGenerator.WriteLabel(this.indent, nextLabel);
                 }
                 else if (!sw)
                 {

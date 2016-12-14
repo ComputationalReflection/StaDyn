@@ -1,157 +1,233 @@
 using System;
 
-namespace Points
+namespace Pybench.Aritmethic
 {
-    public class Node
+	public class Chronometer
     {
-        public dynamic data;
-        public dynamic next;
-        public Node(dynamic data, dynamic next)
+        private DateTime ticks1, ticks2;
+        private bool stopped;
+
+        public void Start()
         {
-            this.data = data;
-            this.next = next;
+            ticks1 = DateTime.Now;
+            stopped = false;
         }
-        public override string ToString()
+        public void Stop()
         {
-            return "Node[data=" + data.ToString() + ",next=" + next.ToString() + "]";
+            ticks2 = DateTime.Now;
+            stopped = true;
+        }
+
+        private static int TicksToMicroSeconds(DateTime t1, DateTime t2)
+        {
+            return TicksToMiliSeconds(t1, t2) * 1000;
+        }
+
+        private static int TicksToMiliSeconds(DateTime t1, DateTime t2)
+        {
+            TimeSpan difference = t2.Subtract(t1);
+            return (difference.Milliseconds + difference.Seconds * 1000 + difference.Minutes * 60000);
+        }
+
+        private static int TicksToSeconds(DateTime t1, DateTime t2)
+        {
+            TimeSpan difference = t2.Subtract(t1);
+            return (difference.Seconds + difference.Minutes * 60);
+        }
+
+        public int GetMicroSeconds()
+        {
+            if (stopped)
+                return TicksToMicroSeconds(ticks1, ticks2);
+            return TicksToMicroSeconds(ticks1, DateTime.Now);
+        }
+
+        public int GetMiliSeconds()
+        {
+            if (stopped)
+                return TicksToMiliSeconds(ticks1, ticks2);
+            return TicksToMiliSeconds(ticks1, DateTime.Now);
+        }
+
+        public int GetSeconds()
+        {
+            if (stopped)
+                return TicksToSeconds(ticks1, ticks2);
+            return TicksToSeconds(ticks1, DateTime.Now);
         }
     }
+    
+	public class BenchMark 
+	{
+		private int iterations;
+		protected int microSeconds;
 
-    public class Point3D
-    {
-        public dynamic x;
-        public dynamic y;
-        public dynamic z;
-        public dynamic dimensions;
-        public Point3D(dynamic x, dynamic y, dynamic z, dynamic dimensions)
-        {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.dimensions = dimensions;
-        }
-        public override string ToString()
-        {
-            return "Point3D[x=" + x.ToString() + ",y=" + y.ToString() + ",z=" + z.ToString() + "]";
-        }
+		public BenchMark(int iterations) 
+		{
+			this.iterations = iterations;
+		}
+
+		public int run() 
+		{
+			BenchMark self = this;			
+			for (int i = 0; i < iterations; i++)
+				self.runOneIteration();
+			return this.microSeconds;
+		}
+
+		virtual public object runOneIteration() { return null; }
+	}
+	
+	public class ArithmethicBenchmark : BenchMark 
+	{
+		public ArithmethicBenchmark(int iterations) : base(iterations) { }	
+		public override object runOneIteration() 
+		{				
+			Chronometer chronometer = new Chronometer();
+			Test test = new MethodCalls();						
+			chronometer.Start();				
+			test.test();
+			chronometer.Stop();			
+			this.microSeconds = this.microSeconds + chronometer.GetMicroSeconds();
+			return null;
+		}
+	}
+	
+	public abstract class Test {
+        public abstract void test();
     }
 
-    public class Point2D
-    {
-        public dynamic x;
-        public dynamic y;
-        public dynamic dimensions;
-        public Point2D(dynamic x, dynamic y, dynamic dimensions)
+	public class C 
+	{
+        var x = 2;
+        var y;
+        var t;
+        var s = "string";
+
+        public var f()
         {
-            this.x = x;
-            this.y = y;
-            this.dimensions = dimensions;
+            return this.x;
         }
-        public override string ToString()
+
+        public var j(var a, var b)
         {
-            return "Point2D[x=" + x.ToString() + ",y=" + y.ToString() + "]";
+            this.y = a;
+            this.t = b;
+            return this.y;
+        }
+
+        public void k(var a, var b, var c)
+        {
+            this.y = a;
+            this.s = "" + b;
+            this.t = c;
         }
     }
-
-    public class Points
-    {
-        private dynamic createPoint(dynamic dimensions, dynamic x, dynamic y, dynamic z)
-        {
-            dynamic point;
-            if (dimensions == 2)
-                point = new Point2D(x, y, dimensions);
-            else
-                point = new Point3D(x, y, z, 3);
-            return point;
-        }
-
-
-        private dynamic createPoints(dynamic number)
-        {
-            dynamic i;
-            dynamic list, point;
-
-            i = 1;
-            point = createPoint(3, 0, 0, 0);
-            list = new Node(point, 0);
-            while (i < number)
+	
+	public class MethodCalls : Test 
+	{		
+        public override void test() 
+		{
+            var o = new C();
+            var two = 2;
+            var three = 3;
+            var four = 4;
+            for (int i = 0; i < 30000; i = i + 1) 
             {
-                point = createPoint(i % 2 + 2, number / 2 - i, i, i);
-                list = new Node(point, list);
-                i = i + 1;
+                o.f();
+                o.f();
+                o.f();
+                o.f();
+                o.f();
+                o.f();
+                o.j(i, i);
+                o.j(i, i);
+                o.j(i, two);
+                o.j(i, two);
+                o.j(two, two);
+                o.k(i, i, three);
+                o.k(i, two, three);
+                o.k(i, two, three);
+                o.k(i, i, four);
+
+                o.f();
+                o.f();
+                o.f();
+                o.f();
+                o.f();
+                o.f();
+                o.j(i, i);
+                o.j(i, i);
+                o.j(i, two);
+                o.j(i, two);
+                o.j(two, two);
+                o.k(i, i, three);
+                o.k(i, two, three);
+                o.k(i, two, three);
+                o.k(i, i, four);
+
+                o.f();
+                o.f();
+                o.f();
+                o.f();
+                o.f();
+                o.f();
+                o.j(i, i);
+                o.j(i, i);
+                o.j(i, two);
+                o.j(i, two);
+                o.j(two, two);
+                o.k(i, i, three);
+                o.k(i, two, three);
+                o.k(i, two, three);
+                o.k(i, i, four);
+
+                o.f();
+                o.f();
+                o.f();
+                o.f();
+                o.f();
+                o.f();
+                o.j(i, i);
+                o.j(i, i);
+                o.j(i, two);
+                o.j(i, two);
+                o.j(two, two);
+                o.k(i, i, three);
+                o.k(i, two, three);
+                o.k(i, two, three);
+                o.k(i, i, four);
+
+                o.f();
+                o.f();
+                o.f();
+                o.f();
+                o.f();
+                o.f();
+                o.j(i, i);
+                o.j(i, i);
+                o.j(i, two);
+                o.j(i, two);
+                o.j(two, two);
+                o.k(i, i, three);
+                o.k(i, two, three);
+                o.k(i, two, three);
+                o.k(i, i, four);
             }
-            return list;
-        }
-
-        dynamic positiveX(dynamic list, dynamic n)
-        {
-            dynamic i;
-            dynamic l, result;
-            i = 0;
-            result = i;
-            l = list;
-            while (i < n)
-            {
-                if (l.data.x >= 0)
-                    result = new Node(l.data, result);
-                l = l.next;
-                i = i + 1;
-            }
-            return result;
-        }
-
-        dynamic distance3D(dynamic point)
-        {
-            dynamic value;
-            value = 2147483647;
-            if (point.dimensions == 3)
-                value = point.x * point.x + point.y * point.y + point.z * point.z;
-            return value;
-        }
-
-        dynamic closestToOrigin3D(dynamic list, dynamic n)
-        {
-            dynamic i, minDistance;
-            dynamic l, point3D;
-
-            point3D = createPoint(3, 0, 0, 0);
-            minDistance = 2147483647;
-            l = list;
-            i = 0;
-            while (i < n)
-            {
-                if (distance3D(l.data) < minDistance)
-                {
-                    minDistance = distance3D(l.data);
-                    point3D = l.data;
-                }
-                l = l.next;
-                i = i + 1;
-            }
-            return point3D;
-        }
-
-        public void Run()
-        {
-            dynamic numberOfPoints;
-            dynamic list, positive, point;
-            numberOfPoints = 10;
-            list = createPoints(numberOfPoints);
-            positive = positiveX(list, numberOfPoints);
-            point = closestToOrigin3D(list, numberOfPoints);
-            System.Console.WriteLine("Full List: {0}", list);
-            System.Console.WriteLine("Positive X List: {0}", positive);
-            System.Console.WriteLine("Closest Point: {0}", point);
         }
     }
-
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            Points points = new Points();
-            points.Run();
-            Console.WriteLine("Successful!!");
-        }
+	
+	public class Program 
+	{
+		public static void Main(string[] args) 
+		{
+			//if (args.Length<1) {
+			//	Console.Error.WriteLine("You must pass the number of thousands iterations.");
+			//		System.Environment.Exit(-1);
+			//}
+			//int iterations = Convert.ToInt32(args[0]);
+			ArithmethicBenchmark arith = new ArithmethicBenchmark(1);
+			Console.WriteLine(arith.run());
+		}
     }
 }

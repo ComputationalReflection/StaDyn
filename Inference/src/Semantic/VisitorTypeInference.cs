@@ -738,9 +738,6 @@ namespace Semantic {
             // * Updates the visitor's state
             this.sortOfUnification = previousSortOfUnification;
 
-
-            List<Pair<TypeExpression, TypeExpression>> previous = new List<Pair<TypeExpression, TypeExpression>>();
-
             foreach (MoveStatement moveStatement in node.AfterCondition)
             {
                 Simplify(moveStatement.LeftExp.ExpressionType);
@@ -801,11 +798,11 @@ namespace Semantic {
                     Simplify(singleIdentifierExpression.ExpressionType);
                 Simplify(theta.ThetaId.ExpressionType);
             }
-            
+
             foreach (MoveStatement moveStatement in node.AfterCondition)
             {
                 Simplify(moveStatement.LeftExp.ExpressionType);
-                Simplify(moveStatement.RightExp.ExpressionType);                
+                Simplify(moveStatement.RightExp.ExpressionType);
             }
 
             return null;
