@@ -297,6 +297,36 @@
     <Content Include="res\tests\Evaluation\Pystone\PystoneSpecialized.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Calls.FunctionCalls-SP.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Calls.MethodCalls-SP.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Calls.Recursion-SP.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Dicts.DictWithFloatKeys-SP.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Dicts.DictWithStringKeys-SP.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Dicts.SimpleDictManipulation-SP.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Instances.CreateInstances-SP.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Lookups.NormalClassAttribute-SP.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Lookups.NormalInstanceAttribute-SP.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.NewInstances.CreateNewInstances-SP.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="src\tests\Benchmarks\Points.cs" />
     <Compile Include="src\tests\Benchmarks\Static.cs" />
     <Compile Include="src\tests\CLRCG\Multimethod.cs" />

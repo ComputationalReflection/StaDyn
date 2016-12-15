@@ -84,7 +84,7 @@ namespace Pybench.Aritmethic
         public override object runOneIteration()
         {
             Chronometer chronometer = new Chronometer();
-            Test test = new CreateNewInstances();
+            Test test = new FunctionCalls();
             chronometer.Start();
             test.test();
             chronometer.Stop();
@@ -98,76 +98,96 @@ namespace Pybench.Aritmethic
         public abstract void test();
     }
 
-    public class Root
+    public class FunctionCalls : Test
     {
-        public int a;
+        void f() { }
 
-        public Root() { }
+        void f1(int x) { }
 
-        public Root(int a)
+        int[] g(int a, int b, int c)
         {
-            this.a = a;
+            int[] result = new int[3];
+            result[0] = a;
+            result[1] = b;
+            result[2] = c;
+            return result;
         }
-    }
 
-    public class C : Root
-    {
-        public static int b;
-        public static int c;
-    }
-
-    public class D : Root
-    {
-        public int b;
-        public int c;
-
-        public D(int a, int b, int c) : base(a)
+        int[] h(int a, int b, int c, int d, int e, int f)
         {
-            this.b = b;
-            this.c = c;
+            int[] result = new int[3];
+            result[0] = d;
+            result[1] = e;
+            result[2] = f;
+            return result;
         }
-    }
 
-    public class E : Root
-    {
-        public int b;
-        public int c;
-        public int d;
-        public int e;
-        public int f;
-
-        public E(int a, int b, int c) : base(a)
-        {
-            this.b = b;
-            this.c = c;
-            this.d = a;
-            this.e = b;
-            this.f = c;
-        }
-    }
-
-    public class CreateNewInstances : Test
-    {
         public override void test()
         {
+            int zero = 0;
+            int two = 2;
             int three = 3;
-            int four = 4;
-            for (int i = 0; i < 800000; i = i + 1)
+            for (int i = 0; i < 60000; i = i + 1)
             {
-                C o = new C();
-                C o1 = new C();
-                C o2 = new C();
-                D p = new D(i, i, three);
-                D p1 = new D(i, i, three);
-                D p2 = new D(i, three, three);
-                D p3 = new D(three, i, three);
-                D p4 = new D(i, i, i);
-                D p5 = new D(three, i, three);
-                D p6 = new D(i, i, i);
-                E q = new E(i, i, three);
-                E q1 = new E(i, i, three);
-                E q2 = new E(i, i, three);
-                E q3 = new E(i, i, four);
+                f();
+                f1(i);
+                f1(i);
+                f1(i);
+                f1(i);
+                g(i, i, i);
+                g(i, i, i);
+                g(i, i, i);
+                g(i, i, i);
+                h(i, i, three, i, i, zero);
+                h(i, i, i, two, i, three);
+
+                f();
+                f1(i);
+                f1(i);
+                f1(i);
+                f1(i);
+                g(i, i, i);
+                g(i, i, i);
+                g(i, i, i);
+                g(i, i, i);
+                h(i, i, three, i, i, zero);
+                h(i, i, i, two, i, three);
+
+                f();
+                f1(i);
+                f1(i);
+                f1(i);
+                f1(i);
+                g(i, i, i);
+                g(i, i, i);
+                g(i, i, i);
+                g(i, i, i);
+                h(i, i, three, i, i, zero);
+                h(i, i, i, two, i, three);
+
+                f();
+                f1(i);
+                f1(i);
+                f1(i);
+                f1(i);
+                g(i, i, i);
+                g(i, i, i);
+                g(i, i, i);
+                g(i, i, i);
+                h(i, i, three, i, i, zero);
+                h(i, i, i, two, i, three);
+
+                f();
+                f1(i);
+                f1(i);
+                f1(i);
+                f1(i);
+                g(i, i, i);
+                g(i, i, i);
+                g(i, i, i);
+                g(i, i, i);
+                h(i, i, three, i, i, zero);
+                h(i, i, i, two, i, three);
             }
         }
     }

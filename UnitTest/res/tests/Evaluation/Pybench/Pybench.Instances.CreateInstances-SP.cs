@@ -84,7 +84,7 @@ namespace Pybench.Aritmethic
         public override object runOneIteration()
         {
             Chronometer chronometer = new Chronometer();
-            Test test = new CreateNewInstances();
+            Test test = new CreateInstances();
             chronometer.Start();
             test.test();
             chronometer.Stop();
@@ -98,46 +98,39 @@ namespace Pybench.Aritmethic
         public abstract void test();
     }
 
-    public class Root
+    public class C
     {
-        public int a;
-
-        public Root() { }
-
-        public Root(int a)
-        {
-            this.a = a;
-        }
-    }
-
-    public class C : Root
-    {
+        public static int a;
         public static int b;
         public static int c;
     }
 
-    public class D : Root
+    public class D
     {
+        public int a;
         public int b;
         public int c;
 
-        public D(int a, int b, int c) : base(a)
+        public D(int a, int b, int c)
         {
+            this.a = a;
             this.b = b;
             this.c = c;
         }
     }
 
-    public class E : Root
+    public class E
     {
+        public int a;
         public int b;
         public int c;
         public int d;
         public int e;
         public int f;
 
-        public E(int a, int b, int c) : base(a)
+        public E(int a, int b, int c)
         {
+            this.a = a;
             this.b = b;
             this.c = c;
             this.d = a;
@@ -146,13 +139,14 @@ namespace Pybench.Aritmethic
         }
     }
 
-    public class CreateNewInstances : Test
+    public class CreateInstances : Test
     {
         public override void test()
         {
+            int i = 0;
             int three = 3;
             int four = 4;
-            for (int i = 0; i < 800000; i = i + 1)
+            while (i < 80000)
             {
                 C o = new C();
                 C o1 = new C();
@@ -168,6 +162,8 @@ namespace Pybench.Aritmethic
                 E q1 = new E(i, i, three);
                 E q2 = new E(i, i, three);
                 E q3 = new E(i, i, four);
+
+                i = i + 1;
             }
         }
     }

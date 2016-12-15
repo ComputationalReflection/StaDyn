@@ -84,7 +84,7 @@ namespace Pybench.Aritmethic
         public override object runOneIteration()
         {
             Chronometer chronometer = new Chronometer();
-            Test test = new CreateNewInstances();
+            Test test = new DictWithFloatKeys();
             chronometer.Start();
             test.test();
             chronometer.Stop();
@@ -98,76 +98,111 @@ namespace Pybench.Aritmethic
         public abstract void test();
     }
 
-    public class Root
+    public class DictWithFloatKeys : Test
     {
-        public int a;
+        public static int SIZE;
 
-        public Root() { }
-
-        public Root(int a)
+        public static int Hash(double value)
         {
-            this.a = a;
+            var val = value.GetHashCode();
+            if (val < 0)
+                return (0 - val) % SIZE;
+            return val % SIZE;
         }
-    }
 
-    public class C : Root
-    {
-        public static int b;
-        public static int c;
-    }
-
-    public class D : Root
-    {
-        public int b;
-        public int c;
-
-        public D(int a, int b, int c) : base(a)
-        {
-            this.b = b;
-            this.c = c;
-        }
-    }
-
-    public class E : Root
-    {
-        public int b;
-        public int c;
-        public int d;
-        public int e;
-        public int f;
-
-        public E(int a, int b, int c) : base(a)
-        {
-            this.b = b;
-            this.c = c;
-            this.d = a;
-            this.e = b;
-            this.f = c;
-        }
-    }
-
-    public class CreateNewInstances : Test
-    {
         public override void test()
         {
+            DictWithFloatKeys.SIZE = 50;
+            int temp;
+
+            int hash1234 = Hash(1.234);
+            int hash2345 = Hash(2.345);
+            int hash3456 = Hash(3.456);
+            int hash4567 = Hash(4.567);
+            int hash5678 = Hash(5.678);
+            int hash6789 = Hash(6.789);
+
+            int one = 1;
+            int two = 2;
             int three = 3;
             int four = 4;
-            for (int i = 0; i < 800000; i = i + 1)
+            int five = 5;
+            int six = 6;
+
+
+            int[] d = new int[DictWithFloatKeys.SIZE];
+
+            for (int i = 0; i < 150000; i = i + 1)
             {
-                C o = new C();
-                C o1 = new C();
-                C o2 = new C();
-                D p = new D(i, i, three);
-                D p1 = new D(i, i, three);
-                D p2 = new D(i, three, three);
-                D p3 = new D(three, i, three);
-                D p4 = new D(i, i, i);
-                D p5 = new D(three, i, three);
-                D p6 = new D(i, i, i);
-                E q = new E(i, i, three);
-                E q1 = new E(i, i, three);
-                E q2 = new E(i, i, three);
-                E q3 = new E(i, i, four);
+                d[hash1234] = one;
+                d[hash2345] = two;
+                d[hash3456] = three;
+                d[hash4567] = four;
+                d[hash5678] = five;
+                d[hash6789] = six;
+
+                temp = d[hash1234];
+                temp = d[hash2345];
+                temp = d[hash3456];
+                temp = d[hash4567];
+                temp = d[hash5678];
+                temp = d[hash6789];
+
+                d[hash1234] = one;
+                d[hash2345] = two;
+                d[hash3456] = three;
+                d[hash4567] = four;
+                d[hash5678] = five;
+                d[hash6789] = six;
+
+                temp = d[hash1234];
+                temp = d[hash2345];
+                temp = d[hash3456];
+                temp = d[hash4567];
+                temp = d[hash5678];
+                temp = d[hash6789];
+
+                d[hash1234] = one;
+                d[hash2345] = two;
+                d[hash3456] = three;
+                d[hash4567] = four;
+                d[hash5678] = five;
+                d[hash6789] = six;
+
+                temp = d[hash1234];
+                temp = d[hash2345];
+                temp = d[hash3456];
+                temp = d[hash4567];
+                temp = d[hash5678];
+                temp = d[hash6789];
+
+                d[hash1234] = one;
+                d[hash2345] = two;
+                d[hash3456] = three;
+                d[hash4567] = four;
+                d[hash5678] = five;
+                d[hash6789] = six;
+
+                temp = d[hash1234];
+                temp = d[hash2345];
+                temp = d[hash3456];
+                temp = d[hash4567];
+                temp = d[hash5678];
+                temp = d[hash6789];
+
+                d[hash1234] = one;
+                d[hash2345] = two;
+                d[hash3456] = three;
+                d[hash4567] = four;
+                d[hash5678] = five;
+                d[hash6789] = six;
+
+                temp = d[hash1234];
+                temp = d[hash2345];
+                temp = d[hash3456];
+                temp = d[hash4567];
+                temp = d[hash5678];
+                temp = d[hash6789];
             }
         }
     }

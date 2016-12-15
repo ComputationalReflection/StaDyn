@@ -84,7 +84,7 @@ namespace Pybench.Aritmethic
         public override object runOneIteration()
         {
             Chronometer chronometer = new Chronometer();
-            Test test = new CreateNewInstances();
+            Test test = new DictWithStringKeys();
             chronometer.Start();
             test.test();
             chronometer.Stop();
@@ -98,76 +98,115 @@ namespace Pybench.Aritmethic
         public abstract void test();
     }
 
-    public class Root
+    public class DictWithStringKeys : Test
     {
-        public int a;
+        public static int SIZE;
 
-        public Root() { }
-
-        public Root(int a)
+        private static int Hash(string value)
         {
-            this.a = a;
+            int hashVal = 0;
+            int c;
+            string key = value;
+            for (int i = 0; i < key.Length; i++)
+            {
+                c = key.ToCharArray()[i];
+                hashVal = hashVal << 5 ^ c ^ hashVal;
+            }
+            return hashVal % SIZE;
         }
-    }
 
-    public class C : Root
-    {
-        public static int b;
-        public static int c;
-    }
-
-    public class D : Root
-    {
-        public int b;
-        public int c;
-
-        public D(int a, int b, int c) : base(a)
-        {
-            this.b = b;
-            this.c = c;
-        }
-    }
-
-    public class E : Root
-    {
-        public int b;
-        public int c;
-        public int d;
-        public int e;
-        public int f;
-
-        public E(int a, int b, int c) : base(a)
-        {
-            this.b = b;
-            this.c = c;
-            this.d = a;
-            this.e = b;
-            this.f = c;
-        }
-    }
-
-    public class CreateNewInstances : Test
-    {
         public override void test()
         {
+            DictWithStringKeys.SIZE = 200;
+            int temp;
+
+            int hashABC = Hash("abc");
+            int hashDEF = Hash("def");
+            int hashGHI = Hash("ghi");
+            int hashJKL = Hash("jkl");
+            int hashMNO = Hash("mno");
+            int hashPQR = Hash("pqr");
+
+            int one = 1;
+            int two = 2;
             int three = 3;
             int four = 4;
-            for (int i = 0; i < 800000; i = i + 1)
+            int five = 5;
+            int six = 6;
+
+            int[] d = new int[SIZE];
+
+            for (int i = 0; i < 200000; i++)
             {
-                C o = new C();
-                C o1 = new C();
-                C o2 = new C();
-                D p = new D(i, i, three);
-                D p1 = new D(i, i, three);
-                D p2 = new D(i, three, three);
-                D p3 = new D(three, i, three);
-                D p4 = new D(i, i, i);
-                D p5 = new D(three, i, three);
-                D p6 = new D(i, i, i);
-                E q = new E(i, i, three);
-                E q1 = new E(i, i, three);
-                E q2 = new E(i, i, three);
-                E q3 = new E(i, i, four);
+                d[hashABC] = one;
+                d[hashDEF] = two;
+                d[hashGHI] = three;
+                d[hashJKL] = four;
+                d[hashMNO] = five;
+                d[hashPQR] = six;
+
+                temp = d[hashABC];
+                temp = d[hashDEF];
+                temp = d[hashGHI];
+                temp = d[hashJKL];
+                temp = d[hashMNO];
+                temp = d[hashPQR];
+
+                d[hashABC] = one;
+                d[hashDEF] = two;
+                d[hashGHI] = three;
+                d[hashJKL] = four;
+                d[hashMNO] = five;
+                d[hashPQR] = six;
+
+                temp = d[hashABC];
+                temp = d[hashDEF];
+                temp = d[hashGHI];
+                temp = d[hashJKL];
+                temp = d[hashMNO];
+                temp = d[hashPQR];
+
+                d[hashABC] = one;
+                d[hashDEF] = two;
+                d[hashGHI] = three;
+                d[hashJKL] = four;
+                d[hashMNO] = five;
+                d[hashPQR] = six;
+
+                temp = d[hashABC];
+                temp = d[hashDEF];
+                temp = d[hashGHI];
+                temp = d[hashJKL];
+                temp = d[hashMNO];
+                temp = d[hashPQR];
+
+                d[hashABC] = one;
+                d[hashDEF] = two;
+                d[hashGHI] = three;
+                d[hashJKL] = four;
+                d[hashMNO] = five;
+                d[hashPQR] = six;
+
+                temp = d[hashABC];
+                temp = d[hashDEF];
+                temp = d[hashGHI];
+                temp = d[hashJKL];
+                temp = d[hashMNO];
+                temp = d[hashPQR];
+
+                d[hashABC] = one;
+                d[hashDEF] = two;
+                d[hashGHI] = three;
+                d[hashJKL] = four;
+                d[hashMNO] = five;
+                d[hashPQR] = six;
+
+                temp = d[hashABC];
+                temp = d[hashDEF];
+                temp = d[hashGHI];
+                temp = d[hashJKL];
+                temp = d[hashMNO];
+                temp = d[hashPQR];
             }
         }
     }
