@@ -279,52 +279,52 @@
     <Content Include="res\tests\CLRCG\Specialization\Specialization41e.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\JGSection2\FFTSpecialized.cs">
+    <Content Include="res\tests\Evaluation\JGSection2\FFTSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\JGSection2\HeapSortSpecialized.cs">
+    <Content Include="res\tests\Evaluation\JGSection2\HeapSortSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\Points\PointsSpecialized.cs">
+    <Content Include="res\tests\Evaluation\Points\PointsSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\JGSection3\RayTracerSpecialized.cs">
+    <Content Include="res\tests\Evaluation\JGSection3\RayTracerSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\JGSection2\SparseMatmultSpecialized.cs">
+    <Content Include="res\tests\Evaluation\JGSection2\SparseMatmultSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\Pystone\PystoneSpecialized.cs">
+    <Content Include="res\tests\Evaluation\Pystone\PystoneSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Calls.FunctionCalls-SP.cs">
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Calls.FunctionCallsSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Calls.MethodCalls-SP.cs">
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Calls.MethodCallsSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Calls.Recursion-SP.cs">
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Calls.RecursionSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Dicts.DictWithFloatKeys-SP.cs">
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Dicts.DictWithFloatKeysSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Dicts.DictWithStringKeys-SP.cs">
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Dicts.DictWithStringKeysSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Dicts.SimpleDictManipulation-SP.cs">
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Dicts.SimpleDictManipulationSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Instances.CreateInstances-SP.cs">
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Instances.CreateInstancesSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Lookups.NormalClassAttribute-SP.cs">
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Lookups.NormalClassAttributeSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Lookups.NormalInstanceAttribute-SP.cs">
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.Lookups.NormalInstanceAttributeSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.NewInstances.CreateNewInstances-SP.cs">
+    <Content Include="res\tests\Evaluation\Pybench\Pybench.NewInstances.CreateNewInstancesSP.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="src\tests\Benchmarks\Points.cs" />
