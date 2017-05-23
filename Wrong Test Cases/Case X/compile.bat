@@ -1,2 +1,2 @@
 del CG.il
-..\StaDyn.exe CG.cs -ed -sp -d
+..\StaDyn.exe CG.cs -ed -sp -d -server

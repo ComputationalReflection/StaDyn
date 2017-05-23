@@ -104,7 +104,7 @@ namespace Pybench.Aritmethic
 
         public static int Hash(double value)
         {
-            var val = value.GetHashCode();
+            int val = value.GetHashCode();
             if (val < 0)
                 return (0 - val) % SIZE;
             return val % SIZE;
