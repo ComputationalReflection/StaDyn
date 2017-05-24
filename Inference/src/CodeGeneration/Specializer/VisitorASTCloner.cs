@@ -38,7 +38,7 @@ namespace CodeGeneration
             TypeExpression[] clonedArgs = new TypeExpression[args.Count()];
             List<Parameter> clonedParametersInfo = new List<Parameter>();
             for (int i = 0; i < node.ParametersInfo.Count; i++)
-            {
+            {                
                 Parameter originalParameter = node.ParametersInfo[i];
                 TypeExpression originalParamType = originalMethodType.GetParameter(i);
                 if (originalParamType is TypeVariable)
@@ -56,8 +56,8 @@ namespace CodeGeneration
                         originalParamType = args[i];
                     }                    
                 }
-                clonedArgs[i] = originalParamType;
-                clonedParametersInfo.Add(new Parameter() { Identifier = originalParameter.Identifier, Column = originalParameter.Column, Line = originalParameter.Line, ParamType = originalParamType.typeExpression });
+                clonedArgs[i] = originalParamType.Simplify();
+                clonedParametersInfo.Add(new Parameter() { Identifier = originalParameter.Identifier, Column = originalParameter.Column, Line = originalParameter.Line, ParamType = originalParamType.Simplify().typeExpression });
             }
          
             foreach (var constraint in originalMethodType.Constraints.Constraints)

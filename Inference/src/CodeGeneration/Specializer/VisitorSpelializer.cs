@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using AST;
@@ -122,7 +123,7 @@ namespace CodeGeneration
                 foreach (TypeExpression[] listOfArgs in GetTypes(args))
                 {
                     MethodDefinition md = SpecilizeMethod(MethodIndentificator(originalMethodDefinition.FullName, listOfArgs), originalMethodDefinition, listOfArgs);
-                    if(md != null)
+                    if(md != null && !methods.Any(m=>m.ILTypeExpression.Equals(md.ILTypeExpression)))
                         methods.Add(md);
                 }
 
@@ -206,10 +207,17 @@ namespace CodeGeneration
                 newMethodType.MemberInfo.TypeDefinition = originalMethodType.MemberInfo.TypeDefinition;
 
                 for (int i = 0; i < originalMethodType.ParameterListCount; i++)                    
-                    newMethodType.AddParameter(args[i]);
+                    newMethodType.AddParameter(args[i].Simplify());
                 
                 newMethodType.ASTNode = newMethodDefinition;
                 newMethodDefinition.TypeExpr = newMethodType;
+                newMethodDefinition.TypeExpr.BuildFullName();
+                newMethodDefinition.TypeExpr.BuildTypeExpressionString(4);
+
+                
+                
+                
+
 
                 TypeDefinition originalTypeDefinition = newMethodType.MemberInfo.TypeDefinition;
                 originalTypeDefinition.AddMethod(newMethodDefinition);
@@ -255,8 +263,11 @@ namespace CodeGeneration
                 if (typeExpression is UnionType)
                 {
                     foreach (var expression in ((UnionType)typeExpression).TypeSet)
-                    {
-                        list.Add(expression);
+                    {                        
+                        foreach (var types in GetTypes(new[] { expression }))
+                        {
+                            list.AddRange(types);
+                        }                        
                     }
                 }
                 else if (typeExpression is TypeVariable && ((TypeVariable)typeExpression).Substitution is UnionType)

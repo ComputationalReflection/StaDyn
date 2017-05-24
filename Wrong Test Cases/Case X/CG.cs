@@ -2,66 +2,11 @@ using System;
 
 namespace Points
 {
-    public class Chronometer
-    {
-        private DateTime ticks1, ticks2;
-        private bool stopped;
-
-        public void Start()
-        {
-            ticks1 = DateTime.Now;
-            stopped = false;
-        }
-        public void Stop()
-        {
-            ticks2 = DateTime.Now;
-            stopped = true;
-        }
-
-        private static int TicksToMicroSeconds(DateTime t1, DateTime t2)
-        {
-            return TicksToMiliSeconds(t1, t2) * 1000;
-        }
-
-        private static int TicksToMiliSeconds(DateTime t1, DateTime t2)
-        {
-            TimeSpan difference = t2.Subtract(t1);
-            return (difference.Milliseconds + difference.Seconds * 1000 + difference.Minutes * 60000);
-        }
-
-        private static int TicksToSeconds(DateTime t1, DateTime t2)
-        {
-            TimeSpan difference = t2.Subtract(t1);
-            return (difference.Seconds + difference.Minutes * 60);
-        }
-
-        public int GetMicroSeconds()
-        {
-            if (stopped)
-                return TicksToMicroSeconds(ticks1, ticks2);
-            return TicksToMicroSeconds(ticks1, DateTime.Now);
-        }
-
-        public int GetMiliSeconds()
-        {
-            if (stopped)
-                return TicksToMiliSeconds(ticks1, ticks2);
-            return TicksToMiliSeconds(ticks1, DateTime.Now);
-        }
-
-        public int GetSeconds()
-        {
-            if (stopped)
-                return TicksToSeconds(ticks1, ticks2);
-            return TicksToSeconds(ticks1, DateTime.Now);
-        }
-    }
-
     public class Node
     {
-        public object data;
-        public object next;
-        public Node(object data, object next)
+        public dynamic data;
+        public dynamic next;
+        public Node(dynamic data, dynamic next)
         {
             this.data = data;
             this.next = next;
@@ -74,11 +19,11 @@ namespace Points
 
     public class Point3D
     {
-        public int x;
-        public int y;
-        public int z;
-        public int dimensions;
-        public Point3D(int x, int y, int z, int dimensions)
+        public dynamic x;
+        public dynamic y;
+        public dynamic z;
+        public dynamic dimensions;
+        public Point3D(dynamic x, dynamic y, dynamic z, dynamic dimensions)
         {
             this.x = x;
             this.y = y;
@@ -93,10 +38,10 @@ namespace Points
 
     public class Point2D
     {
-        public int x;
-        public int y;
-        public int dimensions;
-        public Point2D(int x, int y, int dimensions)
+        public dynamic x;
+        public dynamic y;
+        public dynamic dimensions;
+        public Point2D(dynamic x, dynamic y, dynamic dimensions)
         {
             this.x = x;
             this.y = y;
@@ -110,144 +55,95 @@ namespace Points
 
     public class Points
     {
-        private object createPoint(int dimensions, int x, int y, int z)
+        private dynamic createPoint(dynamic dimensions, dynamic x, dynamic y, dynamic z)
         {
-            object result;
+            dynamic point;
             if (dimensions == 2)
-            {
-                Point2D point2D = new Point2D(x, y, 2);
-                result = point2D;
-            }
+                point = new Point2D(x, y, dimensions);
             else
-            {
-                Point3D point3D = new Point3D(x, y, z, 3);
-                result = point3D;
-            }
-            return result;
+                point = new Point3D(x, y, z, 3);
+            return point;
         }
 
-        private Node createPoints(int number)
+
+        private dynamic createPoints(dynamic number)
         {
-            int i = 1;
-            object point = this.createPoint(3, 0, 0, 0);
-            Node list = new Node(point, 0);
+            dynamic i;
+            dynamic list, point;
+
+            i = 1;
+            point = createPoint(3, 0, 0, 0);
+            list = new Node(point, 0);
             while (i < number)
             {
-                point = this.createPoint(i % 2 + 2, number / 2 - i, i, i);
+                point = createPoint(i % 2 + 2, number / 2 - i, i, i);
                 list = new Node(point, list);
                 i = i + 1;
             }
             return list;
         }
 
-        private object positiveX(Node list, int n)
+        dynamic positiveX(dynamic list, dynamic n)
         {
-            int i = 0;
-            object l = list;
-            object result;
+            dynamic i;
+            dynamic l, result;
+            i = 0;
             result = i;
+            l = list;
             while (i < n)
             {
-                if (l is Node)
-                {
-                    if (((Node)l).data is Point3D)
-                        if (((Point3D)((Node)l).data).x >= 0)
-                            result = new Node(((Node)l).data, result);
-                        else if (((Node)l).data is Point2D)
-                            if (((Point2D)((Node)l).data).x >= 0)
-                                result = new Node(((Node)l).data, result);
-                    l = ((Node)l).next;
-                }
+                if (l.data.x >= 0)
+                    result = new Node(l.data, result);
+                l = l.next;
                 i = i + 1;
             }
             return result;
         }
 
-        private var distance3D(var point)
+        dynamic distance3D(dynamic point)
         {
-			int value = 2147483647;
+            dynamic value;
+            value = 2147483647;
             if (point.dimensions == 3)
                 value = point.x * point.x + point.y * point.y + point.z * point.z;
             return value;
         }
 
-        private int distance3D(Point3D point)
+        dynamic closestToOrigin3D(dynamic list, dynamic n)
         {
-            int value = 2147483647;
-            if (point.dimensions == 3)
-                value = point.x * point.x + point.y * point.y + point.z * point.z;
-            return value;
-        }
-
-        private object distance3D__1_Point3D_or_Point2D(object point)
-        {
-            if (point is Point3D)
-                return (object)distance3D((Point3D)point);			
-            return distance3D((Point3D)point);
-        }
-
-        private object closestToOrigin3D(Node list, int n)
-        {
-            int i, minDistance;
-            object point3D = createPoint(3, 0, 0, 0);
+            dynamic i, minDistance;
+            dynamic l, point3D;
+			dynamic temp;
+            point3D = createPoint(3, 0, 0, 0);
             minDistance = 2147483647;
-            object l = list;
+            l = list;
             i = 0;
             while (i < n)
             {
-                if (l is Node)
+				temp = distance3D(l.data);
+                if (temp < minDistance)
                 {
-                    if ((int)distance3D__1_Point3D_or_Point2D(((Node)l).data) < minDistance)
-                    {
-                        minDistance = (int)distance3D__1_Point3D_or_Point2D(((Node)l).data);
-                        point3D = ((Node)l).data;
-                    }
-                    l = ((Node)l).next;
+                    minDistance = temp;
+                    //point3D = l.data;
                 }
+                l = l.next;
                 i = i + 1;
             }
             return point3D;
         }
 
-        public void test()
-        {
-            int numberOfPoints = 10000;
-            Node list = createPoints(numberOfPoints);
-            object positive = positiveX(list, numberOfPoints);
-            object point = closestToOrigin3D(list, numberOfPoints);
-            //System.Console.WriteLine("Full List: {0}", list);
-            //System.Console.WriteLine("Positive X List: {0}", positive);
-            //System.Console.WriteLine("Closest Point: {0}", point);
-        }
-    }
 
-    public class BenchMark
-    {
-        private int iterations;
-        protected int microSeconds;
-
-        public BenchMark(int iterations)
+        public void Run()
         {
-            this.iterations = iterations;
-        }
-
-        public int run()
-        {
-            BenchMark self = this;
-            for (int i = 0; i < iterations; i++)
-                self.runOneIteration();
-            return this.microSeconds;
-        }
-
-        public object runOneIteration()
-        {
-            Chronometer chronometer = new Chronometer();
-            Points test = new Points();
-            chronometer.Start();
-            test.test();
-            chronometer.Stop();
-            this.microSeconds = this.microSeconds + chronometer.GetMicroSeconds();
-            return null;
+            dynamic numberOfPoints;
+            dynamic list, positive, point;
+            numberOfPoints = 10;
+            list = createPoints(numberOfPoints);			
+            positive = positiveX(list, numberOfPoints);			
+            point = closestToOrigin3D(list, numberOfPoints);
+            System.Console.WriteLine("Full List: {0}", list);
+            System.Console.WriteLine("Positive X List: {0}", positive);
+            System.Console.WriteLine("Closest Point: {0}", point);
         }
     }
 
@@ -255,14 +151,9 @@ namespace Points
     {
         public static void Main(string[] args)
         {
-            if (args.Length < 1)
-            {
-                Console.Error.WriteLine("You must pass the number of thousands iterations.");
-                System.Environment.Exit(-1);
-            }
-            int iterations = Convert.ToInt32(args[0]);
-            BenchMark benchMark = new BenchMark(iterations);
-            Console.WriteLine(benchMark.run());
+            Points points = new Points();
+            points.Run();
+            Console.WriteLine("Successful!!");
         }
     }
 }
