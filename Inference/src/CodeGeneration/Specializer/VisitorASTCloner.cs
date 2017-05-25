@@ -89,10 +89,10 @@ namespace CodeGeneration
             clonedMethodDefinition.TypeExpr = clonedMethodType;
 
             
-            var previousShowMessages = ErrorManager.Instance.ShowMessages;
-            ErrorManager.Instance.ShowMessages = false;            
+          //  var previousShowMessages = ErrorManager.Instance.ShowMessages;
+           // ErrorManager.Instance.ShowMessages = false;            
             clonedMethodDefinition.Accept(this.visitorSpecializer.visitorTypeInference, null);
-            ErrorManager.Instance.ShowMessages = previousShowMessages;
+            //ErrorManager.Instance.ShowMessages = previousShowMessages;
             if (ErrorManager.Instance.UnNotifiedErrors)
             {
                 ErrorManager.Instance.UnNotifiedErrors = false;
@@ -614,6 +614,8 @@ namespace CodeGeneration
 
         public override Object Visit(ReturnStatement node, Object obj)
         {
+            if (node.ReturnExpression == null)
+                return node;
             Expression clonedReturnExpression = (Expression)node.ReturnExpression.Accept(this, obj);
             ReturnStatement clonedReturnStatement = new ReturnStatement(clonedReturnExpression, node.ReturnExpression.Location);
             clonedReturnStatement.CurrentMethodType = currentMethodType;
