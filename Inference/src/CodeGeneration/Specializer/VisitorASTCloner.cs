@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using AST;
 using ErrorManagement;
@@ -567,25 +568,30 @@ namespace CodeGeneration
 
         public override Object Visit(ForStatement node, Object obj)
         {
+            List<Statement> initializer = new List<Statement>();
             for (int i = 0; i < node.InitializerCount; i++)
-                node.GetInitializerElement(i).Accept(this, obj);
-
+                initializer.Add((Statement)node.GetInitializerElement(i).Accept(this, obj));
+            List<MoveStatement> afterInit = new List<MoveStatement>();
             for (int i = 0; i < node.AfterInit.Count; i++)
-                node.AfterInit[i].Accept(this, obj);
-
+                afterInit.Add((MoveStatement)node.AfterInit[i].Accept(this, obj));
+            List<ThetaStatement> beforeCondition = new List<ThetaStatement>();
             for (int i = 0; i < node.BeforeCondition.Count; i++)
-                node.BeforeCondition[i].Accept(this, obj);
-
-            node.Condition.Accept(this, obj);
+                beforeCondition.Add((ThetaStatement)node.BeforeCondition[i].Accept(this, obj));
+            Expression condition = (Expression)node.Condition.Accept(this, obj);
+            List<MoveStatement> afterCondition = new List<MoveStatement>();
             for (int i = 0; i < node.AfterCondition.Count; i++)
-                node.AfterCondition[i].Accept(this, obj);
-
-            node.Statements.Accept(this, obj);
-
+                afterCondition.Add((MoveStatement)node.AfterCondition[i].Accept(this, obj));
+            Statement statements = (Statement)node.Statements.Accept(this, obj);
+            List<Statement> iterator = new List<Statement>();
             for (int i = 0; i < node.IteratorCount; i++)
-                node.GetIteratorElement(i).Accept(this, obj);
-
-            return null;
+                iterator.Add((Statement)node.GetIteratorElement(i).Accept(this, obj));
+            
+            ForStatement forStatement = new ForStatement(initializer, condition, iterator, statements, node.Location);
+            forStatement.AfterInit = afterInit;
+            forStatement.BeforeCondition = beforeCondition;
+            forStatement.AfterCondition = afterCondition;
+            
+            return forStatement;            
         }
 
         #endregion

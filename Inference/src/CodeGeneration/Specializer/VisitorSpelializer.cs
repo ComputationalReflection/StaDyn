@@ -274,7 +274,10 @@ namespace CodeGeneration
                 {                    
                     foreach (var expression in ((UnionType) ((TypeVariable) typeExpression).Substitution).TypeSet)
                     {
-                        list.Add(expression);
+                         foreach (var types in GetTypes(new[] { expression }))
+                        {
+                            list.AddRange(types);
+                        } 
                     }
                 }               
                 else

@@ -1,159 +1,217 @@
 using System;
 
-namespace Points
+namespace JG.SparseMatmult
 {
-    public class Node
+	public class Chronometer
     {
-        public dynamic data;
-        public dynamic next;
-        public Node(dynamic data, dynamic next)
+        private DateTime ticks1, ticks2;
+        private bool stopped;
+
+        public void Start()
         {
-            this.data = data;
-            this.next = next;
+            ticks1 = DateTime.Now;
+            stopped = false;
         }
-        public override string ToString()
+        public void Stop()
         {
-            return "Node[data=" + data.ToString() + ",next=" + next.ToString() + "]";
+            ticks2 = DateTime.Now;
+            stopped = true;
+        }
+
+        private static int TicksToMicroSeconds(DateTime t1, DateTime t2)
+        {
+            return TicksToMiliSeconds(t1, t2) * 1000;
+        }
+
+        private static int TicksToMiliSeconds(DateTime t1, DateTime t2)
+        {
+            TimeSpan difference = t2.Subtract(t1);
+            return (difference.Milliseconds + difference.Seconds * 1000 + difference.Minutes * 60000);
+        }
+
+        private static int TicksToSeconds(DateTime t1, DateTime t2)
+        {
+            TimeSpan difference = t2.Subtract(t1);
+            return (difference.Seconds + difference.Minutes * 60);
+        }
+
+        public int GetMicroSeconds()
+        {
+            if (stopped)
+                return TicksToMicroSeconds(ticks1, ticks2);
+            return TicksToMicroSeconds(ticks1, DateTime.Now);
+        }
+
+        public int GetMiliSeconds()
+        {
+            if (stopped)
+                return TicksToMiliSeconds(ticks1, ticks2);
+            return TicksToMiliSeconds(ticks1, DateTime.Now);
+        }
+
+        public int GetSeconds()
+        {
+            if (stopped)
+                return TicksToSeconds(ticks1, ticks2);
+            return TicksToSeconds(ticks1, DateTime.Now);
         }
     }
+    
+	public class BenchMark 
+	{
+		private int iterations;
+		protected int microSeconds;
 
-    public class Point3D
-    {
-        public dynamic x;
-        public dynamic y;
-        public dynamic z;
-        public dynamic dimensions;
-        public Point3D(dynamic x, dynamic y, dynamic z, dynamic dimensions)
-        {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.dimensions = dimensions;
-        }
-        public override string ToString()
-        {
-            return "Point3D[x=" + x.ToString() + ",y=" + y.ToString() + ",z=" + z.ToString() + "]";
-        }
+		public BenchMark(int iterations) 
+		{
+			this.iterations = iterations;
+		}
+
+		public int run() 
+		{
+			BenchMark self = this;			
+			for (int i = 0; i < iterations; i++)
+				self.runOneIteration();
+			return this.microSeconds;
+		}
+
+		virtual public object runOneIteration() { return null; }
+	}
+	
+	public class ArithmethicBenchmark : BenchMark 
+	{
+		public ArithmethicBenchmark(int iterations) : base(iterations) { }	
+		public override object runOneIteration() 
+		{				
+			Chronometer chronometer = new Chronometer();
+			Test test = new JGFSparseMatmultBench();						
+			chronometer.Start();				
+			test.test();
+			chronometer.Stop();			
+			this.microSeconds = this.microSeconds + chronometer.GetMicroSeconds();
+			return null;
+		}
+	}
+	
+	public abstract class Test {
+        public abstract void test();
     }
 
-    public class Point2D
-    {
-        public dynamic x;
-        public dynamic y;
-        public dynamic dimensions;
-        public Point2D(dynamic x, dynamic y, dynamic dimensions)
+	public class JGFSparseMatmultBench : Test
+	{	
+		private var size;
+
+        private static var datasizes_M;
+        private static var datasizes_N;
+        private static var datasizes_nz;
+        private static var SPARSE_NUM_ITER = 10;
+		public static var ytotal = 0.0;
+
+       // private var R;
+
+        private var x;
+        private var y;
+        private var val;
+        private var col;
+        private var row;
+		
+        public JGFSparseMatmultBench()
         {
-            this.x = x;
-            this.y = y;
-            this.dimensions = dimensions;
+			JGFSparseMatmultBench.datasizes_M = new int[3];
+            JGFSparseMatmultBench.datasizes_M[0] = 50000;
+            JGFSparseMatmultBench.datasizes_M[1] = 100000;
+            JGFSparseMatmultBench.datasizes_M[2] = 500000;
+
+            JGFSparseMatmultBench.datasizes_N = new int[3];
+            JGFSparseMatmultBench.datasizes_N[0] = 50000;
+            JGFSparseMatmultBench.datasizes_N[1] = 100000;
+            JGFSparseMatmultBench.datasizes_N[2] = 500000;
+
+            JGFSparseMatmultBench.datasizes_nz = new int[3];
+            JGFSparseMatmultBench.datasizes_nz[0] = 250000;
+            JGFSparseMatmultBench.datasizes_nz[1] = 500000;
+            JGFSparseMatmultBench.datasizes_nz[2] = 2500000;
         }
-        public override string ToString()
-        {
-            return "Point2D[x=" + x.ToString() + ",y=" + y.ToString() + "]";
-        }
-    }
 
-    public class Points
-    {
-        private dynamic createPoint(dynamic dimensions, dynamic x, dynamic y, dynamic z)
+        public void JGFsetsize(var size)
         {
-            dynamic point;
-            if (dimensions == 2)
-                point = new Point2D(x, y, dimensions);
-            else
-                point = new Point3D(x, y, z, 3);
-            return point;
+            this.size = size;
         }
 
-
-        private dynamic createPoints(dynamic number)
+        public void JGFinitialise()
         {
-            dynamic i;
-            dynamic list, point;
+            var R = new Random(1010);
 
-            i = 1;
-            point = createPoint(3, 0, 0, 0);
-            list = new Node(point, 0);
-            while (i < number)
+            x = RandomVector(datasizes_N[size], R);
+            y = new double[datasizes_M[size]];
+
+            val = new double[datasizes_nz[size]];
+            col = new int[datasizes_nz[size]];
+            row = new int[datasizes_nz[size]];
+
+            for (int i = 0; i < datasizes_nz[size]; i++)
             {
-                point = createPoint(i % 2 + 2, number / 2 - i, i, i);
-                list = new Node(point, list);
-                i = i + 1;
+                var temp1 = R.Next() % datasizes_M[size];
+                var temp2 = R.Next() % datasizes_N[size];                            
+                row[i] = temp1 >= 0 ? temp1 : -1 * temp1;
+                col[i] = temp2 >= 0 ? temp2 : -1 * temp2;
+                val[i] = R.NextDouble();                   
             }
-            return list;
         }
 
-        dynamic positiveX(dynamic list, dynamic n)
-        {
-            dynamic i;
-            dynamic l, result;
-            i = 0;
-            result = i;
-            l = list;
-            while (i < n)
-            {
-                if (l.data.x >= 0)
-                    result = new Node(l.data, result);
-                l = l.next;
-                i = i + 1;
-            }
-            return result;
-        }
-
-        dynamic distance3D(dynamic point)
-        {
-            dynamic value;
-            value = 2147483647;
-            if (point.dimensions == 3)
-                value = point.x * point.x + point.y * point.y + point.z * point.z;
-            return value;
-        }
-
-        dynamic closestToOrigin3D(dynamic list, dynamic n)
-        {
-            dynamic i, minDistance;
-            dynamic l, point3D;
-			dynamic temp;
-            point3D = createPoint(3, 0, 0, 0);
-            minDistance = 2147483647;
-            l = list;
-            i = 0;
-            while (i < n)
-            {
-				temp = distance3D(l.data);
-                if (temp < minDistance)
-                {
-                    minDistance = temp;
-                    //point3D = l.data;
+        public void JGFkernel()
+        {			            
+			for (var reps = 0; reps < SPARSE_NUM_ITER; reps = reps + 1)
+            {				
+                for (var i = 0; i < val.Length ; i = i + 1)
+                {										
+                    y[row[i]] += x[col[i]] * val[i];
                 }
-                l = l.next;
-                i = i + 1;
-            }
-            return point3D;
+            }							
+            for (var i = 0; i < val.Length ; i = i + 1)
+            {
+				ytotal += y[row[i]];                
+            }			
         }
 
-
-        public void Run()
+        public void JGFvalidate()
         {
-            dynamic numberOfPoints;
-            dynamic list, positive, point;
-            numberOfPoints = 10;
-            list = createPoints(numberOfPoints);			
-            positive = positiveX(list, numberOfPoints);			
-            point = closestToOrigin3D(list, numberOfPoints);
-            System.Console.WriteLine("Full List: {0}", list);
-            System.Console.WriteLine("Positive X List: {0}", positive);
-            System.Console.WriteLine("Closest Point: {0}", point);
+            var refval = new double[3];
+            refval[0] = 75.02484945753453;
+            refval[1] = 150.0130719633895;
+            refval[2] = 749.5245870753752;
+            var dev = ytotal - refval[size];
+            dev = dev >= 0 ? dev : -1 * dev;
+            if (dev > 1.0e-12)
+            {
+                //Console.WriteLine("Validation failed");
+                //Console.WriteLine("ytotal = " + ytotal + "  " + dev + "  " + size);
+            }
+        }
+
+        private static var RandomVector(var N, var R)
+        {
+            var a = new double[N];            
+            for (var i = 0; i < N; i = i + 1)
+                a[i] = R.NextDouble() * 1e-6;                
+            return a;
+        }
+		
+        public override void test() 
+		{          			
+			JGFsetsize(0);
+            JGFinitialise();
+            JGFkernel();
+            JGFvalidate();
         }
     }
-
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            Points points = new Points();
-            points.Run();
-            Console.WriteLine("Successful!!");
-        }
+	
+	public class Program 
+	{
+		public static void Main(string[] args) 
+		{			
+			ArithmethicBenchmark arith = new ArithmethicBenchmark(1);
+			Console.WriteLine(arith.run());
+		}
     }
 }
