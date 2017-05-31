@@ -57,8 +57,15 @@ namespace CodeGeneration
                         originalParamType = args[i];
                     }                    
                 }
-                clonedArgs[i] = originalParamType.Simplify();
-                clonedParametersInfo.Add(new Parameter() { Identifier = originalParameter.Identifier, Column = originalParameter.Column, Line = originalParameter.Line, ParamType = originalParamType.Simplify().typeExpression });
+                clonedArgs[i] = originalParamType.Simplify();                                
+                var parameter = new Parameter() { Identifier = originalParameter.Identifier, Column = originalParameter.Column, Line = originalParameter.Line, ParamType = clonedArgs[i].typeExpression };
+                if (parameter.ParamType == null)
+                {
+                    var rebuildParamType = clonedArgs[i].ToString();
+                    parameter.ParamType = clonedArgs[i].typeExpression;
+                }
+                clonedParametersInfo.Add(parameter);
+
             }
          
             foreach (var constraint in originalMethodType.Constraints.Constraints)
@@ -89,10 +96,11 @@ namespace CodeGeneration
             clonedMethodDefinition.TypeExpr = clonedMethodType;
 
             
-          //  var previousShowMessages = ErrorManager.Instance.ShowMessages;
-           // ErrorManager.Instance.ShowMessages = false;            
+            var previousShowMessages = ErrorManager.Instance.ShowMessages;
+            ErrorManager.Instance.UnNotifiedErrors = false;
+            ErrorManager.Instance.ShowMessages = false;            
             clonedMethodDefinition.Accept(this.visitorSpecializer.visitorTypeInference, null);
-            //ErrorManager.Instance.ShowMessages = previousShowMessages;
+            ErrorManager.Instance.ShowMessages = previousShowMessages;
             if (ErrorManager.Instance.UnNotifiedErrors)
             {
                 ErrorManager.Instance.UnNotifiedErrors = false;
@@ -118,7 +126,8 @@ namespace CodeGeneration
                 am.Type = intersection;
                 originalClass.Members[clonedMethodDefinition.Identifier] = am;
             }
-            
+
+            clonedMethodDefinition.IdentifierExp.ExpressionType = clonedMethodDefinition.TypeExpr;
             return clonedMethodDefinition;
         }
 

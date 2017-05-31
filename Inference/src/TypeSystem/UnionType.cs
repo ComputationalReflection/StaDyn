@@ -712,7 +712,13 @@ namespace TypeSystem {
             List<TypeExpression> typeSet = new List<TypeExpression>();
             IDictionary<string,TypeExpression> evaluated = new Dictionary<string, TypeExpression>();
             for (int i = 0; i < this.TypeSet.Count; i++)
-                typeSet.AddRange(GetTypes(this.TypeSet[i],includeTypeVariables, evaluated));
+            {
+                foreach (var type in GetTypes(this.TypeSet[i], includeTypeVariables, evaluated))
+                {
+                    typeSet.Add(type.Simplify());
+                }
+            }
+
             typeSet = new List<TypeExpression>(new HashSet<TypeExpression>(typeSet));
             if (typeSet.Count == 0)
                 return this;

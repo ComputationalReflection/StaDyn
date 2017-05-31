@@ -19,6 +19,7 @@ namespace CodeGeneration
     {
         public VisitorTypeInference visitorTypeInference;        
         private Dictionary<String, MethodDefinition> specilizedMethods;
+        private Dictionary<String, IList<InvocationExpression>> pendingMethods;
         private IList<Pair<TypeExpression, TypeExpression>> previouslyUnified;
         private bool isCurrentMethodDynamic;
 
@@ -26,6 +27,7 @@ namespace CodeGeneration
         {
             this.visitorTypeInference = visitorTypeInference;            
             specilizedMethods = new Dictionary<string, MethodDefinition>();
+            pendingMethods = new Dictionary<string, IList<InvocationExpression>>();
             previouslyUnified = new List<Pair<TypeExpression, TypeExpression>>();
         }
 
@@ -65,27 +67,35 @@ namespace CodeGeneration
 
             bool specializeOrCreate = !HasUnionTypes(originalMethodDefinition.FullName, methodIndentificator);
             MethodDefinition method =  specializeOrCreate ? SpecilizeMethod(methodIndentificator, originalMethodDefinition, args) : CreateMethod(methodIndentificator, originalMethodDefinition, args,node);
-            if (method == null) return null;
+            if (method != null)
+                UpdateActualMethodCalled(node, method, specializeOrCreate);
+            else if(pendingMethods.ContainsKey(methodIndentificator))
+                    pendingMethods[methodIndentificator].Add(node);            
+            return null;            
+        }
+
+        private void UpdateActualMethodCalled(InvocationExpression node, MethodDefinition method, bool specializeOrCreate)
+        {            
             node.ActualMethodCalled = method.TypeExpr;
-            method.IdentifierExp.ExpressionType = method.TypeExpr;
-            TypeExpression returnTypeExpresion = ((MethodType) method.TypeExpr).Return;
-                
+            TypeExpression returnTypeExpresion = ((MethodType) node.ActualMethodCalled).Return;
+
             if (!specializeOrCreate && node.ExpressionType is TypeVariable) //TODO: FieldAcces, UnionType, etc.
-                ((TypeVariable) node.ExpressionType).EquivalenceClass.add(returnTypeExpresion,SortOfUnification.Equivalent, previouslyUnified);
-            
+                ((TypeVariable) node.ExpressionType).EquivalenceClass.add(returnTypeExpresion, SortOfUnification.Equivalent,
+                    previouslyUnified);
+
             node.ExpressionType = returnTypeExpresion;
             node.FrozenTypeExpression = node.ExpressionType.Freeze();
 
             if (node.Identifier is FieldAccessExpression)
             {
-                FieldAccessExpression fae = new FieldAccessExpression(((FieldAccessExpression) node.Identifier).Expression,method.IdentifierExp, node.Location);
+                FieldAccessExpression fae = new FieldAccessExpression(((FieldAccessExpression) node.Identifier).Expression,
+                    method.IdentifierExp, node.Location);
                 fae.FieldName.IndexOfSSA = -1;
-                fae.ExpressionType = method.TypeExpr;
+                fae.ExpressionType = node.ActualMethodCalled;
                 node.Identifier = fae;
             }
             else
                 node.Identifier = method.IdentifierExp;
-            return null;            
         }
 
         #region compoundExpressionToArray()        
@@ -213,12 +223,7 @@ namespace CodeGeneration
                 newMethodDefinition.TypeExpr = newMethodType;
                 newMethodDefinition.TypeExpr.BuildFullName();
                 newMethodDefinition.TypeExpr.BuildTypeExpressionString(4);
-
                 
-                
-                
-
-
                 TypeDefinition originalTypeDefinition = newMethodType.MemberInfo.TypeDefinition;
                 originalTypeDefinition.AddMethod(newMethodDefinition);
                 UserType originalClass = newMethodType.MemberInfo.Class;
@@ -326,11 +331,20 @@ namespace CodeGeneration
         private MethodDefinition SpecilizeMethod(String methodIndentificator, MethodDefinition originalMethodDefinition,TypeExpression[] args)
         {
             MethodDefinition clonedMethodDefinition;
+            if (pendingMethods.ContainsKey(methodIndentificator)) return null;            
             if (!specilizedMethods.ContainsKey(methodIndentificator))
             {                
+                pendingMethods.Add(methodIndentificator, new List<InvocationExpression>());
                 clonedMethodDefinition = (MethodDefinition) originalMethodDefinition.Accept(new VisitorASTCloner(this), args);
                 if(clonedMethodDefinition != null)
+                {                    
+                    foreach (var invocation in pendingMethods[methodIndentificator])
+                    {
+                        UpdateActualMethodCalled(invocation,clonedMethodDefinition,true);       
+                    }
+                    pendingMethods.Remove(methodIndentificator);
                     specilizedMethods.Add(methodIndentificator, clonedMethodDefinition);                               
+                }
             }
             else
             {

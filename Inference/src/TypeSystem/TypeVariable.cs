@@ -533,7 +533,9 @@ namespace TypeSystem {
         /// </summary>
         /// <param name="toRemove">The type variable to remove</param>
         /// <returns>If it has been actually removed</returns>
-        public override bool Remove(TypeVariable toRemove) {
+        public override bool Remove(TypeVariable toRemove)
+        {
+            if (this.equivalenceClass == null) return false;
             bool ret = this.equivalenceClass.Remove(toRemove);
             this.ValidTypeExpression = false;
             return ret;
