@@ -38,7 +38,40 @@ namespace CodeGeneration
                 node.GetMemberElement(i).Accept(this, obj);
             return null;
         }
-        
+
+        public override Object Visit(NewExpression node, Object obj)
+        {
+            MethodType originalMemberTypeExpression = node.ActualMethodCalled as MethodType;
+            if (node.Arguments.ExpressionCount == 0 || originalMemberTypeExpression == null || !originalMemberTypeExpression.HasTypeVariables())
+                return null;
+
+            TypeExpression[] args = this.compoundExpressionToArray(node.Arguments); //VisitorInference pass when error?? 
+            if (args == null)
+                return null;
+
+            MethodDefinition originalMethodDefinition = originalMemberTypeExpression.ASTNode as MethodDefinition;
+            if (originalMethodDefinition == null)
+                return null;
+
+            TypeExpression[] originalParamsType = new TypeExpression[originalMemberTypeExpression.ParameterListCount];
+            for (int i = 0; i < originalMemberTypeExpression.ParameterListCount; i++)
+                originalParamsType[i] = originalMemberTypeExpression.GetParameter(i);
+            var originalMethodIndentificator = MethodIndentificator(originalMethodDefinition.FullName, originalParamsType, true);
+            var methodIndentificator = MethodIndentificator(originalMethodDefinition.FullName, args);
+            if (methodIndentificator.Equals(originalMethodIndentificator)) //Method does not need to be specialized
+            {
+                if (!specilizedMethods.ContainsKey(originalMethodIndentificator))
+                    specilizedMethods[originalMethodIndentificator] = originalMethodDefinition;
+                return null;
+            }
+
+            bool specializeOrCreate = !HasUnionTypes(originalMethodDefinition.FullName, methodIndentificator);
+            MethodDefinition method = specializeOrCreate ? SpecilizeMethod(methodIndentificator, originalMethodDefinition, args) : CreateMethod(methodIndentificator, originalMethodDefinition, args, node);
+            if (method != null)
+                UpdateActualMethodCalled(node, method, specializeOrCreate);            
+            return null;            
+        }
+
         public override Object Visit(InvocationExpression node, Object obj)
         {            
             MethodType originalMemberTypeExpression = node.ActualMethodCalled as MethodType;
@@ -98,6 +131,18 @@ namespace CodeGeneration
                 node.Identifier = method.IdentifierExp;
         }
 
+        private void UpdateActualMethodCalled(NewExpression node, MethodDefinition method, bool specializeOrCreate)
+        {
+            node.ActualMethodCalled = method.TypeExpr;
+            TypeExpression returnTypeExpresion = ((MethodType)node.ActualMethodCalled).Return;
+
+            if (!specializeOrCreate && node.ExpressionType is TypeVariable) //TODO: FieldAcces, UnionType, etc.
+                ((TypeVariable)node.ExpressionType).EquivalenceClass.add(returnTypeExpresion, SortOfUnification.Equivalent,
+                    previouslyUnified);
+
+            node.ExpressionType = returnTypeExpresion;      
+        }
+
         #region compoundExpressionToArray()        
         public TypeExpression[] compoundExpressionToArray(CompoundExpression args) {
             TypeExpression[] aux = new TypeExpression[args.ExpressionCount];
@@ -124,7 +169,7 @@ namespace CodeGeneration
         }
         #endregion
         
-        private MethodDefinition CreateMethod(string fullMethodIndentificator, MethodDefinition originalMethodDefinition, TypeExpression[] args, InvocationExpression node)
+        private MethodDefinition CreateMethod(string fullMethodIndentificator, MethodDefinition originalMethodDefinition, TypeExpression[] args, BaseCallExpression node)
         {
             if (!specilizedMethods.ContainsKey(fullMethodIndentificator))
             {
@@ -399,11 +444,6 @@ namespace CodeGeneration
 
 
         public override Object Visit(BaseCallExpression node, Object obj)
-        {
-            return obj;
-        }
-
-        public override Object Visit(NewExpression node, Object obj)
         {
             return obj;
         }

@@ -83,7 +83,11 @@ namespace CodeGeneration
             SingleIdentifierExpression clonedSingleIdentifierExpression = new SingleIdentifierExpression(node.IdentifierExp.Identifier, node.IdentifierExp.Location);
             
             Block clonedBlock = (Block)node.Body.Accept(this, null);
-            MethodDefinition clonedMethodDefinition = new MethodDefinition(clonedSingleIdentifierExpression, clonedBlock, clonedMethodType.Return.typeExpression, clonedParametersInfo, node.ModifiersInfo, node.Location);
+            MethodDefinition clonedMethodDefinition = null;
+            if(node is ConstructorDefinition)
+                clonedMethodDefinition = new ConstructorDefinition(clonedSingleIdentifierExpression, node.ModifiersInfo, clonedParametersInfo, null, clonedBlock, node.Location);
+            else
+                clonedMethodDefinition = new MethodDefinition(clonedSingleIdentifierExpression, clonedBlock, clonedMethodType.Return.typeExpression, clonedParametersInfo, node.ModifiersInfo, node.Location);
             clonedMethodDefinition.FullName = node.FullName;
             clonedMethodType.MemberInfo = new AccessModifier(originalMethodType.MemberInfo.Modifiers, clonedSingleIdentifierExpression.Identifier, clonedMethodType, false);
             clonedMethodType.MemberInfo.Class = originalMethodType.MemberInfo.Class;
@@ -129,6 +133,11 @@ namespace CodeGeneration
 
             clonedMethodDefinition.IdentifierExp.ExpressionType = clonedMethodDefinition.TypeExpr;
             return clonedMethodDefinition;
+        }
+
+        public override Object Visit(ConstructorDefinition node, Object obj)
+        {
+            return this.Visit((MethodDefinition) node,obj);
         }
 
         #endregion
