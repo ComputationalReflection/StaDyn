@@ -64,11 +64,11 @@ namespace CodeGeneration
                     specilizedMethods[originalMethodIndentificator] = originalMethodDefinition;
                 return null;
             }
-
-            bool specializeOrCreate = !HasUnionTypes(originalMethodDefinition.FullName, methodIndentificator);
-            MethodDefinition method = specializeOrCreate ? SpecilizeMethod(methodIndentificator, originalMethodDefinition, args) : CreateMethod(methodIndentificator, originalMethodDefinition, args, node);
+            
+            if (HasUnionTypes(originalMethodDefinition.FullName, methodIndentificator)) return null; //Any parameter is a UnionType, It is imposible to specilize constructor.
+            MethodDefinition method = SpecilizeMethod(methodIndentificator, originalMethodDefinition, args);
             if (method != null)
-                UpdateActualMethodCalled(node, method, specializeOrCreate);            
+                UpdateActualMethodCalled(node, method, true);            
             return null;            
         }
 
