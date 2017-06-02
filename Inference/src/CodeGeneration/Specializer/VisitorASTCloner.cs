@@ -57,13 +57,16 @@ namespace CodeGeneration
                         originalParamType = args[i];
                     }                    
                 }
+
+                originalParamType.ValidTypeExpression = false;
                 clonedArgs[i] = originalParamType.Simplify();                                
                 var parameter = new Parameter() { Identifier = originalParameter.Identifier, Column = originalParameter.Column, Line = originalParameter.Line, ParamType = clonedArgs[i].typeExpression };
-                if (parameter.ParamType == null)
+                if (parameter.ParamType == null || !originalParameter.ILName.Equals(parameter.ILName))
                 {
                     var rebuildParamType = clonedArgs[i].ToString();
                     parameter.ParamType = clonedArgs[i].typeExpression;
                 }
+                
                 clonedParametersInfo.Add(parameter);
 
             }

@@ -523,7 +523,7 @@ namespace TypeSystem {
             UnionType newUnionType = (UnionType)this.MemberwiseClone();
             newUnionType.typeSet = new List<TypeExpression>();
             // * Clones all the types in the union
-            foreach (TypeExpression type in this.typeSet)
+            foreach (TypeExpression type in new List<TypeExpression>(this.typeSet))
                 newUnionType.typeSet.Add(type.CloneType(typeVariableMappings,typeExpresionVariableMapping));            
             return newUnionType;
         }
