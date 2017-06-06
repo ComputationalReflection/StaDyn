@@ -50,7 +50,7 @@ namespace Tests {
             //typeof(Benchmarks), //no.inference.cs commented.   
             //typeof(Compilation),            
             
-            typeof(CLRCGSpecialization),         
+            //typeof(CLRCGSpecialization),         
         };
 
         static void Main() {            

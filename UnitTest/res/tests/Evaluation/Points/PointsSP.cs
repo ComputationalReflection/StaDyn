@@ -261,13 +261,7 @@ namespace Points
     {
         public static void Main(string[] args)
         {
-            if (args.Length < 1)
-            {
-                Console.Error.WriteLine("You must pass the number of thousands iterations.");
-                System.Environment.Exit(-1);
-            }
-            int iterations = Convert.ToInt32(args[0]);
-            BenchMark benchMark = new BenchMark(iterations);
+            BenchMark benchMark = new BenchMark(1);
             Console.WriteLine(benchMark.run());
         }
     }

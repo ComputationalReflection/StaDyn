@@ -99,7 +99,7 @@ namespace CodeGeneration
             }
 
             bool specializeOrCreate = !HasUnionTypes(originalMethodDefinition.FullName, methodIndentificator);
-            MethodDefinition method =  specializeOrCreate ? SpecilizeMethod(methodIndentificator, originalMethodDefinition, args) : CreateMethod(methodIndentificator, originalMethodDefinition, args,node);
+            MethodDefinition method =  specializeOrCreate ? SpecilizeMethod(methodIndentificator, originalMethodDefinition, args) : CreateMethod(methodIndentificator, originalMethodIndentificator, originalMethodDefinition, args,node);
             if (method != null)
                 UpdateActualMethodCalled(node, method, specializeOrCreate);
             else if(pendingMethods.ContainsKey(methodIndentificator))
@@ -169,15 +169,20 @@ namespace CodeGeneration
         }
         #endregion
         
-        private MethodDefinition CreateMethod(string fullMethodIndentificator, MethodDefinition originalMethodDefinition, TypeExpression[] args, BaseCallExpression node)
+        private MethodDefinition CreateMethod(string fullMethodIndentificator, string originalMethodIndentificator, MethodDefinition originalMethodDefinition, TypeExpression[] args, BaseCallExpression node)
         {
             if (!specilizedMethods.ContainsKey(fullMethodIndentificator))
-            {
+            {                
                 String methodIndentificator = fullMethodIndentificator.Replace(originalMethodDefinition.FullName, originalMethodDefinition.Identifier);
                 List<MethodDefinition> methods = new List<MethodDefinition>();                
                 foreach (TypeExpression[] listOfArgs in GetTypes(args))
                 {
-                    MethodDefinition md = SpecilizeMethod(MethodIndentificator(originalMethodDefinition.FullName, listOfArgs), originalMethodDefinition, listOfArgs);
+                    String currentMethodIdentificator = MethodIndentificator(originalMethodDefinition.FullName, listOfArgs);
+                    MethodDefinition md;
+                    if (currentMethodIdentificator.Equals(originalMethodIndentificator))
+                        md = originalMethodDefinition;
+                    else
+                        md = SpecilizeMethod(currentMethodIdentificator, originalMethodDefinition, listOfArgs);
                     if(md != null && !methods.Any(m=>m.ILTypeExpression.Equals(md.ILTypeExpression)))
                         methods.Add(md);
                 }

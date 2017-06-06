@@ -744,12 +744,12 @@ namespace Semantic {
                 Simplify(moveStatement.RightExp.ExpressionType);
             }
 
-            foreach (ThetaStatement theta in node.ThetaStatements)
-            {
-                foreach (var singleIdentifierExpression in theta.ThetaList)
-                    Simplify(singleIdentifierExpression.ExpressionType);
-                Simplify(theta.ThetaId.ExpressionType);
-            }
+            //foreach (ThetaStatement theta in node.ThetaStatements)
+            //{
+            //    foreach (var singleIdentifierExpression in theta.ThetaList)
+            //        Simplify(singleIdentifierExpression.ExpressionType);
+            //    //Simplify(theta.ThetaId.ExpressionType);
+            //}
             return null;
         }
         #endregion
@@ -792,12 +792,12 @@ namespace Semantic {
                 Simplify(moveStatement.RightExp.ExpressionType);
             }
 
-            foreach (ThetaStatement theta in node.BeforeCondition)
-            {
-                foreach (var singleIdentifierExpression in theta.ThetaList)
-                    Simplify(singleIdentifierExpression.ExpressionType);
-                Simplify(theta.ThetaId.ExpressionType);
-            }
+            //foreach (ThetaStatement theta in node.BeforeCondition)
+            //{
+            //    foreach (var singleIdentifierExpression in theta.ThetaList)
+            //        Simplify(singleIdentifierExpression.ExpressionType);
+            //    // Simplify(theta.ThetaId.ExpressionType);
+            //}
 
             foreach (MoveStatement moveStatement in node.AfterCondition)
             {
@@ -813,7 +813,9 @@ namespace Semantic {
         {
             var simplified = typeExpression.Simplify();
             if (!typeExpression.Equals(simplified))
-                typeExpression.Unify(simplified, SortOfUnification.Override, new List<Pair<TypeExpression, TypeExpression>>());
+            {                                  
+                typeExpression.Unify(simplified, SortOfUnification.Override, new List<Pair<TypeExpression, TypeExpression>>());        
+            }
         }
         #endregion
 
