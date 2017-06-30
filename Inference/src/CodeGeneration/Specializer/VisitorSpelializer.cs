@@ -101,9 +101,12 @@ namespace CodeGeneration
             bool specializeOrCreate = !HasUnionTypes(originalMethodDefinition.FullName, methodIndentificator);
             MethodDefinition method =  specializeOrCreate ? SpecilizeMethod(methodIndentificator, originalMethodDefinition, args) : CreateMethod(methodIndentificator, originalMethodIndentificator, originalMethodDefinition, args,node);
             if (method != null)
+            {
                 UpdateActualMethodCalled(node, method, specializeOrCreate);
-            else if(pendingMethods.ContainsKey(methodIndentificator))
-                    pendingMethods[methodIndentificator].Add(node);            
+                method.Accept(this, obj);
+            }
+            else if (pendingMethods.ContainsKey(methodIndentificator))
+                pendingMethods[methodIndentificator].Add(node);
             return null;            
         }
 

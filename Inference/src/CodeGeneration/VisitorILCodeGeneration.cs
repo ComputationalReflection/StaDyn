@@ -1213,7 +1213,7 @@ namespace CodeGeneration {
             for (int i = 0; i < unionType.TypeSet.Count; i++)
             {
                 ClassType classType = unionType.TypeSet[i] as ClassType;
-                if (classType != null && classType.Fields[memberName] != null)
+                if (classType != null && classType.Fields.ContainsKey(memberName) && classType.Fields[memberName] != null)
                 {
                     FieldType fieldType = classType.Fields[memberName].Type as FieldType;
                     if (!String.IsNullOrEmpty(nextLabel))

@@ -151,7 +151,9 @@ namespace CodeGeneration
 
         public override Object Visit(ArgumentExpression node, Object obj)
         {
-            return new ArgumentExpression((Expression)node.Argument.Accept(this, obj), node.Location);
+            ArgumentExpression clonedArgumentExpression = new ArgumentExpression((Expression)node.Argument.Accept(this, obj), node.Location);            
+            clonedArgumentExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);            
+            return clonedArgumentExpression;
         }
 
         #endregion
@@ -193,6 +195,8 @@ namespace CodeGeneration
             AssignmentExpression clonedAssignmentExpression = new AssignmentExpression(clonedFirstOperand, clonedSecondOperand, node.Operator, node.Location);
             if (node.MoveStat != null)
                 clonedAssignmentExpression.MoveStat = (MoveStatement)node.MoveStat.Accept(this, obj);
+            if(node.ExpressionType != null)
+                clonedAssignmentExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
             return clonedAssignmentExpression;
         }
 
@@ -422,16 +426,21 @@ namespace CodeGeneration
 
         public override Object Visit(InvocationExpression node, Object obj)
         {
-            CompoundExpression arguments = (CompoundExpression) node.Arguments.Accept(this, obj);
-            var previousShowMessages = ErrorManager.Instance.ShowMessages;
-            ErrorManager.Instance.ShowMessages = false;
-            arguments.Accept(visitorSpecializer.visitorTypeInference, obj);
-            ErrorManager.Instance.ShowMessages = previousShowMessages;
-            InvocationExpression clonedInvocationExpression = new InvocationExpression((Expression)node.Identifier.Accept(this, obj),arguments, node.Location);
-            //if (node.ExpressionType != null)
-              //  clonedInvocationExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
-            clonedInvocationExpression.ActualMethodCalled = node.ActualMethodCalled;
-            clonedInvocationExpression.Accept(visitorSpecializer, obj);
+            CompoundExpression clonedArguments = (CompoundExpression) node.Arguments.Accept(this, obj);            
+            Expression clonedIdentifier = (Expression) node.Identifier.Accept(this, obj);
+
+            
+            InvocationExpression clonedInvocationExpression = new InvocationExpression(clonedIdentifier, clonedArguments, node.Location);
+            if (node.ExpressionType != null) 
+                clonedInvocationExpression.ExpressionType = node.ExpressionType.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);            
+            clonedInvocationExpression.ActualMethodCalled = node.ActualMethodCalled.CloneType(this.typeVariableMappings, this.typeExpresionVariableMapping);
+
+            //var previousShowMessages = ErrorManager.Instance.ShowMessages;
+            //ErrorManager.Instance.ShowMessages = false;            
+            //clonedInvocationExpression.Accept(visitorSpecializer.visitorTypeInference, obj);
+            //ErrorManager.Instance.ShowMessages = previousShowMessages;
+
+           // clonedInvocationExpression.Accept(visitorSpecializer, obj);
             return clonedInvocationExpression;
         }
 
