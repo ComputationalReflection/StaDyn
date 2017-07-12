@@ -401,16 +401,28 @@ namespace TypeSystem {
             newOne.IsDynamic = this.IsDynamic;
             // * Sets the mapping between the old and new one in the typeVariableMappings parameter
             typeVariableMappings[this] = newOne;
+            EquivalenceClass clonedEquivalenceClass = null;
+
+            if (this.EquivalenceClass != null)
+            {
+                clonedEquivalenceClass = new EquivalenceClass();
+                foreach (var typeVariable in this.EquivalenceClass.TypeVariables)
+                {
+                    TypeExpression clonedTypeVariable = typeVariable.Value.CloneType(typeVariableMappings);
+                    clonedEquivalenceClass.add(clonedTypeVariable, SortOfUnification.Equivalent, new List<Pair<TypeExpression, TypeExpression>>());                    
+                }                
+            }
+            
             // * Add both equivalence classes to the equivalenceClasses parameter
-            if (this.EquivalenceClass != null && !equivalenceClasses.Contains(this.equivalenceClass))
-                equivalenceClasses.Add(this.equivalenceClass);
+            if (clonedEquivalenceClass != null && !equivalenceClasses.Contains(clonedEquivalenceClass))
+                equivalenceClasses.Add(clonedEquivalenceClass);
             // * Assigns a clone of the substitution when it previously exists
             if (this.Substitution != null) {
                 TypeExpression clonedSubstitution = this.Substitution.CloneTypeVariables(typeVariableMappings, equivalenceClasses, clonedClasses);
                 newOne.addToMyEquivalenceClass(clonedSubstitution, SortOfUnification.Equivalent, new List<Pair<TypeExpression, TypeExpression>>());
             }
-            else if (this.EquivalenceClass != null)
-                newOne.equivalenceClass = this.equivalenceClass;
+            else if (clonedEquivalenceClass != null)
+                newOne.equivalenceClass = clonedEquivalenceClass;
             newOne.ValidTypeExpression = false;
             // * Returns the new type variable
             return newOne;
