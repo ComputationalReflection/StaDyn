@@ -440,7 +440,7 @@ namespace CodeGeneration
             //clonedInvocationExpression.Accept(visitorSpecializer.visitorTypeInference, obj);
             //ErrorManager.Instance.ShowMessages = previousShowMessages;
 
-           // clonedInvocationExpression.Accept(visitorSpecializer, obj);
+            clonedInvocationExpression.Accept(visitorSpecializer, obj);
             return clonedInvocationExpression;
         }
 

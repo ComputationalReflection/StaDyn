@@ -647,7 +647,8 @@ namespace Semantic {
                 if (node.ExpressionType == null)
                     return null;
 
-                ((ClassType)node.ExpressionType).ConcreteType = true;
+                if(node.ExpressionType is ClassType)
+                    ((ClassType)node.ExpressionType).ConcreteType = true;
             }
             return null;
         }

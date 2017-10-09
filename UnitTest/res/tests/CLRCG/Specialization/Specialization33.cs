@@ -66,13 +66,13 @@ public class Program
         operators[0] = new AddOp();
 
         int i = 0;
-        for (; i < expressionsLength; i = i + 1)
+        for (; i < 2; i = i + 1)
         {
             int j = 0;
-            for (; j < operatorsLength; j = j + 1)
+            while (j < operatorsLength)
             {
                 int k = 0;
-                for (; k < expressionsLength; k = k + 1)
+                for (; k < 2; k = k + 1)
                 {
                     var op1 = expressions[i];
                     var op = operators[j];
@@ -80,6 +80,7 @@ public class Program
                     var result = Evaluate(op1, op, op2);
                     Console.WriteLine(op1.ToString() + " " + op.ToString() + " " + op2.ToString() + " = " + result.ToString());
                 }
+                j = j + 1;
             }
         }
     }
