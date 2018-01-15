@@ -33,8 +33,10 @@ namespace CG.Var.CustomStack2
         }
 		
 		public bool IsEmpty()
-        {			         
-			return this.start == null;
+        {		
+			if(this.start == null)		
+				return true;
+			return false;
         }
 
         public override string ToString()
@@ -56,11 +58,12 @@ namespace CG.Var.CustomStack2
             stack.Push(1);
             stack.Push(2);
             stack.Push(3);
-            stack.Push(4);
-            Console.WriteLine(stack.ToString());						
+            stack.Push(4);            				
 			while(!stack.IsEmpty())
 				Console.WriteLine("{0}",stack.Pop());							
 			Console.WriteLine("Successful!!");
         }
     }
 }
+
+
