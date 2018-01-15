@@ -26,7 +26,7 @@ namespace CommandLine {
 
         public const string noInputMessage = copyrightMessage + "\nNo inputs specified. Type /help for help.\n";
         public const string wrongTarget = copyrightMessage + "\nThe target specified is not correct. Type /help for help.\n";
-        public const string helpMessage = copyrightMessage + "\n              StaDyn C# 2013 Compiler Options\n" +
+        public const string helpMessage = copyrightMessage + "\n              StaDyn C# 2018 Compiler Options\n" +
                                 "/help                    Displays this usage message (Short form: /?).\n" +
                                 "/out:<file>              Specify output filename.\n" +
                                 "/everythingDynamic       Ignores all the dyn files, setting all the references\n" +

@@ -147,21 +147,6 @@
     <Content Include="res\tests\GettingStarted\Sample7.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Benchmarks\Static\Pystone.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Benchmarks\Static\JGFFFT.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Benchmarks\Static\JGFNumericSortTest.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Benchmarks\Static\JGFRayTracer.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Benchmarks\Static\JGFSparseMatmult.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="res\tests\CLRCG\Specialization\Specialization20.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -181,21 +166,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="res\tests\CLRCG\Specialization\Specialization26.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Benchmarks\Points\PointsFull.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Benchmarks\Points\Points01.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Benchmarks\Points\Points02.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Benchmarks\Points\Points03.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Benchmarks\Points\Points04.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="res\tests\CLRCG\Specialization\Specialization28.cs">
@@ -279,63 +249,11 @@
     <Content Include="res\tests\CLRCG\Specialization\Specialization41e.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\tests\Evaluation\JGSection2\FFTSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Evaluation\JGSection2\HeapSortSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Evaluation\Points\PointsSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Evaluation\JGSection3\RayTracerSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Evaluation\JGSection2\SparseMatmultSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Evaluation\Pystone\PystoneSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Calls.FunctionCallsSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Calls.MethodCallsSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Calls.RecursionSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Dicts.DictWithFloatKeysSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Dicts.DictWithStringKeysSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Dicts.SimpleDictManipulationSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Instances.CreateInstancesSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Lookups.NormalClassAttributeSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.Lookups.NormalInstanceAttributeSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="res\tests\Evaluation\Pybench\Pybench.NewInstances.CreateNewInstancesSP.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="res\tests\CLRCG\Specialization\Specialization42.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="src\tests\Benchmarks\Points.cs" />
-    <Compile Include="src\tests\Benchmarks\Static.cs" />
     <Compile Include="src\tests\CLRCG\Multimethod.cs" />
-    <Compile Include="src\tests\Evaluation\Points.cs" />
     <Compile Include="src\tests\GettingStarted.cs" />
-    <Compile Include="src\tests\Wrong.cs" />
     <Compile Include="src\tests\CLRCG\Specialization.cs" />
     <Content Include="res\tests\CLRCG\Specialization\Specialization01.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
