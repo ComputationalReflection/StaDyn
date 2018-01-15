@@ -207,10 +207,13 @@ namespace Tests
             DynVarOptions.Instance.EverythingDynamic = false;
         }
 
-        public void testJavaGrandeStaticRayTracerTest()
-        {
-            runTest(new string[] { "tests/benchmarks/static/javagrande/JGFRayTracer.cs" });
-        }
+        /*
+        * To try this test it's necessary to add "process.StartInfo.CreateNoWindow = true" to src/compiler/Program ln 387
+        */
+        //public void testJavaGrandeStaticRayTracerTest()
+        //{
+        //    runTest(new string[] { "tests/benchmarks/static/javagrande/JGFRayTracer.cs" });
+        //}
 
         /*
          * To try this test it's necessary to add "process.StartInfo.CreateNoWindow = true" to src/compiler/Program ln 387

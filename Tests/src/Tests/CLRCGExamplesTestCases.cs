@@ -7,12 +7,13 @@ namespace Tests
     class CLRCGExamplesTestCases : Test
     {
             #region Constructor
+
         /// GenerateCode = true
         /// Run = true
         /// Dynamic = true
         /// Target = "clr"
         /// </summary>
-        public CLRCGExamplesTestCases() : base(true, true, true, TargetPlatform.CLR,true) { }
+        public CLRCGExamplesTestCases() : base(true, true, true, TargetPlatform.CLR, true) {}
         #endregion
 
 
@@ -56,14 +57,14 @@ namespace Tests
         {
             runTest(new string[] { "tests/examples/Figure10b.stadyn" });
         }
-        public void testFigure12()
-        {
-            runTest(new string[] { "tests/examples/Figure12.stadyn" });
-        }
-        public void testFigure12b()
-        {
-            runTest(new string[] { "tests/examples/Figure12b.stadyn" });
-        }
+        //public void testFigure12()
+        //{
+        //    runTest(new string[] { "tests/examples/Figure12.stadyn" });
+        //}
+        //public void testFigure12b()
+        //{
+        //    runTest(new string[] { "tests/examples/Figure12b.stadyn" });
+        //}
         public void testFigure13()
         {
             runTest(new string[] { "tests/examples/Figure13.stadyn" });

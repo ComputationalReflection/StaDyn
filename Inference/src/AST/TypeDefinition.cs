@@ -126,6 +126,11 @@ namespace AST {
 
         #endregion
 
+        public void AddMethod(MethodDeclaration method)
+        {
+            members.Add(method);            
+        }
+
         #region RemoveMemberElement()
 
         /// <summary>

@@ -17,7 +17,7 @@ namespace DynVarManagement {
 
         private XmlDocument document;
         private string fileName;
-
+        
         #endregion
 
         #region ".dyn" XML constants: Extension, tags and attributes
@@ -36,6 +36,7 @@ namespace DynVarManagement {
 
         public static readonly string NameAtt = "name";
         public static readonly string DynReturnAtt = "dynreturn";
+        public static bool DynamicOption = false;
 
         #endregion
 
@@ -72,7 +73,6 @@ namespace DynVarManagement {
                 return false;
             }
         }
-
         #endregion
 
         #region Save
@@ -171,26 +171,7 @@ namespace DynVarManagement {
             }
             if (path.MethodName != null) {
                 node = getOrCreateNode(node, MethodTag, NameAtt, path.MethodName);
-            }
-            // * "block" element is not used anymore.
-            // *
-            // *
-            //if (path.Blocks.Count > 0)
-            //{
-            //    XmlNodeList nodeList;
-            //    XmlNode blockNode;
-            //    for (int blockLevel = 0; blockLevel < path.Blocks.Count; blockLevel++)
-            //    {
-            //        nodeList = node.SelectNodes("block");
-            //        blockNode = null;
-            //        for (int i = 0; i <= path.Blocks[blockLevel] - nodeList.Count; i++)
-            //        {
-            //            blockNode = document.CreateElement("block");
-            //            node.AppendChild(blockNode);
-            //        }
-            //        node = blockNode == null ? nodeList[path.Blocks[blockLevel]] : blockNode;
-            //    }
-            //}            
+            }                  
             return node;
         }
 
@@ -220,7 +201,7 @@ namespace DynVarManagement {
         /// Gets true if the xml document is loaded. Otherwise false.
         /// </summary>
         public bool Ready {
-            get { return this.ready; }
+            get { return this.ready ; }            
         }
 
         #endregion
@@ -259,14 +240,10 @@ namespace DynVarManagement {
         {            
             fileName = "stadyn.dyn";
             document = new XmlDocument();
-            try
-            {         
-                this.ready = true;
-            }
-            catch (Exception e)
-            {
-                throw new DynVarException(e.Message);
-            }
+            XmlElement el = document.CreateElement(ApplicationTag);
+            el.SetAttribute(NameAtt, Path.GetFileNameWithoutExtension(fileName));
+            document.AppendChild(el);            
+            this.ready = true;
         }
 
         #endregion

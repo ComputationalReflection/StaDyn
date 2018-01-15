@@ -82,6 +82,8 @@ namespace TypeSystem
       /// </summary>
       private string id;
 
+      private TypeDefinition typeDefinition;
+
       #endregion
 
       #region Properties
@@ -110,6 +112,12 @@ namespace TypeSystem
       {
          get { return this.classType; }
          set { this.classType = value; }
+      }
+
+      public TypeDefinition TypeDefinition
+      {
+          get { return this.typeDefinition; }
+          set { this.typeDefinition = value; }
       }
 
       /// <summary>

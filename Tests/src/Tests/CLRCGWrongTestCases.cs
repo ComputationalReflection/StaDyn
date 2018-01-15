@@ -6,16 +6,19 @@ namespace Tests
 {
     class CLRCGWrongTestCases : Test
     {
-            #region Constructor
+        #region Constructor
+
         /// GenerateCode = true
         /// Run = true
         /// Dynamic = true
         /// Target = "clr"
         /// </summary>
-        public CLRCGWrongTestCases() : base(true, true, true, TargetPlatform.CLR, true) {}
+        public CLRCGWrongTestCases() : base(true, true, true, TargetPlatform.CLR, false)
+        {
+            this.specialized = true;
+        }
         #endregion
-
-
+        
         #region runTest(string[])
         /// <summary>
         /// A code genertion tests calls the run tests the name of the output file
@@ -30,9 +33,9 @@ namespace Tests
 
         public void testX()
         {            
-            //DynVarOptions.Instance.EverythingDynamic = true;
+            DynVarOptions.Instance.EverythingDynamic = true;
             runTest(new string[] { "../../../Wrong Test Cases/Case X/CG.cs" });
-            //  DynVarOptions.Instance.EverythingDynamic = false;
+            DynVarOptions.Instance.EverythingDynamic = false;
         }       
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeGeneration;
+using CodeGeneration.ExceptionManagement;
 using CodeGeneration.Operations;
 using TypeSystem;
 using AST;
@@ -59,7 +60,7 @@ namespace CodeGeneration.Operations
         }
 
         protected override void GenerateOperator(BinaryExpression node, TypeExpression result)
-        {
+        {                           
             ArithmeticOperator arithmeticOperator = ((ArithmeticExpression) node).Operator;
             bool isConcat = false;
             switch (arithmeticOperator)
@@ -90,13 +91,15 @@ namespace CodeGeneration.Operations
                     break;
             }            
             if (!isConcat && !IsValueType(node.ExpressionType) && !(node.ExpressionType is StringType))
-                this.codeGenerator.Box(indent, result);
+                this.codeGenerator.Box(indent, result);           
             if (!string.IsNullOrEmpty(label_result))
             {                
                 this.codeGenerator.stloc(this.indent, label_result);
             }
+            if (result == null)
+            {
+                codeGenerator.WriteThrowNonSuitableObjectException(indent, StringType.Instance.FullName, arithmeticOperator.ToString());
+            }
         }
-
-       
     }
 }

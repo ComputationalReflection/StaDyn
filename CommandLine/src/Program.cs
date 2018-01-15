@@ -30,7 +30,7 @@ namespace CommandLine {
             //ParseArguments(new string[] { "tests/sample.cs", "/out=a.out.exe", "/target=clr", "/everythingDynamic" });
 
             ParseArguments(args);
-            Compiler.Parser.Parse(parameters.InputFileNames, parameters.OutputFileName, parameters.TargetPlatform, Application.StartupPath + "\\", "ilasm.exe", "TypeTable.txt", parameters.Run, parameters.Dynamic, parameters.Server);            
+            Compiler.Parser.Parse(parameters.InputFileNames, parameters.OutputFileName, parameters.TargetPlatform, Application.StartupPath + "\\", "ilasm.exe", "TypeTable.txt", parameters.Run, parameters.Dynamic, parameters.Server, parameters.Specialized);            
         }
 
         /// <summary>
@@ -39,6 +39,7 @@ namespace CommandLine {
         private static Parameters parameters;
 
         public static void ParseArguments(string[] args) {
+            SetDefaultParameters();
             // * No parameters
             if (args.Length == 0) {
                 Console.WriteLine(OptionsConfiguration.noInputMessage);
@@ -85,6 +86,7 @@ namespace CommandLine {
         private static void SetDefaultParameters() {
             parameters.Run = OptionsConfiguration.defaultRunOption; // * Default value
             parameters.TargetPlatform = OptionsConfiguration.defaultTargetPlatform; // * Default value
+            parameters.Specialized = OptionsConfiguration.defaultSpecializedOption; // * Default value
         }
 
         /// <summary>
@@ -130,7 +132,14 @@ namespace CommandLine {
                 {
                     parameters.Server = true;
                     return;
-                }  
+                }
+            // * Specialized option            
+            foreach (string opString in OptionsConfiguration.specilizationOptions)
+                if (option.Equals(opString))
+                {
+                    parameters.Specialized = false;
+                    return;
+                } 
             // * Out option
             foreach (string opString in OptionsConfiguration.outputOptions)
                 if (option.StartsWith(opString)) {

@@ -1,0 +1,72 @@
+using System;
+using System.Collections;
+
+
+namespace JG
+{
+    public class Vec
+    {
+        public dynamic x;
+        public dynamic y;
+        public dynamic z;
+
+        public Vec()
+        {
+            this.x = 0.0;
+            this.y = 0.0;
+            this.z = 0.0;
+        }
+
+        public Vec(dynamic a, dynamic b, dynamic c)
+        {
+            this.x = a;
+            this.y = b;
+            this.z = c;
+        }
+
+        public static dynamic sub1(dynamic a, dynamic b)
+        {
+            return new Vec(a.x - b.x, a.y - b.y, a.z - b.z);
+        }
+
+    
+    }
+
+    public class View
+    {
+        public dynamic fromVec;
+        
+        public View(dynamic fromVec)
+        {
+            this.fromVec = fromVec;                   
+        }
+    }
+
+    public class RayTracer
+    {
+        public void render()
+        {
+ 			dynamic x = 1;
+            dynamic y = 1.5;
+			dynamic vec1 = new Vec(x,x,x);
+			dynamic vec2 = new Vec(y,y,y);	
+			
+			dynamic view1 = new View(vec1); 			
+			dynamic view2 = new View(vec2); 		
+
+			dynamic result = Vec.sub1(view1.fromVec,view2.fromVec);
+        }
+    }
+
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            dynamic ray = new RayTracer();
+            ray.render();
+            Console.WriteLine("Successful!!");
+        }
+    }
+}
+
+

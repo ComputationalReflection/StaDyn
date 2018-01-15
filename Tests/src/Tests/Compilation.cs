@@ -85,21 +85,21 @@ namespace Tests
             DynVarOptions.Instance.EverythingDynamic = false;
         }
         
-        public void testJavaGrandeStaticRayTracerTest()
-         {
-             runTest(new string[] { "tests/benchmarks/static/javagrande/JGFRayTracer.cs" });
-         }
+        //public void testJavaGrandeStaticRayTracerTest()
+        // {
+        //     runTest(new string[] { "tests/benchmarks/static/javagrande/JGFRayTracer.cs" });
+        // }
          
-         public void testJavaGrandeHybridRayTracerTest()
-         {
-             runTest(new string[] { "tests/benchmarks/hybrid/javagrande/JGFRayTracer.cs" });
-         }
+        // public void testJavaGrandeHybridRayTracerTest()
+        // {
+        //     runTest(new string[] { "tests/benchmarks/hybrid/javagrande/JGFRayTracer.cs" });
+        // }
 
-         public void testJavaGrandeDynamicRayTracerTest()
-         {
-             DynVarOptions.Instance.EverythingDynamic = true;
-             runTest(new string[] { "tests/benchmarks/dynamic/javagrande/JGFRayTracer.cs" });
-             DynVarOptions.Instance.EverythingDynamic = false;
-         }
+        // public void testJavaGrandeDynamicRayTracerTest()
+        // {
+        //     DynVarOptions.Instance.EverythingDynamic = true;
+        //     runTest(new string[] { "tests/benchmarks/dynamic/javagrande/JGFRayTracer.cs" });
+        //     DynVarOptions.Instance.EverythingDynamic = false;
+        // }
     }
 }

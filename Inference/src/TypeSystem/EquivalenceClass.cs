@@ -163,8 +163,13 @@ namespace TypeSystem {
                     // * We create a new entry with the new one...
                     TypeVariable newTypeVariable = typeVariableMappings[oldPair.Value];
                     newEquivalenceClass.typeVariables[newTypeVariable.Variable] = newTypeVariable;
+                    var previusSubstitution = newTypeVariable.Substitution;
+                   
                     // * ... and updates the class equivalence of the new type variable
                     newTypeVariable.EquivalenceClass = newEquivalenceClass;
+
+                    if (previusSubstitution != null && newTypeVariable.Substitution == null)
+                        newTypeVariable.EquivalenceClass.add(previusSubstitution, SortOfUnification.Equivalent, new List<Pair<TypeExpression, TypeExpression>>());
                     newTypeVariable.ValidTypeExpression = false;
                 }
                 else // * Otherwise, the old one is kept

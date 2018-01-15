@@ -158,7 +158,7 @@ namespace Tests
             runTest(new string[] { "tests/code.generation/Access/CG.TestStats2.cs" });
         }
         public void testCCGtestVarParametersAndReturn()
-        {
+        {            
             runTest(new string[] { "tests/code.generation/Access/CG.testVar.ParametersAndReturn.cs" });
         }
         public void testCCGThisBase()
@@ -337,10 +337,10 @@ namespace Tests
             runTest(new string[] { "tests/code.generation/Access/CG.TestGettersAndSetters.cs" });
         }
 
-        public void testFields()
-        {
-            runTest(new string[] { "tests/code.generation/Access/CG.TestFields.cs" });
-        }
+        //public void testFields()
+        //{
+        //    runTest(new string[] { "tests/code.generation/Access/CG.TestFields.cs" });
+        //}
 
         public void testAbstract()
         {

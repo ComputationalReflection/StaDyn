@@ -1,5 +1,6 @@
 ﻿using ErrorManagement;
 using System.Collections.Generic;
+using System.Windows.Forms.VisualStyles;
 using TypeSystem.Constraints;
 using DynVarManagement;
 namespace TypeSystem.Operations {
@@ -87,9 +88,41 @@ namespace TypeSystem.Operations {
                 ErrorManager.Instance.NotifyError(new ArgumentNumberError(caller.MemberInfo.MemberIdentifier, this.arguments.GetLength(0), this.location));
                 return null;
             }
+
+            int from = (this.methodAnalyzed!=null && this.methodAnalyzed.Constraints != null) ? this.methodAnalyzed.Constraints.Count:0;
             // Check the argument type
             for (int i = 0; i < caller.ParameterListCount; i++)
                 this.arguments[i].AcceptOperation(PromotionOperation.Create(caller.getParam(i), this.methodAnalyzed, this.location), arg);
+            int to = (this.methodAnalyzed != null && this.methodAnalyzed.Constraints != null) ? this.methodAnalyzed.Constraints.Count : 0;
+
+            if (to > from)
+            {
+                ConstraintList cl = new ConstraintList();
+                for (int i = from; i < to; i++)
+                    cl.Add(this.methodAnalyzed.Constraints.Constraints[i]);
+                for (int i = to - 1; i >= from; i--)
+                    this.methodAnalyzed.Constraints.Constraints.RemoveAt(i);
+
+                InvocationConstraint ic = null;
+                foreach (var constraint in this.methodAnalyzed.Constraints.Constraints)
+                {
+                    ic = constraint as InvocationConstraint;
+                    if (ic != null && ic.MethodName.Equals(caller.ToString()))
+                    {
+                        ic.Add(cl);
+                        break;
+                    }
+                    ic = null;
+                }
+
+                if (ic == null)
+                {
+                    ic = new InvocationConstraint(caller.ToString());
+                    ic.Add(cl);
+                    this.methodAnalyzed.Constraints.Add(ic);
+                }
+            }
+
             // * Returns the return type
             return caller.Return;
         }
