@@ -341,6 +341,42 @@ namespace TypeSystem {
 
         // SSA
 
+
+        #region CloneType()
+        /// <summary>
+        /// This method creates a new type variable.
+        /// It these type variables where bounded to types or other
+        /// type variables, they are maintained.
+        /// </summary>
+        /// <param name="typeVariableMappings">Each new type varaiable represent a copy of another existing one.
+        /// This parameter is a mapping between them, wher tmpName=old and value=new.</param>
+        /// <returns>The new cloned class type</returns>
+        public override TypeExpression CloneType(IDictionary<TypeVariable, TypeVariable> typeVariableMappings)
+        {
+            if (!this.HasTypeVariables())
+                return this;
+            FieldType newFieldType = (FieldType)this.MemberwiseClone();
+            if (newFieldType.fieldType != null)
+                newFieldType.fieldType = newFieldType.fieldType.CloneType(typeVariableMappings);
+            newFieldType.ValidTypeExpression = false;
+            return newFieldType;            
+        }
+
+        public override TypeExpression CloneType(IDictionary<TypeVariable, TypeVariable> typeVariableMappings, IDictionary<TypeExpression, TypeExpression> typeExpresionVariableMapping)
+        {
+            if (typeExpresionVariableMapping.ContainsKey(this))
+                return typeExpresionVariableMapping[this];
+            if (!this.HasTypeVariables())
+                return this;
+            FieldType newFieldType = (FieldType)this.MemberwiseClone();
+            if (newFieldType.fieldType != null)
+                newFieldType.fieldType = newFieldType.fieldType.CloneType(typeVariableMappings, typeExpresionVariableMapping);
+            newFieldType.ValidTypeExpression = false;
+            return newFieldType;
+        }
+        #endregion
+
+
         #region Clone()
         /// <summary>
         /// Clones a type to be used in SSA. It must taken into account that:

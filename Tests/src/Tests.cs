@@ -12,6 +12,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Text;
@@ -22,16 +23,16 @@ namespace Tests {
     /// </summary>
     class Tests {
 
-        static Type[] testClasses = { 
-            
-            typeof(GettingStartedTest),                        
+        static Type[] testClasses = {
+
+            typeof(GettingStartedTest),
             typeof(SemanticSampleTest),
             typeof(SemanticDynamicsTest),
-            typeof(SemanticExplicitTest), 
+            typeof(SemanticExplicitTest),
             typeof(SemanticVarTest),
             typeof(WrongExplicitTests),
             typeof(WrongVarTests), //testWrongVar.SSA.nested.cs and testWrongVar.SSA.while.cs commented
-            typeof(WrongDynamicsTests), 
+            typeof(WrongDynamicsTests),
             typeof(CLRCGAccessTest),
             typeof(CLRCGArithmeticTest),
             typeof(CLRCGArrayTest),
@@ -45,7 +46,11 @@ namespace Tests {
             typeof(CLRCGPropertyTest),
             typeof(CLRCGUnionTypes),
             typeof(CLRCGSampleTest),
-            typeof(CLRCGExamplesTestCases),                       
+            typeof(CLRCGExamplesTestCases),
+            //typeof(Benchmarks), //no.inference.cs commented.   
+            //typeof(Compilation),            
+            
+            //typeof(CLRCGSpecialization),         
         };
 
         static void Main() {            

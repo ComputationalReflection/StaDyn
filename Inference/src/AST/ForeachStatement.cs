@@ -77,7 +77,6 @@ namespace AST
       {
          get { return this.block; }
       }
-
       #endregion
 
       #region Constructor

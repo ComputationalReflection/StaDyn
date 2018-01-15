@@ -764,7 +764,6 @@ namespace CodeGeneration {
                     // * If the expected type is an String, we must call its ToString method
                     if (TypeExpression.Is<StringType>(certainType2))
                         this.CallVirt(indent, "instance", "string", "[mscorlib]System.Object", "ToString", null);
-
                     return;
                 }
 
@@ -775,6 +774,8 @@ namespace CodeGeneration {
                         /////this.RuntimeFreshTypeExpressionPromotion(indent, certainType2);
                         ////////////////////////
                         certainType2.AcceptOperation(new CGRuntimeFreshTEPromotionOperation<ILCodeGenerator>(indent, this), null);
+                    else
+                        this.UnboxAny(indent, certainType2);                    
                     return;
                 }
 

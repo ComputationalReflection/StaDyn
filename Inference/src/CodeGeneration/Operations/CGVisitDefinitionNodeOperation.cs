@@ -1,4 +1,5 @@
-﻿using TypeSystem.Operations;
+﻿using System.Reflection;
+using TypeSystem.Operations;
 using TypeSystem;
 using ErrorManagement;
 using AST;
@@ -45,9 +46,17 @@ namespace CodeGeneration.Operations {
             this.BeginOfOperation();
             MethodType methodType = invocationExpression.ActualMethodCalled as MethodType;
             if (methodType != null && this.node.Init.ILTypeExpression.IsValueType() && !methodType.Return.IsValueType())
-                this.codeGenerator.Promotion(this.indent, methodType.Return, methodType.Return, this.node.TypeExpr, this.node.ILTypeExpression, true, this.visitor.CheckMakeAnUnbox(this.node.Init));
+            {
+                if (methodType.MemberInfo.Modifiers.Contains(Modifier.Static) && methodType.Return is UnionType)
+                    this.codeGenerator.Promotion(this.indent, this.node.Init.ExpressionType, this.node.Init.ILTypeExpression,
+                    this.node.TypeExpr, this.node.ILTypeExpression, true, this.visitor.CheckMakeAnUnbox(this.node.Init));
+                else
+                    this.codeGenerator.Promotion(this.indent, methodType.Return, methodType.Return, this.node.TypeExpr,
+                        this.node.ILTypeExpression, true, this.visitor.CheckMakeAnUnbox(this.node.Init));
+            }
             else
-                this.codeGenerator.Promotion(this.indent, this.node.Init.ExpressionType, this.node.Init.ILTypeExpression, this.node.TypeExpr, this.node.ILTypeExpression, true, this.visitor.CheckMakeAnUnbox(this.node.Init));            
+                this.codeGenerator.Promotion(this.indent, this.node.Init.ExpressionType, this.node.Init.ILTypeExpression,
+                    this.node.TypeExpr, this.node.ILTypeExpression, true, this.visitor.CheckMakeAnUnbox(this.node.Init));
             return this.EndOfOperation();
         }
         public override object Exec(AstNode exp, object arg) {

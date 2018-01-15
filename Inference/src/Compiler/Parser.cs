@@ -33,17 +33,18 @@ namespace Compiler {
         /// <param name="run">If the program must be executed after compilation</param>
         /// <param name="dynamic">Using "dynamic" to refer to a "dynamic var"</param>
         /// <param name="server">Server option, make use of the DLR</param>
+        /// <param name="specialized">Specializing methods with the type information of their arguments</param>
         /// <param name="debugFilePath">Path where files with debug info will be created (does not include filename).</param>
         /// <param name="typeTableFileName">Path to file with types table info that will be created (includes filename).</param>
         /// <param name="ilasmFileName">Path to the ilasm.exe executable file (includes filename).</param>
-        public static void Parse(string[] files, string outputFileName, TargetPlatform targetPlatform, string debugFilePath, string ilasmFileName, string typeTableFileName, bool run, bool dynamic, bool server)
+        public static void Parse(string[] files, string outputFileName, TargetPlatform targetPlatform, string debugFilePath, string ilasmFileName, string typeTableFileName, bool run, bool dynamic, bool server, bool specialized)
         {
             if (files == null)
                 return;
 #if DEBUG
             ConsoleColor previousColor = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.Error.WriteLine("Compiling...");
+            Console.Out.WriteLine("Compiling...");
             Console.ForegroundColor = previousColor;
             long startTime = DateTime.Now.Ticks;
 #endif
@@ -65,15 +66,20 @@ namespace Compiler {
                         }
                     }
                     // starts the compilation process                     
-                    initApp.Run(directories, outputFileName, debugFilePath, ilasmFileName, typeTableFileName, targetPlatform, run, dynamic, server);
+                    initApp.Run(directories, outputFileName, debugFilePath, ilasmFileName, typeTableFileName, targetPlatform, run, dynamic, server,specialized);
 
                 }
                 else
                     ErrorManager.Instance.NotifyError(new CommandLineArgumentsError());
             }   catch (System.Exception e) {
-               Program.ClearMemory();
+               Program.ClearMemory();                
                Console.Error.WriteLine("An internal error has ocurred. Please, see " + Path.ChangeExtension(outputFileName,".log") + " for details.");
-               File.WriteAllLines(Path.ChangeExtension(outputFileName, ".log") , new[] { "Exception: " + e, e.StackTrace });                
+               File.WriteAllLines(Path.ChangeExtension(outputFileName, ".log") , new[] { "Exception: " + e, e.StackTrace });
+
+                var previousShowMessages = ErrorManager.Instance.ShowMessages;
+                ErrorManager.Instance.ShowMessages = true;
+                ErrorManager.Instance.NotifyError(new CodeGenerationError(outputFileName));
+                ErrorManager.Instance.ShowMessages = previousShowMessages;
             }
 #if DEBUG
             double elapsedTime = ((DateTime.Now.Ticks - startTime) / TimeSpan.TicksPerMillisecond) / 1000.0;

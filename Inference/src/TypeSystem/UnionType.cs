@@ -470,6 +470,65 @@ namespace TypeSystem {
         }
         #endregion
 
+
+        #region CloneType()
+        /// <summary>
+        /// This method creates a new type variable.
+        /// It these type variables where bounded to types or other
+        /// type variables, they are maintained.
+        /// </summary>
+        /// <param name="typeVariableMappings">Each new type varaiable represent a copy of another existing one.
+        /// This parameter is a mapping between them, wher tmpName=old and value=new.</param>
+        /// <returns>The new cloned class type</returns>
+        public override TypeExpression CloneType(IDictionary<TypeVariable, TypeVariable> typeVariableMappings)
+        {
+            if (!this.HasTypeVariables())
+                return this;
+            UnionType newUnionType = (UnionType)this.MemberwiseClone();
+            newUnionType.typeSet = new List<TypeExpression>();
+            List<TypeExpression> currentTypeSet = new List<TypeExpression>();
+            currentTypeSet.AddRange(this.typeSet);
+            // * Clones all the types in the union
+            foreach (TypeExpression type in currentTypeSet)
+                newUnionType.typeSet.Add(type.CloneType(typeVariableMappings));
+            return newUnionType;
+        }
+
+        public override TypeExpression CloneType(IDictionary<TypeVariable, TypeVariable> typeVariableMappings, IDictionary<TypeExpression, TypeExpression> typeExpresionVariableMapping)
+        {
+            if (typeExpresionVariableMapping.ContainsKey(this))
+                return typeExpresionVariableMapping[this];
+
+            foreach (TypeExpression type in this.typeSet)
+            {
+                if (typeExpresionVariableMapping.ContainsKey(type))
+                {
+                    if (!typeExpresionVariableMapping.ContainsKey(this))
+                        typeExpresionVariableMapping.Add(this, typeExpresionVariableMapping[type]);
+                    if (!typeExpresionVariableMapping[this].Equals(typeExpresionVariableMapping[type]))
+                    {
+                        typeExpresionVariableMapping.Remove(this);
+                        break;
+                    }
+                }                
+            }
+
+            if (typeExpresionVariableMapping.ContainsKey(this))
+                return typeExpresionVariableMapping[this];
+
+
+            
+            if (!this.HasTypeVariables())
+                return this;
+            UnionType newUnionType = (UnionType)this.MemberwiseClone();
+            newUnionType.typeSet = new List<TypeExpression>();
+            // * Clones all the types in the union
+            foreach (TypeExpression type in new List<TypeExpression>(this.typeSet))
+                newUnionType.typeSet.Add(type.CloneType(typeVariableMappings,typeExpresionVariableMapping));            
+            return newUnionType;
+        }
+        #endregion
+
         // Loop Detection
 
         #region Remove()
@@ -642,5 +701,120 @@ namespace TypeSystem {
 
         #endregion
 
+
+        #region Simplify()
+        /// <summary>
+        /// Gets the simplified version of the typeexpression.
+        /// </summary>
+        /// <returns>Returns the simplified type.</returns>
+        public override TypeExpression Simplify(bool includeTypeVariables = true)
+        {
+            List<TypeExpression> typeSet = new List<TypeExpression>();
+            IDictionary<string,TypeExpression> evaluated = new Dictionary<string, TypeExpression>();
+            for (int i = 0; i < this.TypeSet.Count; i++)
+            {
+                foreach (var type in GetTypes(this.TypeSet[i], includeTypeVariables, evaluated))
+                {
+                    typeSet.Add(type.Simplify());
+                }
+            }
+
+            typeSet = new List<TypeExpression>(new HashSet<TypeExpression>(typeSet));
+            if (typeSet.Count == 0)
+                return this;
+            else if (typeSet.Count == 1)
+                return typeSet[0];            
+            else
+            {
+                //this.typeSet = typeSet;
+                UnionType ut = (UnionType)this.CloneType(new Dictionary<TypeVariable, TypeVariable>());
+                ut.typeSet = typeSet;                
+                return ut;
+            }
+        }
+        
+        private List<TypeExpression> GetTypes(TypeExpression typeExpression, bool includeTypeVariables, IDictionary<string, TypeExpression> evaluated = null)
+        {
+            List<TypeExpression> typeSet = new List<TypeExpression>();
+            if (evaluated == null)
+                evaluated = new Dictionary<string, TypeExpression>();
+            if (evaluated.Keys.Contains(typeExpression.FullName))
+            {
+                if (evaluated[typeExpression.FullName] is ClassType)
+                    MergeClassType((ClassType) evaluated[typeExpression.FullName], (ClassType)typeExpression);
+                return typeSet;
+            }
+            else
+                evaluated.Add(typeExpression.FullName, typeExpression);
+            if (typeExpression is UnionType)
+            {
+                UnionType union = typeExpression as UnionType;
+                foreach (var expression in union.TypeSet)
+                    typeSet.AddRange(GetTypes(expression, includeTypeVariables, evaluated));
+            }
+            else if (typeExpression.IsValueType() || typeExpression is StringType)
+            {
+                if (typeExpression is TypeVariable)
+                    typeSet.Add(((TypeVariable)typeExpression).Substitution);
+                else
+                    typeSet.Add(typeExpression);
+            }
+            else if (typeExpression is TypeVariable)
+            {
+                if (((TypeVariable)typeExpression).Substitution != null)
+                    typeSet.AddRange(GetTypes(((TypeVariable)typeExpression).Substitution, includeTypeVariables, evaluated));
+                else if(includeTypeVariables)
+                    typeSet.Add(typeExpression);
+            }            
+            else if (typeExpression is FieldType)
+            {
+                FieldType fieldType = typeExpression as FieldType;
+                typeSet.AddRange(GetTypes(fieldType.FieldTypeExpression, includeTypeVariables, evaluated));
+            }
+            else if (typeExpression is PropertyType)
+            {
+                PropertyType propertyType = typeExpression as PropertyType;
+                typeSet.AddRange(GetTypes(propertyType.PropertyTypeExpression,includeTypeVariables, evaluated));
+            }
+            else if (typeExpression is ClassType)
+            {             
+                typeSet.Add(typeExpression);
+            }
+
+            return typeSet;
+        }
+
+        private void MergeClassType(ClassType targeClassType, ClassType classTypeToInclude)
+        {
+            foreach (var targetMember in targeClassType.Members)
+            {
+                if (targetMember.Value.Type is FieldType)
+                {
+                    var fieldType = ((FieldType)targetMember.Value.Type).FieldTypeExpression;
+                    var fieldTypeToInclude = ((FieldType)classTypeToInclude.Members[targetMember.Key].Type).FieldTypeExpression;
+                    var ut = fieldType as UnionType;
+                    if (ut == null)
+                        ut = new UnionType(fieldType);
+                    if (fieldTypeToInclude is UnionType)
+                        ut.typeSet.AddRange(((UnionType) fieldTypeToInclude).typeSet);
+                    else if(!ut.typeSet.Contains(fieldTypeToInclude))
+                            ut.typeSet.Add(fieldTypeToInclude);                    
+                    FieldType newFieldType = null;                    
+                    if (ut.typeSet.Count == 1)
+                        newFieldType = new FieldType(ut.typeSet[0]);
+                    else
+                        newFieldType = new FieldType(ut);
+                    
+                    var originalMemberInfo = ((FieldType) targetMember.Value.Type).MemberInfo;
+                    newFieldType.MemberInfo = new AccessModifier(originalMemberInfo.Modifiers,originalMemberInfo.MemberIdentifier, newFieldType,false);
+                    newFieldType.MemberInfo.Class = targeClassType;
+
+                    ut.BuildFullName();
+                    targetMember.Value.Type = newFieldType;
+                }
+            }            
+        }
+
+        #endregion
     }
 }

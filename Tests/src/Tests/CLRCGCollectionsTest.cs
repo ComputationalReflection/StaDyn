@@ -41,9 +41,9 @@ namespace Tests
         //{
         //    runTest(new string[] { "tests/code.generation/Collections/CG.Var.CustomStack.cs" });
         //}
-        public void testCGVARCustomStack2()
-        {
-            runTest(new string[] { "tests/code.generation/Collections/CG.Var.CustomStack2.cs" });
-        }
+        //public void testCGVARCustomStack2()
+        //{
+        //    runTest(new string[] { "tests/code.generation/Collections/CG.Var.CustomStack2.cs" });
+        //}
 	}
 }

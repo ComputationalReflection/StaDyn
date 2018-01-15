@@ -356,10 +356,27 @@ namespace TypeSystem {
             // * The substitution is not altered
             // * Since equivalence classes and type variables have a bidirectional association,
             //   the new equivalence classes will make type variables update their new equivalence classes
-            foreach (EquivalenceClass equivalenceClass in equivalenceClasses)
+            foreach (EquivalenceClass equivalenceClass in new List<EquivalenceClass>(equivalenceClasses))
                 equivalenceClass.UpdateEquivalenceClass(typeVariableMappings);
             newTypeVariable.ValidTypeExpression = false;
             // * The new class type is returned
+            return newTypeVariable;
+        }
+
+        public override TypeExpression CloneType(IDictionary<TypeVariable, TypeVariable> typeVariableMappings, IDictionary<TypeExpression, TypeExpression> typeExpresionVariableMapping)
+        {
+            if (typeExpresionVariableMapping.ContainsKey(this))
+                return typeExpresionVariableMapping[this];
+            //Same implementation of CloneType(IDictionary<TypeVariable, TypeVariable> typeVariableMappings), but 
+            //if loop is detected, it is necesary to suppress this from the equivalenceClasses
+            IList<EquivalenceClass> equivalenceClasses = new List<EquivalenceClass>();
+            TypeVariable newTypeVariable = (TypeVariable)this.CloneTypeVariables(typeVariableMappings, equivalenceClasses, new List<ClassType>());
+            for (int i = equivalenceClasses.Count - 1; i >= 0; i--)
+                if (equivalenceClasses[i].TypeVariables.Count == 1 && equivalenceClasses[i].TypeVariables.ContainsKey(this.Variable))
+                    equivalenceClasses.RemoveAt(i);          
+            foreach (EquivalenceClass equivalenceClass in new List<EquivalenceClass>(equivalenceClasses))
+                equivalenceClass.UpdateEquivalenceClass(typeVariableMappings);
+            newTypeVariable.ValidTypeExpression = false;
             return newTypeVariable;
         }
         #endregion
@@ -384,16 +401,28 @@ namespace TypeSystem {
             newOne.IsDynamic = this.IsDynamic;
             // * Sets the mapping between the old and new one in the typeVariableMappings parameter
             typeVariableMappings[this] = newOne;
+            EquivalenceClass clonedEquivalenceClass = null;
+
+            if (this.EquivalenceClass != null)
+            {
+                clonedEquivalenceClass = new EquivalenceClass();
+                foreach (var typeVariable in this.EquivalenceClass.TypeVariables)
+                {
+                    TypeExpression clonedTypeVariable = typeVariable.Value.CloneType(typeVariableMappings);
+                    clonedEquivalenceClass.add(clonedTypeVariable, SortOfUnification.Equivalent, new List<Pair<TypeExpression, TypeExpression>>());                    
+                }                
+            }
+            
             // * Add both equivalence classes to the equivalenceClasses parameter
-            if (this.EquivalenceClass != null && !equivalenceClasses.Contains(this.equivalenceClass))
-                equivalenceClasses.Add(this.equivalenceClass);
+            if (clonedEquivalenceClass != null && !equivalenceClasses.Contains(clonedEquivalenceClass))
+                equivalenceClasses.Add(clonedEquivalenceClass);
             // * Assigns a clone of the substitution when it previously exists
             if (this.Substitution != null) {
                 TypeExpression clonedSubstitution = this.Substitution.CloneTypeVariables(typeVariableMappings, equivalenceClasses, clonedClasses);
                 newOne.addToMyEquivalenceClass(clonedSubstitution, SortOfUnification.Equivalent, new List<Pair<TypeExpression, TypeExpression>>());
             }
-            else if (this.EquivalenceClass != null)
-                newOne.equivalenceClass = this.equivalenceClass;
+            else if (clonedEquivalenceClass != null)
+                newOne.equivalenceClass = clonedEquivalenceClass;
             newOne.ValidTypeExpression = false;
             // * Returns the new type variable
             return newOne;
@@ -516,7 +545,9 @@ namespace TypeSystem {
         /// </summary>
         /// <param name="toRemove">The type variable to remove</param>
         /// <returns>If it has been actually removed</returns>
-        public override bool Remove(TypeVariable toRemove) {
+        public override bool Remove(TypeVariable toRemove)
+        {
+            if (this.equivalenceClass == null) return false;
             bool ret = this.equivalenceClass.Remove(toRemove);
             this.ValidTypeExpression = false;
             return ret;
@@ -564,7 +595,11 @@ namespace TypeSystem {
         }
 
         #endregion
-
+        
+        public override TypeExpression Simplify(bool includeTypeVariables = true)
+        {
+            return this.Substitution == null ? this : this.Substitution.Simplify(includeTypeVariables);
+        }
     }
 }
 

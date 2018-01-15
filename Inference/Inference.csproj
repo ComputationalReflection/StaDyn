@@ -173,6 +173,7 @@
     <Compile Include="src\CodeGeneration\Operations\MajorTypeForArithMeticOperation.cs" />
     <Compile Include="src\CodeGeneration\Operations\MajorTypeOperation.cs" />
     <Compile Include="src\CodeGeneration\TemporalVariablesTable.cs" />
+    <Compile Include="src\CodeGeneration\Specializer\VisitorASTCloner.cs" />
     <Compile Include="src\CodeGeneration\VisitorCodeGenerationBase.cs" />
     <Compile Include="src\CodeGeneration\ILCodeGenerator.cs" />
     <Compile Include="src\CodeGeneration\ILStatementsCodeGeneration.cs" />
@@ -188,8 +189,10 @@
     <Compile Include="src\Parser\CSharpParserDynamic.cs" />
     <Compile Include="src\Parser\ICSharpLexer.cs" />
     <Compile Include="src\Parser\ICSharpParser.cs" />
+    <Compile Include="src\CodeGeneration\Specializer\VisitorSpelializer.cs" />
     <Compile Include="src\TargetPlatforms\TargetPlatform.cs" />
     <Compile Include="src\TargetPlatforms\TargetPlatformRepresentation.cs" />
+    <Compile Include="src\TypeSystem\Constraints\InvocationConstraint.cs" />
     <Compile Include="src\TypeSystem\Operations\CastOperation.cs" />
     <Compile Include="src\TypeSystem\Operations\EqualsForOverloadOperation.cs" />
     <Compile Include="src\TypeSystem\Operations\GetMembersOperation.cs" />

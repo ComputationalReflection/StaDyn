@@ -219,6 +219,11 @@ namespace TypeSystem.Operations {
                         TypeVariable typeVariable = (TypeVariable)leftOperand.FieldTypeExpression;
                         typeVariable.AcceptOperation(new AssignmentOperation(rightOperand, this.op, null, SortOfUnification.Override, null, this.location), arg);
                     }
+                    else if (leftOperand.FieldTypeExpression is TypeVariable && TypeExpression.As<ClassType>(rightOperand) != null && ((TypeVariable)leftOperand.FieldTypeExpression).IsDynamic)
+                    {
+                        TypeVariable typeVariable = (TypeVariable)leftOperand.FieldTypeExpression;
+                        typeVariable.AcceptOperation(new AssignmentOperation(rightOperand, this.op, null, SortOfUnification.Override, null, this.location), arg);
+                    }
                     else if (leftOperand.FieldTypeExpression is TypeVariable && rightOperand is TypeVariable && ((TypeVariable)rightOperand).Substitution == null && ((TypeVariable)rightOperand).IsDynamic)
                     {
                         TypeVariable typeVariable = (TypeVariable)leftOperand.FieldTypeExpression;

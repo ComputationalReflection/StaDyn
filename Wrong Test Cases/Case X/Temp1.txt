@@ -1,0 +1,142 @@
+using System;
+using System.Collections;
+
+
+namespace JG
+{
+    public class Vec
+    {
+        public dynamic x;
+        public dynamic y;
+        public dynamic z;
+
+        public Vec()
+        {
+            this.x = 0.0;
+            this.y = 0.0;
+            this.z = 0.0;
+        }
+
+        public Vec(dynamic a, dynamic b, dynamic c)
+        {
+            this.x = a;
+            this.y = b;
+            this.z = c;
+        }
+
+        public static dynamic sub1(dynamic a, dynamic b)
+        {
+            return new Vec(a.x - b.x, a.y - b.y, a.z - b.z);
+        }
+
+        public static dynamic cross(dynamic a, dynamic b)
+        {
+            return new Vec(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+        }
+
+        public static dynamic dot(dynamic a, dynamic b)
+        {
+            return a.x * b.x + a.y * b.y + a.z * b.z;
+        }
+
+        public void scale(dynamic t)
+        {
+            x = t * x;
+            y = t * y;
+            z = t * z;
+        }
+
+        public dynamic normalize()
+        {
+            dynamic len = Math.Sqrt(x * x + y * y + z * z);
+            if (len > 0.0)
+            {
+                x = (double)(x / len);
+                y = (double)(y / len);
+                z = (double)(z / len);
+            }
+            return len;
+        }
+
+        public override String ToString()
+        {
+            return "<" + x + "," + y + "," + z + ">";
+        }
+    }
+
+    public class View
+    {
+        public dynamic fromVec;
+        public dynamic atVec;
+        public dynamic upVec;
+        public dynamic dist;
+        public dynamic angle;
+        public dynamic aspect;
+
+        public View(dynamic fromVec, dynamic atVec, dynamic upVec, dynamic dist, dynamic angle, dynamic aspect)
+        {
+            this.fromVec = fromVec;
+            this.atVec = atVec;
+            this.upVec = upVec;
+            this.dist = dist;
+            this.angle = angle;
+            this.aspect = aspect;
+        }
+    }
+
+    public class Ray
+    {
+        public dynamic P;
+        public dynamic D;
+
+        public Ray()
+        {
+            this.P = new Vec();
+            this.D = new Vec();
+        }
+
+        public dynamic point(dynamic t)
+        {
+            return new Vec(this.P.x + this.D.x * t, this.P.y + this.D.y * t, this.P.z + this.D.z * t);
+        }
+
+        public override String ToString()
+        {
+            return "{" + P.ToString() + " -> " + D.ToString() + "}";
+        }
+    }
+
+
+    public class RayTracer
+    {
+        public void render()
+        {
+            dynamic x = 0.0;
+            dynamic y = 0.0;
+            dynamic localView = new View(new Vec(x, 20.0, -30.0), new Vec(x, y, 0.0), new Vec(0.0, 1.0, 0.0), 1.0, 35.0 * 3.14159265 / 180.0, 1.0);
+            dynamic viewVec = Vec.sub1(localView.atVec, localView.fromVec);
+            viewVec.normalize();
+            dynamic tmpVec = new Vec(viewVec.x, viewVec.y, viewVec.z);
+            dynamic dotValue = Vec.dot(localView.upVec, viewVec);
+            tmpVec.scale(dotValue);
+            dynamic upVec = Vec.sub1(localView.upVec, tmpVec);
+            upVec.normalize();
+            dynamic leftVec = Vec.cross(localView.upVec, viewVec);
+            leftVec.normalize();
+            dynamic frustrumwidth = localView.dist * Math.Tan(localView.angle);
+            upVec.scale(-frustrumwidth);
+            dynamic scaleValue = localView.aspect * frustrumwidth;
+            leftVec.scale(scaleValue);
+        }
+    }
+
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            dynamic ray = new RayTracer();
+            ray.render();
+            Console.WriteLine("Successful!!");
+        }
+    }
+}

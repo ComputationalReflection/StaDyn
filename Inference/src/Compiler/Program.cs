@@ -17,9 +17,11 @@ using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using AST;
 using CodeGeneration;
 using Debugger;
+using DynVarManagement;
 using ErrorManagement;
 using Parser;
 using Semantic;
@@ -194,8 +196,11 @@ namespace Compiler
                 //------------------------------------------------------------------
 
                 // Create a parser that reads from the scanner
-                if(dynamic)
+                if (dynamic)
+                {
                     parser = new CSharpParserDynamic(filter);
+                    DynVarManager.DynamicOption = true;
+                }
                 else
                     parser = new CSharpParser(filter);
                 parser.setFilename(f.FullName);
@@ -234,10 +239,11 @@ namespace Compiler
       /// <param name="run">If the program must be executed after compilation</param>
       /// <param name="dynamic">Using "dynamic" to refer to a "dynamic var"</param>
       /// <param name="server">Server option, make use of the DLR</param>
+      /// <param name="specialized">Specializing methods with the type information of their arguments</param>
       /// <param name="targetPlatform">The target platform to compile the code</param>
       /// </summary>
       public void Run(IDictionary<string, string> directories, string outputFileName, 
-          string debugFilePath, string ilasmFileName,string typeTableFileName,  TargetPlatform targetPlatform, bool run, bool dynamic, bool server)
+          string debugFilePath, string ilasmFileName,string typeTableFileName,  TargetPlatform targetPlatform, bool run, bool dynamic, bool server, bool specialized)
       {
          int previousNumberOfErrors = ErrorManager.Instance.ErrorCount;
 
@@ -256,7 +262,7 @@ namespace Compiler
 
          for (int i = 0; i < this.astList.Count; i++)
          {
-            this.astList[i].Accept(new VisitorSSA(), null);
+             this.astList[i].Accept(new VisitorSSA(), null);
          }
 
          for (int i = 0; i < this.astList.Count; i++)
@@ -278,6 +284,16 @@ namespace Compiler
          for (int i = 0; i < this.astList.Count; i++)
             // * The same visitor type inference should be used in the whole process
             this.astList[i].Accept(visitorTypeInference, null);
+
+         //Specialized option
+         if (specialized)
+         {
+            VisitorSpelializer visitorSpecializer = new VisitorSpelializer(visitorTypeInference);
+            for (int i = 0; i < this.astList.Count; i++)
+                // * The same visitor type inference should be used in the whole process
+                this.astList[i].Accept(visitorSpecializer, null);
+         }
+         
          //for (int i = 0; i < this.astList.Count; i++)
          //    this.astList[i].Accept(new VisitorDebug(new StreamWriter("debug.out")),0);
 
@@ -297,7 +313,8 @@ namespace Compiler
                visitorCodeGeneration.AddExceptionCode();
                visitorCodeGeneration.Close();
 
-               // * If no errors found, the executable file is generated
+                
+               // If no errors found, the executable file is generated
                if (previousNumberOfErrors == ErrorManager.Instance.ErrorCount)
                   switch (targetPlatform)
                   {
@@ -310,14 +327,14 @@ namespace Compiler
                      default:
                         System.Diagnostics.Debug.Assert(false, "Unknown target platform.");
                         break;
-                  }
+                  }                
             }
          }
 
 
 #if DEBUG
          // * Dumps the types table
-        // debug(debugFilePath, typeTableFileName);
+         debug(debugFilePath, typeTableFileName);
 #endif
 
          ClearMemory();
@@ -388,7 +405,7 @@ namespace Compiler
          process.StartInfo.RedirectStandardOutput = false; //Set to false to execute large source code
          process.StartInfo.RedirectStandardError = false; //Set to false to execute large source code  
 
-         process.StartInfo.FileName = ilasmFileName;
+         process.StartInfo.FileName = ilasmFileName;         
          process.StartInfo.Arguments = "\"" + ilFileName + "\"" + " /output=" + "\"" + outputFileName + "\" /optimize";
          process.Start();
          process.WaitForExit();
@@ -396,33 +413,37 @@ namespace Compiler
          if (process.ExitCode != 0)
          {
             ErrorManager.Instance.NotifyError(new AssemblerError(ilFileName));
-            process.StartInfo.RedirectStandardOutput = false;
-            process.StartInfo.RedirectStandardError = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
             process.Start();
+            Console.Out.WriteLine(process.StandardOutput.ReadToEnd());
+            Console.Out.WriteLine(process.StandardError.ReadToEnd());
             process.WaitForExit();
          }
          else if (run)
          {
             // * The compilation has successed
             process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = false;
-            process.StartInfo.RedirectStandardError = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
             process.StartInfo.FileName = outputFileName;
             process.Start();
+            Console.Out.WriteLine(process.StandardOutput.ReadToEnd());
+            Console.Error.WriteLine(process.StandardError.ReadToEnd());
             process.WaitForExit();
             if (process.ExitCode != 0)
                ErrorManager.Instance.NotifyError(new ExecutionError(outputFileName));
          }
       }
-      #endregion
+        #endregion
 
-      #region debug()
-      /// <summary>
-      /// Calls to debug visit
-      /// <param name="debugFilePath">Path where files with debug info will be created (does not include filename).</param>
-      /// <param name="typeTableFileName">Path to file with types table info that will be created (includes filename).</param>
-      /// </summary>
-      private void debug(string debugFilePath, string typeTableFileName)  {
+        #region debug()
+        /// <summary>
+        /// Calls to debug visit
+        /// <param name="debugFilePath">Path where files with debug info will be created (does not include filename).</param>
+        /// <param name="typeTableFileName">Path to file with types table info that will be created (includes filename).</param>
+        /// </summary>
+        private void debug(string debugFilePath, string typeTableFileName)  {
 #if DEBUG
           //TODO: OJO Si la carpeta Test no existe falla en tiempo de ejecución al menos en consola.
          for (int i = 0; i < this.astList.Count; i++)

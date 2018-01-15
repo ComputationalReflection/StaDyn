@@ -647,7 +647,8 @@ namespace Semantic {
                 if (node.ExpressionType == null)
                     return null;
 
-                ((ClassType)node.ExpressionType).ConcreteType = true;
+                if(node.ExpressionType is ClassType)
+                    ((ClassType)node.ExpressionType).ConcreteType = true;
             }
             return null;
         }
@@ -736,7 +737,20 @@ namespace Semantic {
                 theta.Accept(this, obj);
 
             // * Updates the visitor's state
-            this.sortOfUnification = previousSortOfUnification;                        
+            this.sortOfUnification = previousSortOfUnification;
+
+            foreach (MoveStatement moveStatement in node.AfterCondition)
+            {
+                Simplify(moveStatement.LeftExp.ExpressionType);
+                Simplify(moveStatement.RightExp.ExpressionType);
+            }
+
+            //foreach (ThetaStatement theta in node.ThetaStatements)
+            //{
+            //    foreach (var singleIdentifierExpression in theta.ThetaList)
+            //        Simplify(singleIdentifierExpression.ExpressionType);
+            //    //Simplify(theta.ThetaId.ExpressionType);
+            //}
             return null;
         }
         #endregion
@@ -763,7 +777,7 @@ namespace Semantic {
             this.sortOfUnification = SortOfUnification.Incremental; // * Union types used in unification
             node.Statements.Accept(this, obj); // * WriteType inference
             ErrorManager.Instance.ShowMessages = previousShowErrorMessages; // * Error messages enabled
-            //node.Statements.Accept(this, obj); // * WriteType checking
+           // node.Statements.Accept(this, obj); // * WriteType checking
             this.sortOfUnification = previousSortOfUnification;
 
             // * WriteType inference of theta functions (SSA) must be performed at the end (when all the types have been inferred)
@@ -771,8 +785,38 @@ namespace Semantic {
                 // * WriteType inference
                 theta.Accept(this, obj);
             // * Constraints satisfaction            
-            ConstraintSatisfaction(this.getMethodAnalyzed(), fromConstraint, node);                     
+            ConstraintSatisfaction(this.getMethodAnalyzed(), fromConstraint, node);
+
+            foreach (MoveStatement moveStatement in node.InitWhile)
+            {
+                Simplify(moveStatement.LeftExp.ExpressionType);
+                Simplify(moveStatement.RightExp.ExpressionType);
+            }
+
+            //foreach (ThetaStatement theta in node.BeforeCondition)
+            //{
+            //    foreach (var singleIdentifierExpression in theta.ThetaList)
+            //        Simplify(singleIdentifierExpression.ExpressionType);
+            //    // Simplify(theta.ThetaId.ExpressionType);
+            //}
+
+            foreach (MoveStatement moveStatement in node.AfterCondition)
+            {
+                Simplify(moveStatement.LeftExp.ExpressionType);
+                Simplify(moveStatement.RightExp.ExpressionType);
+            }
+
             return null;
+        }
+
+
+        private void Simplify(TypeExpression typeExpression)
+        {
+            var simplified = typeExpression.Simplify();
+            if (!typeExpression.Equals(simplified))
+            {                                  
+                typeExpression.Unify(simplified, SortOfUnification.Override, new List<Pair<TypeExpression, TypeExpression>>());        
+            }
         }
         #endregion
 
@@ -1319,7 +1363,7 @@ namespace Semantic {
         /// </summary>
         /// <param name="args">Arguments information.</param>
         /// <returns>Returns the argument type expressions </returns>
-        private TypeExpression[] compoundExpressionToArray(CompoundExpression args) {
+        public TypeExpression[] compoundExpressionToArray(CompoundExpression args) {
             TypeExpression[] aux = new TypeExpression[args.ExpressionCount];
             TypeExpression te;
 
@@ -1405,7 +1449,7 @@ namespace Semantic {
             if (md == null)
                 // * No abstract interpretation in method declarations (abstract or interfaces)
                 return mte;
-
+            
             if (this.methodsAllReadyVisited.Contains(md))
                 // * Already visited, let's exit
                 return mte;

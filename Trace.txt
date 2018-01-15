@@ -1,0 +1,3 @@
+30/05/2016	09:30	Nueva tarea 1: Con parametros de tipo union, solamente se genera una version especializada para aquellos parametros validos.
+30/05/2016	17:00	Finalizada tarea 1
+

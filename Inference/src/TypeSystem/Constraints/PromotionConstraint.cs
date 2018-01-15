@@ -131,14 +131,13 @@ namespace TypeSystem.Constraints {
         /// one and Incremental is used in the SSA bodies of the while, for and do statements)</param>
         /// <param name="location">Location of the method call</param>
         /// <returns>If the unification has been satisfied</returns>
-        public override TypeExpression Check(MethodType methodAnalyzed, TypeExpression actualImplicitObject, bool showInvocationMessage,
-                            SortOfUnification activeSortOfUnification, Location location) {
+        public override TypeExpression Check(MethodType methodAnalyzed, TypeExpression actualImplicitObject, bool showInvocationMessage, SortOfUnification activeSortOfUnification, Location location) {
             TypeExpression result;
             if (this.op!=null)
                 //result = this.FirstOperand.Promotion(this.SecondOperand, (Enum)this.Operator, methodAnalyzed, this.Location);
-                result = (TypeExpression)this.FirstOperand.AcceptOperation(PromotionOperation.Create(this.SecondOperand, (Enum)this.Operator, methodAnalyzed, this.Location), null);
+                result = (TypeExpression)this.FirstOperand.AcceptOperation(PromotionOperation.Create(this.SecondOperand, (Enum)this.Operator, methodAnalyzed, this.Location, showInvocationMessage), null);
             else
-                result = (TypeExpression)this.FirstOperand.AcceptOperation(PromotionOperation.Create(this.SecondOperand, methodAnalyzed, this.Location), null);
+                result = (TypeExpression)this.FirstOperand.AcceptOperation(PromotionOperation.Create(this.SecondOperand, methodAnalyzed, this.Location, showInvocationMessage), null);
             if (result == null && showInvocationMessage) {
                 ErrorManager.Instance.NotifyError(new ConstraintError(location));
                 return null;

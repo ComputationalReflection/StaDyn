@@ -101,8 +101,8 @@ namespace TypeSystem {
                 //   substituting the old type variables for the new ones
                 // * The substitution is not altered
                 // * Since equivalence classes and type variables have a bidirectional association,
-                //   the new equivalence classes will make type variables update their new equivalence classes
-                foreach (EquivalenceClass equivalenceClass in equivalenceClasses)
+                //   the new equivalence classes will make type variables update their new equivalence classes                
+                foreach (EquivalenceClass equivalenceClass in new List<EquivalenceClass>(equivalenceClasses))
                     equivalenceClass.UpdateEquivalenceClass(typeVariableMappings);
                 // * The new class type is returned
                 this.realType.ValidTypeExpression = false;

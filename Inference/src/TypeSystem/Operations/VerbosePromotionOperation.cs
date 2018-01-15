@@ -17,7 +17,8 @@ namespace TypeSystem.Operations {
         #endregion
 
         #region Constructor
-        internal VerbosePromotionOperation (TypeExpression to, Enum op, MethodType methodAnalyzed, Location location) {
+        internal VerbosePromotionOperation (TypeExpression to, Enum op, MethodType methodAnalyzed, Location location, bool notifyError) : base(notifyError)
+        {
             this.to = to;
             this.op = op;
             this.methodAnalyzed = methodAnalyzed;
@@ -116,7 +117,8 @@ namespace TypeSystem.Operations {
 
 
         public override object ReportError(TypeExpression from) {
-            ErrorManager.Instance.NotifyError(new TypePromotionError(from.fullName, this.to.FullName, this.op.ToString(), this.location));
+            if (NotifyError)
+                ErrorManager.Instance.NotifyError(new TypePromotionError(from.fullName, this.to.FullName, this.op.ToString(), this.location));
             return null;
         }
     }
