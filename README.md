@@ -1,4 +1,4 @@
-#*StaDyn*
+# *StaDyn*
 
 Dynamic languages are becoming increasingly popular for developing different kinds of applications such as adaptable and adaptive software, Web development, application frameworks, game engines, interactive programming, rapid prototyping, and dynamic aspect-oriented programming. These languages build on the Smalltalk idea of supporting reasoning about (and customizing) program structure, behavior and environment at runtime.
 
@@ -8,7 +8,7 @@ Dynamic languages do not perform type checking at compile time like statically t
 2. **No early detection of type errors**. Dynamic type checking do not make possible to fix programming errors immediately rather than discovering them at runtime; when the programmer's efforts might be aimed at some other task, or even after the program has been deployed.
 3. **Legibility loss**. Type declarations constitute a form of documentation, giving useful hints about behavior and structure. Unlike descriptions embedded in comments, this form of documentation cannot become outdated, since it is checked during every run of the compiler.
 
-##Project Aim
+## Project Aim
 The main objective of this project is combining the benefits of both dynamic and static languages in just one single programming language: *StaDyn*. *StaDyn* permits straightforward development of adaptable software and rapid prototyping, without sacrificing application robustness, performance and legibility of source code.
 
 Static typing is centered on making sure that programs behave correctly at runtime. This is the reason why languages with static typing employ a pessimistic policy regarding to programs correctness. This pessimism causes compilation errors of programs that are dynamically correct. The following Java code shows this limitation:
@@ -28,7 +28,7 @@ Dynamic languages follow the opposite point of view. They do not perform type ch
         length = myObjet.length()  # No compilation error
 ```                 
                     
-##Language Benefits
+## Language Benefits
 
 1. *Improving the Performance, Robustness, Legibility and Scalability of dynamic languages*. Adding a flexible static type system to a dynamic language will produce the previous benefits. As an example, the previous Python code will show a compile-time error.
 2. *Improving the adaptability and rapid prototyping features of "static" languages*. Using type inference and type reconstruction techniques, together with constraint based type systems, will make typeable a higher number of programs that are dynamically correct. These features imply a static duck typing system. It is not necessary to use the explicitly Java interface based programming style. Objects interface is inferred statically.

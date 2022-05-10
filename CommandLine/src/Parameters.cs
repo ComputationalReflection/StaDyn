@@ -22,7 +22,7 @@ namespace CommandLine {
         public TargetPlatform TargetPlatform;
         // * If the program must be executed after compilation (default value is false)
         public bool Run;
-        // * Using "dynamic" to refer to a "dynamic var" (default value is false)
+        // * Using "dynamic" to refer to a "dynamic var" (default value is true)
         public bool Dynamic;
         // * Server option, make use of the DLR (default value is false)
         public bool Server;
