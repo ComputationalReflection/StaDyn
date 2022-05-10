@@ -21,7 +21,7 @@ namespace CommandLine {
         
         // * Messages
 
-        private const string copyrightMessage = "StaDyn C# 2007 Compiler for Reflective Rotor (SSCLI) 1.0\n" +
+        private const string copyrightMessage = "StaDyn C# 2022 Compiler for Reflective Rotor (SSCLI) 1.0\n" +
                                                 " and Microsoft (R) Windows (R) 2005 Framework.\n";
 
         public const string noInputMessage = copyrightMessage + "\nNo inputs specified. Type /help for help.\n";
@@ -37,8 +37,8 @@ namespace CommandLine {
                                 "/target:rrotor           Builds a Rrotor executable (Short form: /t:Rrotor).\n" +
                                 "/run                     Runs the program if compilation success\n" +
                                 "                                   (Short form: /r).\n" +
-                                "/dynamic                 Allows using the dynamic type (disabled by default)\n" +
-                                "                                   (Short form: /d).\n" +
+                                "/nodynamic               Allows using the dynamic type (disabled by default)\n" +
+                                "                                   (Short form: /nd).\n" +
                                 "/server                  Allows using the DLR (disabled by default)\n" +
                                 "                                   (Short form: /s).\n" +
                                 "/specialized             Allows specializing methods with the type information of their arguments. (enabled by default)\n" +
@@ -54,7 +54,7 @@ namespace CommandLine {
         public static readonly string[] outputOptions = { "output", "out" };
         public static readonly string[] targetOptions = { "target", "t" };
         public static readonly string[] runOptions = { "run", "r" };
-        public static readonly string[] dynamicOptions = {"dynamic","d"};
+        public static readonly string[] noDynamicOptions = { "nodynamic", "nd"};
         public static readonly string[] serverOptions = { "server", "s" };
         public static readonly string[] specilizationOptions = { "specialized", "sp" };
 
@@ -65,6 +65,7 @@ namespace CommandLine {
         public static readonly TargetPlatform defaultTargetPlatform = TargetPlatform.CLR;
         public static readonly bool defaultRunOption = false;
         public static readonly bool defaultSpecializedOption = true;
+        public static readonly bool defaultDynamicOption = true;
 
 
         // * Options prefix

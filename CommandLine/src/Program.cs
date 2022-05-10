@@ -87,6 +87,7 @@ namespace CommandLine {
             parameters.Run = OptionsConfiguration.defaultRunOption; // * Default value
             parameters.TargetPlatform = OptionsConfiguration.defaultTargetPlatform; // * Default value
             parameters.Specialized = OptionsConfiguration.defaultSpecializedOption; // * Default value
+            parameters.Dynamic = OptionsConfiguration.defaultDynamicOption; // * Default value
         }
 
         /// <summary>
@@ -119,14 +120,14 @@ namespace CommandLine {
                     parameters.Run = true;
                     return;
                 }
-            // * Dynamic option
-            foreach (string opString in OptionsConfiguration.dynamicOptions)
+            // * Nodynamic option
+            foreach (string opString in OptionsConfiguration.noDynamicOptions)
                 if (option.Equals(opString))
                 {
-                    parameters.Dynamic = true;
+                    parameters.Dynamic = false;
                     return;
                 }
-            // * Dynamic option
+            // * Server option
             foreach (string opString in OptionsConfiguration.serverOptions)
                 if (option.Equals(opString))
                 {
