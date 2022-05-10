@@ -37,7 +37,7 @@ namespace CommandLine {
                                 "/target:rrotor           Builds a Rrotor executable (Short form: /t:Rrotor).\n" +
                                 "/run                     Runs the program if compilation success\n" +
                                 "                                   (Short form: /r).\n" +
-                                "/nodynamic               Allows using the dynamic type (disabled by default)\n" +
+                                "/nodynamic               Disables the use of the dynamic type (disabled by default)\n" +
                                 "                                   (Short form: /nd).\n" +
                                 "/server                  Allows using the DLR (disabled by default)\n" +
                                 "                                   (Short form: /s).\n" +
