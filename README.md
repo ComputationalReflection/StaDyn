@@ -4,21 +4,34 @@ StaDyn is an object-oriented general-purpose programming language for the .NET p
 
 Its first prototype appeared in 2007, as a modification of C# 3.0. Type inference was supported by including ```var``` as a new type, unlike C#, which only offers ```var``` to define initialized local variables. Flow-sensitive types of ```var``` references are inferred by the compiler, providing type safe duck typing [1]. When a more lenient approach is required by the programmer, the ```dynamic``` type could be used instead of ```var```. Although type inference is still performed, dynamic references behave closer to those in dynamic languages.
 
+## Variables with different types
 
-![image](https://user-images.githubusercontent.com/10128026/168113918-41c4cc27-6a4f-497f-9acf-57bbe1e5606e.png)
+Just like dynamic languages, variables may hold different types in the same scope:
+
+```C#
+using System;
+class Program {
+    public static void Main() {
+        Console.Write("Number: ");
+        var age = Console.In.ReadLine();
+        Console.WriteLine("Digits: " + age.Length);
+
+        age = Convert.ToInt32(age);
+        Console.WriteLine(age.GetType());
+        age++;
+
+        Console.WriteLine("Happy birthday, you are " + age +
+                          " years old now.");
+        int length = age.Length; // * Compiler error
+    }
+}               
+```
 
 
 
-StaDyn is an object-oriented general-purpose programming language for the .NET platform that supports both static and dynamic typing in the same programming language. The StaDyn compiler gathers type information for the dynamically typed code. That type information is used to detect type errors at compilation time and to perform significant optimizations. For that purpose, it provides type reconstruction (inference), flow-sensitive types, union and intersection types, constraint-based typing,  alias analysis and method specialization.
 
-Its first prototype appeared in 2007, as a modification of C# 3.0. Type inference was supported by including var as a new type, unlike C#, which only offers var to define initialized local variables. Flow-sensitive types of var references are inferred by the compiler, providing type safe duck typing [1]. When a more lenient approach is required by the programmer, the dynamic type could be used instead of var. Although type inference is still performed, dynamic references behave closer to those in dynamic languages.
-![image](https://user-images.githubusercontent.com/10128026/168113760-4522a72f-99a3-4e88-8ea1-7dbd8b38d9fc.png)
+----------------------------------------------
 
-
-
-Dynamic languages are becoming increasingly popular for developing different kinds of applications such as adaptable and adaptive software, Web development, application frameworks, game engines, interactive programming, rapid prototyping, and dynamic aspect-oriented programming. These languages build on the Smalltalk idea of supporting reasoning about (and customizing) program structure, behavior and environment at runtime.
-
-Dynamic languages do not perform type checking at compile time like statically typed languages (Java, C# or C++), because runtime adaptability is implemented with dynamic type systems. This postponement causes three major drawbacks:
 
 1. **Performance**. The exact knowledge of object structure at compile time makes possible the generation of optimum code. This information need not to be retrieved at runtime, causing a performance penalty.
 2. **No early detection of type errors**. Dynamic type checking do not make possible to fix programming errors immediately rather than discovering them at runtime; when the programmer's efforts might be aimed at some other task, or even after the program has been deployed.
