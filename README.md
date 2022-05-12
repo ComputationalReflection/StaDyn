@@ -32,6 +32,57 @@ The ```age``` variable is first inferred as string, so it is safe to get its ```
 The generated code does not use a single ```Object``` variable to represent age, but two different variables whose types are string and int. This is achieved with a modification of the algorithm to compute the [SSA form](https://en.wikipedia.org/wiki/Static_single_assignment_form). This makes the generated code to be more efficient, since runtime type conversions are not required.
 
 
+## Flow-sensitive types
+
+```var``` and ```dynamic``` variables can hold flow-sensitive types:
+
+```C#
+using System;
+class Program {
+    public static void Main(String[] args) {
+        var exception;
+        if (args.Length >0)
+            exception = new ApplicationException("An application exception.");
+        else
+            exception = new SystemException("A system exception.");
+        Console.WriteLine(exception.Message);
+    }
+}
+```
+
+It is safe to get the ```Message``` property from ```exception``` because both ```ApplicationException``` and ```SystemException``` provide that property. Otherwise, a compiler error is shown. In this way, StaDyn provides a type-safe static duck-typing system.
+
+In the following program:
+
+```C#
+using System;
+class Program {
+    public static void Main(String[] args) {
+        var exception;
+        switch (args.Length) {
+        case 0: 
+            exception = new ApplicationException("An application exception.");
+            break;
+        case 1:
+            exception = new SystemException("A system exception.");
+            break;
+        case 2:
+            exception = "This is not an exception";
+            break;
+        }
+        Console.WriteLine(exception.Message); // * Compiler error with var, but not with dynamic
+        Console.WriteLine(exception.Unknown); // * Compiler error
+    }
+}
+```
+
+The ```Message``` property is not provided by ```String```, so a compiler error is shown for ```exception.Message```. However, if we declare ```exception``` as ```dynamic```, the previous program is accepted by the compiler. ```dynamic``` is more lenient than ```var```, following the flavor of dynamic languages. However, static type checking is still performed. This is shown in the last line of code, where the compiler shows an error for ```exception.Unknown``` even if exception is declared as ```dynamic```. This is because neither of the three possible types (```ApplicationException```, ```SystemException``` and ```String```) supports the ```Unknown``` message [5].
+
+Although ```dynamic``` and ```var``` types can be used explicitly to obtain safer or more lenient type checking, the dynamism of single ```var``` references can also be modified with command-line options, XML configuration files and a plugin for Visual Studio (see more details in [6]).
+
+
+
+
 
 
 
