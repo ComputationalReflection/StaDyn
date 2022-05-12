@@ -52,7 +52,6 @@ class Program {
         Console.WriteLine("Digits: " + age.Length);
 
         age = Convert.ToInt32(age);
-        Console.WriteLine(age.GetType());
         age++;
 
         Console.WriteLine("Happy birthday, you are " + age +
