@@ -1,5 +1,4 @@
-# StaDyn
-![stadyn-fondo-blanco](https://user-images.githubusercontent.com/10128026/168120914-95af229e-2d49-4e68-b8f8-319387e7cd2d.png)
+<img src="http://user-images.githubusercontent.com/10128026/168120914-95af229e-2d49-4e68-b8f8-319387e7cd2d.png" alt="StaDyn" width="200"/>
 
 StaDyn is an object-oriented general-purpose programming language for the .NET platform that supports both static and dynamic typing in the same programming language. The StaDyn compiler gathers type information for the dynamically typed code. That type information is used to detect type errors at compilation time and to perform significant optimizations. For that purpose, it provides type reconstruction (inference), flow-sensitive types, union and intersection types, constraint-based typing,  alias analysis and method specialization.
 
