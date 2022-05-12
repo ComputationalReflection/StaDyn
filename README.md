@@ -7,7 +7,7 @@ Its first prototype appeared in 2007, as a modification of C# 3.0. Type inferenc
 
 ## Installation and usage
 
-Just download the latest release in a Windows computer with an installed .Net framework (default installations of Windows 10 and 11 already have one).
+Just download the latest release in a Windows computer with an installed .NET framework (default installations of Windows 10 and 11 already have one).
 
 Create a ```hello.stadyn``` file:
 
