@@ -63,7 +63,7 @@ class Program {
 
 The ```age``` variable is first inferred as string, so it is safe to get its ```Length``` property. Then, it holds an integer, so ```age++``` is a valid expression.  The compiler detects an error in the last line, since ```Length``` is no longer provided by ```age```.
 
-The generated code does not use a single ```Object``` variable to represent age, but two different variables whose types are string and int. This is achieved with a modification of the algorithm to compute the [SSA form](https://en.wikipedia.org/wiki/Static_single_assignment_form) [[2]](#2). This makes the generated code to be more efficient, since runtime type conversions are not required.
+The generated code does not use a single ```Object``` variable to represent age, but two different variables whose types are ```string``` and ```int```. This is achieved with a modification of the algorithm to compute the [SSA form](https://en.wikipedia.org/wiki/Static_single_assignment_form) [[2]](#2). This makes the generated code to be more efficient, since runtime type conversions are not required.
 
 
 ### Flow-sensitive types
