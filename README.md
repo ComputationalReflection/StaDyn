@@ -4,7 +4,42 @@ StaDyn is an object-oriented general-purpose programming language for the .NET p
 
 Its first prototype appeared in 2007, as a modification of C# 3.0. Type inference was supported by including ```var``` as a new type, unlike C#, which only offers ```var``` to define initialized local variables. Flow-sensitive types of ```var``` references are inferred by the compiler, providing type safe duck typing [1]. When a more lenient approach is required by the programmer, the ```dynamic``` type could be used instead of ```var```. Although type inference is still performed, dynamic references behave closer to those in dynamic languages.
 
-## Variables with different types
+
+## Installation and usage
+
+Just download the latest release in a Windows computer with an installed .Net framework (default installations of Windows 10 and 11 already have one).
+
+Create a ```hello.stadyn``` file:
+
+```C#
+using System;
+
+public class HelloWorld {
+    public static void Main() {
+        var message;
+        message = "Hello world from StaDyn!";
+        Console.WriteLine(message);
+    }
+}
+```
+
+Compile it with:
+
+```
+StaDyn hello.stadyn
+```
+
+And run it:
+
+```
+hello.exe
+```
+
+## Language features
+
+We describe a summary of the main language features. For more information, please visit the [StaDyn website](http://www.reflection.uniovi.es/stadyn/) or read our [publications](#references).
+
+### Variables with different types
 
 Just like dynamic languages, variables may hold different types in the same scope:
 
@@ -32,7 +67,7 @@ The ```age``` variable is first inferred as string, so it is safe to get its ```
 The generated code does not use a single ```Object``` variable to represent age, but two different variables whose types are string and int. This is achieved with a modification of the algorithm to compute the [SSA form](https://en.wikipedia.org/wiki/Static_single_assignment_form). This makes the generated code to be more efficient, since runtime type conversions are not required.
 
 
-## Flow-sensitive types
+### Flow-sensitive types
 
 ```var``` and ```dynamic``` variables can hold flow-sensitive types:
 
@@ -81,7 +116,7 @@ The ```Message``` property is not provided by ```String```, so a compiler error 
 Although ```dynamic``` and ```var``` types can be used explicitly to obtain safer or more lenient type checking, the dynamism of single ```var``` references can also be modified with command-line options, XML configuration files and a plugin for Visual Studio (see more details in [6]).
 
 
-## Type inference of fields
+### Type inference of fields
 
 ```var``` and ```dynamic``` types can be used as object fields:
 
@@ -120,7 +155,7 @@ class Test {
 The ```Wrapper``` class can wrap any type. Each time we call the ```set``` method, the type of ```attribute``` is inferred as the type of the argument. Each object has a potentially different type of ```attribute```, so its type is stored for every single instance rather than for the whole class. In this way, the two lines indicated in the code above report compilation errors. A type-based alias analysis algorithm is implemented to support this behavior [7].
 
 
-## Constraint-based types
+### Constraint-based types
 
 Let's analyze the following method:
 
@@ -143,6 +178,8 @@ The type information gathered by StaDyn is used to perform significant optimizat
 A detailed evaluation of the runtime performance of StaDyn can be consulted in [1].
 
 For more detailed information, please visit the [StaDyn website](http://www.reflection.uniovi.es/stadyn/).
+
+## References<a name="references"></a>
 
 ## Copyright and License
 
