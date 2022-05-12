@@ -1,4 +1,4 @@
-# *StaDyn*
+# StaDyn
 
 StaDyn is an object-oriented general-purpose programming language for the .NET platform that supports both static and dynamic typing in the same programming language. The StaDyn compiler gathers type information for the dynamically typed code. That type information is used to detect type errors at compilation time and to perform significant optimizations. For that purpose, it provides type reconstruction (inference), flow-sensitive types, union and intersection types, constraint-based typing,  alias analysis and method specialization.
 
@@ -133,6 +133,15 @@ public static var upper(var parameter) {
 The type of ```parameter``` and the function return value are inferred by the compiler. To that aim, a constraint is added to the type of the ```upper``` method: the argument must provide a ```ToUpper``` method with no parameters. At each invocation, the constraint will be checked. Additionally, the return type of ```upper``` will be inferred as the return type of the corresponding ```ToUpper``` method implemented by the argument [8]. 
 
 The programmer may use either ```var``` or ```dynamic``` to declare ```parameter```, changing the way type checking is performed upon method invocation. Let's assume that the argument passed to ```upper``` holds a flow-sensitive type (e.g., the ```ApplicationException```, ```SystemException``` or ```String``` ```exception``` variable in the code above). With ```var```, *all* the possible types of the argument must provide ```ToUpper```; with ```dynamic```, *at least one* type must provide ```ToUpper```.
+
+
+## Runtime performance
+
+
+The type information gathered by StaDyn is used to perform significant optimizations in the generated code [9]: the number of type inspections and type casts are reduced, reflection is avoided, frequent types are cached, and methods with constraints are specialized. The point of all the optimizations is to reduce the number of type-checking operations performed at runtime, which is the main performance penalty of most dynamic languages. Many of those type checks are undertaken earlier by the StaDyn compiler.
+
+A detailed evaluation of the runtime performance of StaDyn can be consulted in [1].
+
 
 
 
