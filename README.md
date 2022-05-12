@@ -41,7 +41,7 @@ using System;
 class Program {
     public static void Main(String[] args) {
         var exception;
-        if (args.Length >0)
+        if (args.Length > 0)
             exception = new ApplicationException("An application exception.");
         else
             exception = new SystemException("A system exception.");
@@ -67,7 +67,7 @@ class Program {
             exception = new SystemException("A system exception.");
             break;
         case 2:
-            exception = "This is not an exception";
+            exception = "This is not an exception.";
             break;
         }
         Console.WriteLine(exception.Message); // * Compiler error with var, but not with dynamic
@@ -81,7 +81,43 @@ The ```Message``` property is not provided by ```String```, so a compiler error 
 Although ```dynamic``` and ```var``` types can be used explicitly to obtain safer or more lenient type checking, the dynamism of single ```var``` references can also be modified with command-line options, XML configuration files and a plugin for Visual Studio (see more details in [6]).
 
 
+## Type inference of fields
 
+```var``` and ```dynamic``` types can be used as object fields:
+
+```C#
+   class Wrapper {
+        private var attribute;
+
+        public Wrapper(var attribute) {
+            this.attribute = attribute;
+        }
+
+        public var get() {
+            return attribute;
+        }
+
+        public void set(var attribute) {
+            this.attribute = attribute;
+        }
+    }
+
+    class Test {
+        public static void Main() {
+            string aString;
+            int aInt;
+            Wrapper wrapper = new Wrapper("Hello");
+            aString = wrapper.get();
+            aInt = wrapper.get(); // * Compiler error
+
+            wrapper.set(3);
+            aString = wrapper.get(); // * Compiler error
+            aInt = wrapper.get();
+        }
+    }
+```
+
+The ```Wrapper``` class can wrap any type. Each time we call the ```set``` method, the type of ```attribute``` is inferred as the type of the argument. Each object has a potentially different type of``` attribute```, so its type is stored for every single instance rather than for the whole class. In this way, the two lines indicated in the code above report compilation errors. A type-based alias analysis algorithm is implemented to support this behavior [7].
 
 
 
