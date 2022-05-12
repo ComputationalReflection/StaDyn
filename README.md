@@ -100,7 +100,7 @@ class Program {
         case 1:
             exception = new SystemException("A system exception.");
             break;
-        case 2:
+        default:
             exception = "This is not an exception.";
             break;
         }
