@@ -5,7 +5,7 @@ StaDyn is an object-oriented general-purpose programming language for the .NET p
 Its first prototype appeared in 2007, as a modification of C# 3.0. Type inference was supported by including ```var``` as a new type, unlike C#, which only offers ```var``` to define initialized local variables. Flow-sensitive types of ```var``` references are inferred by the compiler, providing type safe duck typing [[1]](#1). When a more lenient approach is required by the programmer, the ```dynamic``` type could be used instead of ```var```. Although type inference is still performed, dynamic references behave closer to those in dynamic languages.
 
 
-## Installation and usage
+## Installation and Usage
 
 Just download the latest release in a Windows computer with an installed .NET framework (default installations of Windows 10 and 11 already have one).
 
@@ -35,7 +35,7 @@ And run it:
 hello.exe
 ```
 
-## Language features
+## Language Features
 
 We describe a summary of the main language features. For more information, please visit the [StaDyn website](http://www.reflection.uniovi.es/stadyn/) or read our [publications](#references).
 
@@ -169,7 +169,7 @@ The type of ```parameter``` and the function return value are inferred by the co
 The programmer may use either ```var``` or ```dynamic``` to declare ```parameter```, changing the way type checking is performed upon method invocation. Let's assume that the argument passed to ```upper``` holds a flow-sensitive type (e.g., the ```ApplicationException```, ```SystemException``` or ```String``` ```exception``` variable in the code above). With ```var```, *all* the possible types of the argument must provide ```ToUpper```; with ```dynamic```, *at least one* type must provide ```ToUpper```.
 
 
-## Runtime performance
+## Runtime Performance
 
 
 The type information gathered by StaDyn is used to perform significant optimizations in the generated code [[7]](#7): the number of type inspections and type casts are reduced, reflection is avoided, frequent types are cached, and methods with constraints are specialized. The point of all the optimizations is to reduce the number of type-checking operations performed at runtime, which is the main performance penalty of most dynamic languages. Many of those type checks are undertaken earlier by the StaDyn compiler.
