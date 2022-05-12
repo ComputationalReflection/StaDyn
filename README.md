@@ -142,5 +142,11 @@ The type information gathered by StaDyn is used to perform significant optimizat
 
 A detailed evaluation of the runtime performance of StaDyn can be consulted in [1].
 
-
 For more detailed information, please visit the [StaDyn website](http://www.reflection.uniovi.es/stadyn/).
+
+## Copyright and License
+
+Copyright 2006-2022 (C) [Francisco Ortin](https://reflection.uniovi.es/ortin/). 
+[MIT License](license.md).
+
+MIT License
