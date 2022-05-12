@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) Francisco Ortin. All Rights Reserved.
+Copyright (c) [Francisco Ortin](https://reflection.uniovi.es/ortin/). All Rights Reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
