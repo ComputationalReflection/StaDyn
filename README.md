@@ -120,6 +120,21 @@ class Test {
 The ```Wrapper``` class can wrap any type. Each time we call the ```set``` method, the type of ```attribute``` is inferred as the type of the argument. Each object has a potentially different type of ```attribute```, so its type is stored for every single instance rather than for the whole class. In this way, the two lines indicated in the code above report compilation errors. A type-based alias analysis algorithm is implemented to support this behavior [7].
 
 
+## Constraint-based types
+
+Let's analyze the following method:
+
+```C#
+public static var upper(var parameter) {
+    return parameter.ToUpper();
+}
+```
+
+The type of ```parameter``` and the function return value are inferred by the compiler. To that aim, a constraint is added to the type of the ```upper``` method: the argument must provide a ```ToUpper``` method with no parameters. At each invocation, the constraint will be checked. Additionally, the return type of ```upper``` will be inferred as the return type of the corresponding ```ToUpper``` method implemented by the argument [8]. 
+
+The programmer may use either ```var``` or ```dynamic``` to declare ```parameter```, changing the way type checking is performed upon method invocation. Let's assume that the argument passed to ```upper``` holds a flow-sensitive type (e.g., the ```ApplicationException```, ```SystemException``` or ```String``` ```exception``` variable in the code above). With ```var```, *all* the possible types of the argument must provide ```ToUpper```; with ```dynamic```, *at least one* type must provide ```ToUpper```.
+
+
 
 
 ----------------------------------------------
