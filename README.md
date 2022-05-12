@@ -147,6 +147,5 @@ For more detailed information, please visit the [StaDyn website](http://www.refl
 ## Copyright and License
 
 Copyright 2006-2022 (C) [Francisco Ortin](https://reflection.uniovi.es/ortin/). 
-[MIT License](license.md).
 
-MIT License
+[MIT License](LICENSE.md).
